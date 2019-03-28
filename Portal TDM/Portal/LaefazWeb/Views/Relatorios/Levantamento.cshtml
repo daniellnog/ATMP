@@ -1,0 +1,581 @@
+﻿@using TDMWeb.Extensions
+@model IEnumerable<TDMWeb.Models.VOs.RelatorioLevantamentoVO>
+
+@{
+    ViewBag.Titulo = "Relatório de Levantamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <style>
+        table.dataTable tbody tr {
+            cursor: pointer;
+        }
+    </style>
+}
+<form id="form-processar-analise">
+    <div class="box box-primary" id="panelCollapse">
+        <div class="box-header with-border">
+            <h3 id="AnaliseProcessar" class="box-title">An&aacute;lise</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" id="botaoCollapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body with-border">
+            <div class="form-group">
+                <div class="col-md-11">
+                    @Html.DropDownList("analise_processar", new SelectList(ViewBag.ListaAnalises, "Id", "Descricao"), "", new
+                                                                                           {
+                                                                                               @class = "form-control",
+                                                                                               @id = "analise-processar",
+                                                                                               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                                                                               required = "required"
+                                                                                           })
+                </div>
+                <div class="col-md-1" style=" padding-left: 0px; padding-right: 0px;">
+                    <button type="submit" id="botaoProcessarAnalise" class="btn btn-success" style="width: 100%">Processar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="chkSelecionado" value="0" />
+
+    <!-- /.box -->
+</form>
+
+<div class="box box-info">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-10" style="width: 100%;">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li id="espaco" style="width: 10px"></li>
+                        <li class="dropdown" style="right: 200px;">
+                            <a class=" dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li id="botaoExportar" role="presentation"><a role="menuitem" tabindex="-1" href="#">Exportar</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li id="botaoContestar" role="presentation"><a role="menuitem" tabindex="-1" href="#">Contestar Automático</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li id="botaoContestarManual" role="presentation"><a role="menuitem" tabindex="-1" href="#" data-toggle="modal" data-target="#modalContestar">Contestar Manualmente</a></li>
+                            </ul>
+                        </li>
+                        <li class="pull-left header"><i class="fa fa-pie-chart"></i>Relatório de Levantamento</li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="form-group">
+                            @Html.Label("OE", "O.E.")
+                            @Html.TextBox("OmissaoEntrada", null, string.Format("{0:c}", 0), new { @class = "FontBlue AlinharDireita", @Readonly = true, Id = "OmissaoEntrada" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("OS", "O.S.")
+                            @Html.TextBox("OmissaoSaida", null, string.Format("{0:c}", 0), new { @class = "FontRed AlinharDireita", @Readonly = true, Id = "OmissaoSaida" })
+                        </div>
+
+                        <div id="FiltroPorCor" style="height: 24px; width: 24px; position: absolute; right: 229px; top: 171px; z-index: 1;">
+                            <select id="colorselector" style="display: inline;">
+                                <option value="0" data-color="gray">Todos</option>
+                                <option value="1" data-color="green">Verde</option>
+                                <option value="2" data-color="orange">Laranja</option>
+                            </select>
+                        </div>
+
+                        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProdutoDescricao)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UnidadeDescricao)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QtdInicial)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QtdEntrada)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QtdSaida)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QtdFinalCalculado)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QtdFinal)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.QtdDiferenca)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.OMISSAO)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ValorUnitario)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BaseCalculo)
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /input-group -->
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+<!-- Modal -->
+<div class="modal fade" id="modalContestar" tabindex="-1" role="dialog" aria-labelledby="myModalContestar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Contestar Manualmente</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="alert alert-error" style="display: none;" id="mensagem-erro-contestar-manual">
+                        <button class="close" onclick="$('.alert').hide()">×</button>
+                        <span>Você deve selecionar todos os valores para Saídas.</span>
+                    </div>
+                    <form id="form-contestar-manual">
+                        <table id="gridContestar" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.Label("Descrição Unificada")
+                                    </th>
+                                    <th>
+                                        @Html.Label("Saídas")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-contestar-body"></tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnCloseModalContestar" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn-action-contestar-manual">Contestar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <style type="text/css">
+        .AlinharDireita {
+            text-align: right;
+        }
+
+        .AlinharCentro {
+            text-align: center;
+        }
+
+        .FontRed {
+            color: red;
+        }
+
+        .FontBlue {
+            color: blue;
+        }
+
+        .FontBold {
+            font-weight: bold;
+        }
+    </style>
+
+    <script type="text/javascript" charset="utf-8">
+
+        function getOmissaoSaidaEntrada() {
+            $.ajax({
+                url: "/Relatorios/CalcularOmissaoEntradaSaida",
+                data: { idAnalise: $("#analise-processar").val() },
+                type: "GET",
+                async: true,
+                cache: false,
+                success: function (data) {
+
+                    if (data.Status == 0) {
+                        $("#OmissaoEntrada").val(data.OEntrada);
+                        $("#OmissaoSaida").val(data.OSaida);
+                    } else {
+                        $.MessageBoxOK({ mensagem: data.Result });
+                    }
+                },
+                error: function (data) {
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            var pageScrollPos = 0;
+
+            $('#colorselector').colorselector();
+
+            $(".ul li").removeClass("active");
+            $('#Relatorio').addClass('active');
+            $('#RelatorioLevantamento').addClass('active');
+
+            $('#form-processar-analise').validate();
+
+            $(".dropdown-menu").click(function () {
+
+                if ($('#analise-processar').val() == "") {
+                    $.MessageBoxOK({ mensagem: "Nenhuma análise selecionada." });
+                    return;
+                }
+
+                $("#chkSelecionado").val($(this).find("li").find(".selected").attr("data-value"));
+                $('#form-processar-analise').submit();
+            });
+
+            $('#form-processar-analise').on('submit', function (e) {
+                var isValid = $("#form-processar-analise").valid();
+                if (isValid) {
+                    e.preventDefault();
+
+                    getOmissaoSaidaEntrada();
+
+                    $("#grid").DataTable().draw();
+                }
+            });
+
+            $("#botaoContestar").click(function () {
+                var idsProdutos = $('table.display:visible').find('tr.selected').find('input.hidden-produto-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (idsProdutos == undefined || idsProdutos.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Produto Selecionado." });
+                    return false;
+                }
+
+                //Chamar o controler
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: "/Relatorios/ConstestarValor",
+                    data: { idsProdutoPai: idsProdutos.join(",") },
+                    type: "GET",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+
+                        $.MessageBoxOK({ mensagem: data.Result });
+
+                        $('table.display').DataTable().draw();
+                    },
+                    error: function (data) {
+                        if (data.Result == undefined) {
+                            $.MessageBoxOK({ mensagem: data.responseText });
+                        } else {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        }
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+
+                $(window).scrollTop(pageScrollPos);
+            });
+
+            $("#botaoContestarManual").click(function () {
+                if ($('#analise-processar').val() == "") {
+                    $.MessageBoxOK({ mensagem: "Nenhuma análise selecionada." });
+                    return false;
+                }
+
+                var idsProdutos = $('table.display:visible').find('tr.selected').find('input.hidden-produto-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (idsProdutos == undefined || idsProdutos.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Produto Selecionado." });
+                    return false;
+                }
+
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: "/Relatorios/ListarValoresContestar",
+                    data: { idAnalise: $('#analise-processar').val(), idsProdutoPai: idsProdutos.join(",") },
+                    type: "GET",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+                        if (data.Status != 0) {
+                            $("#tabela-contestar-body").html('');
+                            $.each(data.Result, function (i, item) {
+
+                                var $select = $("<select class='select-contestar-value form-control'>");
+                                $("<option>", { text: "", value: "" }).appendTo($select);
+
+                                $.each(item.Valores, function (j, option) {
+                                    var $option = $("<option>", { text: option.ValorUnitario, value: option.Id });
+                                    $option.appendTo($select);
+                                });
+
+                                var tdDescricao = "<input type='hidden' class='ids-produtos-pai' value='" + item.IdProdutoPai + "' /> " + item.Descricao;
+                                $('<tr>').append(
+                                    $('<td>').html(tdDescricao),
+                                    $('<td>').append($select)
+                                ).appendTo('#tabela-contestar-body');
+                            });
+                        } else {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        }
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            $.MessageBoxOK({ mensagem: data.responseText });
+                        } else {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+
+                $(window).scrollTop(pageScrollPos);
+            });
+
+            $('#btn-action-contestar-manual').click(function () {
+                $('#mensagem-erro-contestar-manual').hide();
+
+                var allSelected = true;
+                var allValores = [];
+                $('.select-contestar-value').each(function (i, item) {
+                    if ($(item).val().length == 0) {
+                        allSelected = false;
+                    } else {
+                        var idProdutoPai = $($('.ids-produtos-pai').get(i)).val();
+                        allValores.push({ IdProdutoPai: idProdutoPai, idValor: $(item).val() });
+                    }
+                });
+
+                if (!allSelected) {
+                    $('#mensagem-erro-contestar-manual').show();
+                } else {
+
+                    allValores = JSON.stringify({ 'valores': allValores });
+
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        url: "/Relatorios/SalvarContestacaoManual",
+                        data: allValores,
+                        dataType: 'json',
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+                            $("#btnCloseModalContestar").click();
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                            $("#grid").DataTable().draw();
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        },
+                        error: function (data) {
+                            if (data.Result == undefined) {
+                                $.MessageBoxOK({ mensagem: data.responseText });
+                            } else {
+                                $.MessageBoxOK({ mensagem: data.Result });
+                            }
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        }
+                    });
+                }
+
+                $(window).scrollTop(pageScrollPos);
+            });
+
+            $("#botaoExportar").click(function () {
+                if ($('#analise-processar').val() == "") {
+                    $.MessageBoxOK({ mensagem: "Nenhuma análise selecionada." });
+                    return;
+                }
+
+                document.body.style.cursor = 'default';
+                $("#Loading").fadeOut();
+
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: "/Relatorios/ExportarRelatorioLevantamento",
+                    data: { idAnalise: $('#analise-processar').val() },
+                    type: "GET",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+                        if (data.Status != 0) {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        } else {
+                            window.location = '/Relatorios/DownloadRelatorioLevantamento';
+                        }
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            alert(data.responseText);
+                        } else {
+                            alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            });
+
+            $('#grid').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    if (aData.CorLinha == 'verde') {
+                        $('td', nRow).css('background-color', 'lightgreen');
+                    } else if (aData.CorLinha == 'laranja') {
+                        $('td', nRow).css('background-color', 'darkorange');
+                    }
+                },
+                "preDrawCallback": function (settings) {
+                    pageScrollPos = $('body').scrollTop();
+                },
+                "drawCallback": function (settings) {
+                    $('body').scrollTop(pageScrollPos);
+                },
+                ajax: {
+                    url: "@Url.Action("CarregarRelatorioLevantamento", "Relatorios")",
+                    type: "POST",
+                    data: function (d) {
+                        return $.extend(d, {
+                            idAnalise: $("#analise-processar").val(),
+                            chkSelecionado: $("#chkSelecionado").val()
+                        });
+                    }
+                },
+                select: {
+                    style: 'os',
+                    selector: 'td:not(.column-desc-produto)'
+                },
+                columns: [
+                    {
+                        data: "ProdutoDescricao",
+                        name: "ProdutoDescricao",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return data +
+                                    ' <input type="hidden" class="hidden-produto-id" name="Id" value="' + row.IdProdutoPai + '" />' +
+                                    ' <input type="hidden" class="hidden-CorLinha" name="Id" value="' + row.CorLinha + '" />';
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "UnidadeDescricao", name: "UnidadeDescricao", sClass: "AlinharCentro" },
+                    { data: "QtdInicial", name: "QtdInicial", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharCentro" },
+                    { data: "QtdEntrada", name: "QtdEntrada", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharCentro FontBold" },
+                    { data: "QtdSaida", name: "QtdSaida", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharCentro FontBold" },
+                    { data: "QtdFinalCalculado", name: "QtdFinalCalculado", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharCentro" },
+                    {
+                        data: "QtdFinal",
+                        name: "QtdFinal",
+                        render: function (data) { return data.toFixed(2).replace(".", ",").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); },
+                        sClass: "AlinharCentro"
+                    },
+                    { data: "QtdDiferenca", name: "QtdDiferenca", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharCentro" },
+                    {
+                        data: "OMISSAO", name: "OMISSAO", sClass: "AlinharCentro FontBold",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                var classe = "FontRed";
+                                if (row.OMISSAO.trim() == "Entrada") {
+                                    classe = "FontBlue";
+                                }
+                                return '<div class="' + classe + '">' + row.OMISSAO + '</div>';
+                            }
+                            return data;
+                        }
+
+                    },
+                    { data: "ValorUnitario", name: "ValorUnitario", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharDireita" },
+                    { data: "BaseCalculo", name: "BaseCalculo", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharDireita" }
+                ],
+                "iDisplayLength": 50,
+                "aLengthMenu": [5, 50, 500, 1000, 10000],
+                oLanguage: {
+                    select: {
+                        rows: {
+                            _: "%d linhas selecionadas",
+                            1: "1 linha selecionada"
+                        }
+                    },
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": $("#LoadingGrid").show(),
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+            $("#analise-processar").select2({
+                placeholder: "Selecione a análise que deseja processar...",
+                allowClear: true
+            });
+
+            // Collapse Panel
+            $("#botaoProcessarAnalise").click(function () {
+                var idAnalise = $('#analise-processar').val();
+                if (idAnalise != undefined && idAnalise != "") {
+                    $("#botaoCollapse").click();
+                    $("#AnaliseProcessar").html("Análise: " + $("#select2-analise-processar-container").attr("title"));
+
+                    $("#chkSelecionado").val("0");
+                    $(document).find(".btn-colorselector").css("background-color", "gray");
+                }
+            });
+        });
+    </script>
+}

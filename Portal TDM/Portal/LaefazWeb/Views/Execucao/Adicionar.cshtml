@@ -1,0 +1,73 @@
+﻿@using TDMWeb.Extensions
+@{
+    ViewBag.Titulo = "Sistema";
+}
+
+@section styles {
+    @Styles.Render("~/Asset/Vendor/jquery-upload-file/css")
+
+    <style type="text/css">
+        .form-control[readonly] {
+            background-color: white;
+        }
+
+        .progress {
+            position: relative;
+        }
+
+            .progress span {
+                position: absolute;
+                display: block;
+                width: 100%;
+                color: black;
+            }
+    </style>
+}
+
+@using (Html.BeginForm("Salvar", "Execucao", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Adicionar Sistema</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("descricao", "Descrição")
+                @Html.TextBox("descricao", null, new { @class = "form-control", required = "required" })
+                @Html.Label("fase","Fase")
+                @Html.DropDownList( "listfase", new SelectList(ViewBag.listTipoFaseTeste, "Id", "Descricao"), "", new
+           {
+               @class = "form-control",
+               @id = "list-tipo-fase-teste",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required"
+           }
+               )
+            </div>
+        </div>
+        <div class="box-footer" align="right">
+            <a href="@Url.Action("Index", "Demanda")" class="btn btn-danger" id="cancelar">Cancelar</a>
+            <button type="submit" class="btn btn-primary" id="submit-form">Salvar</button>
+        </div>
+        <!-- /.box-body -->
+    </div>
+}
+<!-- /.box -->
+@section scripts
+{
+    @Styles.Render("~/Asset/Vendor/jquery-upload-file/js")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#list-tipo-fase-teste").select2({
+                "language": {
+                    "noResults": function () {
+                        return "Nenhum resultado encontrado.";
+                    }
+                },
+                allowClear: true
+            });
+        });
+    </script>
+}

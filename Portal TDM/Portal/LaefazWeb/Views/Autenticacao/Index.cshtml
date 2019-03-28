@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Portal ATMP | Autentica&ccedil;&atilde;o</title>
+    @Styles.Render("~/Asset/Vendor/bootstrap/css")
+    <!-- Font Awesome -->
+    @Styles.Render("~/Asset/Vendor/FontAwesome/css")
+    <!-- Ionicons -->
+    @Styles.Render("~/Asset/Vendor/Ionicons/css")
+    @Styles.Render("~/Asset/Styles/css")
+    @Styles.Render("~/Asset/Vendor/AdminLTE/css")
+    <style type="text/css">
+        div.validation-summary-errors ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+              <img src="@Url.Content("~/Assets/Images/logo_tdm.png")" height="80" a href="../../index2.html" />
+              <a href="../../index2.html"><b>ATMP</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count() > 0)
+            {
+                <div class="alert alert-error">
+                    <button class="close" data-dismiss="alert">×</button>
+                    @Html.ValidationSummary(true)
+                </div>
+            } 
+            
+            <form action="" method="post" id="form-login">
+                <div class="form-group has-feedback">
+                    <label for="campo-usuario">Usu&aacute;rio</label>
+                    <input type="text" class="form-control" name="usuario" id="campo-usuario" required placeholder="Informe o seu usu&aacute;rio">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="campo-senha">Senha</label>
+                    <input type="password" class="form-control" name="senha" id="campo-senha" required placeholder="Informe a sua senha">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        &nbsp;
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-5">
+                        <button type="submit" class="btn btn-success btn-block btn-flat">Efetuar Login</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+    @Scripts.Render("~/Asset/Vendor/js")
+    @Scripts.Render("~/Asset/Vendor/bootstrap/js")
+    <script type="text/javascript">
+        // override jquery validate plugin defaults
+        $.validator.setDefaults({
+            highlight: function (element) {
+                $(element).closest('.form-group').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error');
+            },
+            errorElement: 'span',
+            errorClass: 'help-block',
+            errorPlacement: function (error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+        $(document).ready(function () {
+            $('#form-login').validate();
+        });
+    </script>
+</body>
+</html>

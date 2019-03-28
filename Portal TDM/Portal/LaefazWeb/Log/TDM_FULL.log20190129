@@ -1,0 +1,73 @@
+29-01-2019 14:22:18 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 0
+29-01-2019 14:22:18 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+29-01-2019 14:22:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:22:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 1
+29-01-2019 14:22:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+29-01-2019 14:22:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:22:59 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 2
+29-01-2019 14:22:59 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 2
+29-01-2019 14:22:59 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:02 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 3
+29-01-2019 14:23:03 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 18
+29-01-2019 14:23:03 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:07 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 4
+29-01-2019 14:23:07 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 34
+29-01-2019 14:23:08 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:11 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 5
+29-01-2019 14:23:12 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 47
+29-01-2019 14:23:12 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:15 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 6
+29-01-2019 14:23:15 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 49
+29-01-2019 14:23:16 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 7
+29-01-2019 14:23:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 50
+29-01-2019 14:23:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:24 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 8
+29-01-2019 14:23:24 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 1
+29-01-2019 14:23:24 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:27 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 9
+29-01-2019 14:23:27 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+29-01-2019 14:23:27 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:29 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135221
+29-01-2019 14:23:29 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135221','IdTestData':'6687','IdParametroScript':'14','IdParametroValor_Origem':'','Valor':'TESTE',}]
+29-01-2019 14:23:36 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 10
+29-01-2019 14:23:37 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+29-01-2019 14:23:37 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:37 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+29-01-2019 14:23:38 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 1
+29-01-2019 14:23:38 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135222
+29-01-2019 14:23:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135222','IdTestData':'6687','IdParametroScript':'15','IdParametroValor_Origem':'','Valor':'TI8',}]
+29-01-2019 14:23:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'1','Descricao':'TI8',}]
+29-01-2019 14:23:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 1
+29-01-2019 14:23:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135222
+29-01-2019 14:23:49 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 11
+29-01-2019 14:23:50 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+29-01-2019 14:23:50 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:53 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 12
+29-01-2019 14:23:54 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+29-01-2019 14:23:54 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:23:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135225
+29-01-2019 14:23:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135225','IdTestData':'6687','IdParametroScript':'19','IdParametroValor_Origem':'','Valor':'TESTE',}]
+29-01-2019 14:23:59 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 13
+29-01-2019 14:24:00 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+29-01-2019 14:24:00 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:24:01 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135226
+29-01-2019 14:24:02 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135226','IdTestData':'6687','IdParametroScript':'20','IdParametroValor_Origem':'','Valor':'TESTE',}]
+29-01-2019 14:24:05 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 14
+29-01-2019 14:24:06 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+29-01-2019 14:24:06 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:24:08 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135227
+29-01-2019 14:24:08 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135227','IdTestData':'6687','IdParametroScript':'21','IdParametroValor_Origem':'','Valor':'TESTE',}]
+29-01-2019 14:24:14 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 15
+29-01-2019 14:24:14 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+29-01-2019 14:24:15 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:24:16 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135228
+29-01-2019 14:24:16 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135228','IdTestData':'6687','IdParametroScript':'22','IdParametroValor_Origem':'','Valor':'TESTE',}]
+29-01-2019 14:24:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 16
+29-01-2019 14:24:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+29-01-2019 14:24:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1
+29-01-2019 14:24:23 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 135229
+29-01-2019 14:24:23 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'135229','IdTestData':'6687','IdParametroScript':'23','IdParametroValor_Origem':'','Valor':'TESTE',}]
+29-01-2019 14:24:27 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 17
+29-01-2019 14:24:27 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 48
+29-01-2019 14:24:28 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 1

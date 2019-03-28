@@ -1,0 +1,70 @@
+15-02-2019 16:00:00 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:00:00 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:00:46 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:00:46 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:04:24 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:04:24 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:05:20 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:05:20 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:06:33 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:06:33 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:07:42 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:07:42 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:14:18 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:14:18 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:15:41 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:15:41 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:18:31 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:18:31 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:19:13 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:19:13 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:24:00 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:24:00 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:25:49 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:25:49 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:26:24 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:26:24 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727
+15-02-2019 16:43:36 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+15-02-2019 16:43:36 [ERROR] (LaefazWeb.Controllers.ScriptController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1727

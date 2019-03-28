@@ -1,0 +1,177 @@
+﻿@model IEnumerable<LaefazWeb.Models.Execucao>
+
+@{
+    ViewBag.Titulo = "Execuções";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- /.box -->
+<div class="box box-info">
+    <button type="button" class="btn btn-primary" id="hiddenRemover" style="display: none;">Remover</button>
+    <div class="box-header">
+        <a href="@Url.Action("Adicionar", "Execucao")" class="btn btn-block btn-success pull-right" style="width: 100px;">Criar</a>
+        <input type="button" class="btn btn-block btn-info pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Editar" id="btnEditar"/>
+        <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+    </div>
+    <div class="box-body">
+        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descricao)                        
+                    </th>
+                    <th>
+                        Fase
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                            @Html.HiddenFor(modelItem => item.Id, new { @class = "hidden-id" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoFaseTeste.Descricao)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+@section scripts
+{
+    <script type="text/javascript" charset="utf-8">
+
+        function Remover(id) {
+
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: "/Execucao/Remover",
+                data: { id: id.toString() },
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function(data) {
+
+                    $.MessageBoxOK({
+                        mensagem: data.Result,
+                        argFuncao: data.Status,
+                        funcaoBotaoOK: function(status) {
+                            if (status == 0)
+                                window.location = '/Execucao/Index';
+                        }
+                    });
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function(data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $(".ul li").removeClass("active");
+            $('#Execucao').addClass('active');
+
+            $("#btnEditar").click(function() {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma execucção selecionada." });
+                    return;
+                }
+
+                window.location = '/Execucao/editar?id=' + id;
+            });
+
+            $('#btnExcluir').click(function() {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma execucção selecionada." });
+                    return;
+                }
+
+                $.MessageBoxSimNao({
+                    titulo: "Remover Execução?",
+                    mensagem: "Confirma remoção da Execução",
+                    height: "auto",
+                    width: "auto",
+                    funcaoBotaoSim: function() {
+                        Remover(id);
+                    }
+                });
+            });
+
+            $('#grid').DataTable({
+                columnDefs: [
+                    {
+                        targets: [0],
+                        sortable: true,
+                        width: '100%'
+                    }
+                ],
+                order: [[0, "asc"]],
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+            var table = $('#grid').DataTable();
+
+            $('#grid tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+        });
+    </script>
+}

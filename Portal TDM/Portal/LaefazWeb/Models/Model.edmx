@@ -1,0 +1,3227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TDM.DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agendamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RotinaDiaria" Type="bit" />
+          <Property Name="InicioAgendamento" Type="datetime" />
+          <Property Name="TerminoAgendamento" Type="datetime" />
+          <Property Name="Output" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Agendamento_TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAgendamento" Type="int" Nullable="false" />
+          <Property Name="IdTestData" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AmbienteExecucao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AmbienteVirtual">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IP" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="AUT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CondicaoScript">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Sistema" Type="varchar" MaxLength="50" />
+          <Property Name="Fase" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DataPool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTDM" Type="int" Nullable="false" />
+          <Property Name="IdAut" Type="int" Nullable="false" />
+          <Property Name="IdDemanda" Type="int" />
+          <Property Name="IdScript_CondicaoScript" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="QtdSolicitada" Type="int" />
+          <Property Name="Observacao" Type="varchar" MaxLength="5000" />
+          <Property Name="DataSolicitacao" Type="datetime" Nullable="false" />
+          <Property Name="DataInicioExecucao" Type="datetime" />
+          <Property Name="DataTermino" Type="datetime" />
+          <Property Name="ConsiderarRotinaDiaria" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Demanda">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Complemento" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="DeParaAtmpAlmFase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAmbienteExecucao" Type="int" />
+          <Property Name="Fase" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="DeParaAtmpAlmSistema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAut" Type="int" />
+          <Property Name="DescricaoALM" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Encadeamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Encadeamento_TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTestData" Type="int" Nullable="false" />
+          <Property Name="IdEncadeamento" Type="int" Nullable="false" />
+          <Property Name="Ordem" Type="int" Nullable="false" />
+          <Property Name="IdAmbienteExecucao" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Execucao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdScript_CondicaoScript_Ambiente" Type="int" />
+          <Property Name="IdTestData" Type="int" />
+          <Property Name="IdStatusExecucao" Type="int" Nullable="false" />
+          <Property Name="IdTipoFaseTeste" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="500" />
+          <Property Name="SituacaoAmbiente" Type="int" />
+          <Property Name="DataAgendamento" Type="datetime" />
+          <Property Name="InicioExecucao" Type="datetime" />
+          <Property Name="TerminoExecucao" Type="datetime" />
+          <Property Name="ToscaInput" Type="varchar(max)" />
+          <Property Name="ToscaOutput" Type="varchar(max)" />
+          <Property Name="EnvioTelegram" Type="bit" Nullable="false" />
+          <Property Name="IdAgendamento" Type="int" />
+        </EntityType>
+        <EntityType Name="Historico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdDataPool" Type="int" />
+          <Property Name="IdTestData" Type="int" />
+          <Property Name="IdExecucao" Type="int" />
+          <Property Name="Acao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Valores" Type="varchar(max)" />
+          <Property Name="Entidade" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MapaCalor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTelaMapaCalor" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="PosX" Type="int" Nullable="false" />
+          <Property Name="PosY" Type="int" Nullable="false" />
+          <Property Name="Resolucao" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MotivoExecucao">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Descricao" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AtivaOfensor" Type="bit" />
+        </EntityType>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="ColunaTecnicaTosca" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParametroScript">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdParametro" Type="int" Nullable="false" />
+          <Property Name="IdScript_CondicaoScript" Type="int" Nullable="false" />
+          <Property Name="IdTipoParametro" Type="int" Nullable="false" />
+          <Property Name="Obrigatorio" Type="bit" Nullable="false" />
+          <Property Name="ValorDefault" Type="varchar" MaxLength="5000" />
+          <Property Name="VisivelEmTela" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParametroScript_Valor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdParametroScript" Type="int" Nullable="false" />
+          <Property Name="ValorSugerido" Type="varchar(max)" Nullable="false" />
+          <Property Name="Usada" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParametroValor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTestData" Type="int" Nullable="false" />
+          <Property Name="IdParametroScript" Type="int" Nullable="false" />
+          <Property Name="IdParametroValor_Origem" Type="int" />
+          <Property Name="Valor" Type="varchar" MaxLength="5000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParametroValor_Historico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdParametroValor" Type="int" Nullable="false" />
+          <Property Name="TempoInicio" Type="datetime" Nullable="false" />
+          <Property Name="TempoTermino" Type="datetime" Nullable="false" />
+          <Property Name="Valor" Type="varchar" MaxLength="5000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlanoTeste_TI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExecucaoAutomatizada_ATMP" Type="bit" />
+          <Property Name="MotivoExecucao_ATMP" Type="varchar" MaxLength="50" />
+          <Property Name="OFENSOR_ATMP" Type="varchar" MaxLength="255" />
+          <Property Name="Plataforma_ATMP" Type="varchar" MaxLength="10" />
+          <Property Name="SUBPROJETO" Type="nvarchar" MaxLength="32" />
+          <Property Name="ENTREGA" Type="nvarchar" MaxLength="32" />
+          <Property Name="PROJETO" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="PLANO_TESTE" Type="nvarchar" MaxLength="256" />
+          <Property Name="TESTE" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CT" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RELEASE" Type="nvarchar" MaxLength="32" />
+          <Property Name="CICLO" Type="nvarchar" MaxLength="32" />
+          <Property Name="FORNECEDOR" Type="nvarchar" MaxLength="32" />
+          <Property Name="SISTEMA" Type="nvarchar" MaxLength="64" />
+          <Property Name="NOME" Type="nvarchar" MaxLength="256" />
+          <Property Name="COMPLEXIDADE" Type="nvarchar" MaxLength="32" />
+          <Property Name="UAT" Type="nvarchar" MaxLength="32" />
+          <Property Name="MASSA_TESTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="DT_PLANEJAMENTO" Type="datetime2" Precision="7" />
+          <Property Name="DT_EXECUCAO" Type="datetime2" Precision="7" />
+          <Property Name="STATUS_EXEC_CT" Type="nvarchar" MaxLength="32" />
+          <Property Name="MOTIVO_CANCELAMENTO_CT" Type="nvarchar" MaxLength="64" />
+          <Property Name="TESTADOR" Type="nvarchar" MaxLength="32" />
+          <Property Name="QT_STEPS" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="PASTA_LM" Type="nvarchar" MaxLength="256" />
+          <Property Name="CT_AUTOMATIZADO" Type="nvarchar" MaxLength="32" />
+          <Property Name="EXECUCAO_AUTOMATICA" Type="nvarchar" MaxLength="32" />
+          <Property Name="MOTIVO_EXECUCAO_MANUAL" Type="nvarchar" MaxLength="256" />
+          <Property Name="FABRICA_TESTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="ITERATIONS" Type="nvarchar" MaxLength="256" />
+          <Property Name="VARIANTE" Type="nvarchar" MaxLength="256" />
+          <Property Name="PRE_CONDICAO" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OBS" Type="nvarchar" MaxLength="256" />
+          <Property Name="NRO_CENARIO" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="NRO_CT" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="EVIDENCIA_VALIDACAO_TECNICA" Type="nvarchar" MaxLength="32" />
+          <Property Name="PLANO_VALIDACAO_CLIENTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="PLANO_VALIDACAO_TECNICA" Type="nvarchar" MaxLength="32" />
+          <Property Name="CT_SUCESSOR" Type="nvarchar" MaxLength="512" />
+          <Property Name="PRE_REQUISITO" Type="nvarchar" MaxLength="512" />
+          <Property Name="DT_CARGA" Type="datetime2" Precision="7" />
+          <Property Name="SCRIPT_TOSCA_ATMP" Type="nvarchar" MaxLength="255" />
+          <Property Name="SCRIPT_RFT_ATMP" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="PlanoTeste_TI_Historico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPlanoTesteTI" Type="int" Nullable="false" />
+          <Property Name="ExecucaoAutomatizada_ATMP" Type="bit" />
+          <Property Name="MotivoExecucao_ATMP" Type="varchar" MaxLength="50" />
+          <Property Name="OFENSOR_ATMP" Type="varchar" MaxLength="255" />
+          <Property Name="Plataforma_ATMP" Type="varchar" MaxLength="10" />
+          <Property Name="SUBPROJETO" Type="nvarchar" MaxLength="32" />
+          <Property Name="ENTREGA" Type="nvarchar" MaxLength="32" />
+          <Property Name="PROJETO" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="PLANO_TESTE" Type="nvarchar" MaxLength="256" />
+          <Property Name="TESTE" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CT" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="RELEASE" Type="nvarchar" MaxLength="32" />
+          <Property Name="CICLO" Type="nvarchar" MaxLength="32" />
+          <Property Name="FORNECEDOR" Type="nvarchar" MaxLength="32" />
+          <Property Name="SISTEMA" Type="nvarchar" MaxLength="64" />
+          <Property Name="NOME" Type="nvarchar" MaxLength="256" />
+          <Property Name="COMPLEXIDADE" Type="nvarchar" MaxLength="32" />
+          <Property Name="UAT" Type="nvarchar" MaxLength="32" />
+          <Property Name="MASSA_TESTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="DT_PLANEJAMENTO" Type="datetime2" Precision="7" />
+          <Property Name="DT_EXECUCAO" Type="datetime2" Precision="7" />
+          <Property Name="STATUS_EXEC_CT" Type="nvarchar" MaxLength="32" />
+          <Property Name="MOTIVO_CANCELAMENTO_CT" Type="nvarchar" MaxLength="64" />
+          <Property Name="TESTADOR" Type="nvarchar" MaxLength="32" />
+          <Property Name="QT_STEPS" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="PASTA_LM" Type="nvarchar" MaxLength="256" />
+          <Property Name="CT_AUTOMATIZADO" Type="nvarchar" MaxLength="32" />
+          <Property Name="EXECUCAO_AUTOMATICA" Type="nvarchar" MaxLength="32" />
+          <Property Name="MOTIVO_EXECUCAO_MANUAL" Type="nvarchar" MaxLength="256" />
+          <Property Name="FABRICA_TESTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="ITERATIONS" Type="nvarchar" MaxLength="256" />
+          <Property Name="VARIANTE" Type="nvarchar" MaxLength="256" />
+          <Property Name="PRE_CONDICAO" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OBS" Type="nvarchar" MaxLength="256" />
+          <Property Name="NRO_CENARIO" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="NRO_CT" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="EVIDENCIA_VALIDACAO_TECNICA" Type="nvarchar" MaxLength="32" />
+          <Property Name="PLANO_VALIDACAO_CLIENTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="PLANO_VALIDACAO_TECNICA" Type="nvarchar" MaxLength="32" />
+          <Property Name="CT_SUCESSOR" Type="nvarchar" MaxLength="512" />
+          <Property Name="PRE_REQUISITO" Type="nvarchar" MaxLength="512" />
+          <Property Name="DT_CARGA" Type="datetime2" Precision="7" />
+          <Property Name="DT_HISTORICO" Type="datetime2" Precision="7" />
+          <Property Name="FONTE" Type="nvarchar" MaxLength="32" />
+          <Property Name="OPERACAO" Type="nvarchar" MaxLength="32" />
+          <Property Name="SCRIPT_TOSCA_ATMP" Type="nvarchar" MaxLength="255" />
+          <Property Name="SCRIPT_RFT_ATMP" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Plataforma">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Script">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdScriptPai" Type="int" />
+          <Property Name="IdAUT" Type="int" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Script_CondicaoScript">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdScript" Type="int" Nullable="false" />
+          <Property Name="IdCondicaoScript" Type="int" />
+          <Property Name="QueryTosca" Type="varchar(max)" />
+          <Property Name="ListaExecucaoTosca" Type="varchar(max)" />
+          <Property Name="CaminhoArquivoTCS" Type="varchar(max)" />
+          <Property Name="DiretorioRelatorio" Type="varchar(max)" />
+          <Property Name="TempoEstimadoExecucao" Type="datetime" Nullable="false" />
+          <Property Name="NomeTecnicoScript" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DisponivelATMP" Type="bit" />
+          <Property Name="TempFase" Type="varchar" MaxLength="50" />
+          <Property Name="CaminhoArquivoSVN" Type="varchar(max)" />
+          <Property Name="WorkspaceCompartilhado" Type="varchar(max)" />
+          <Property Name="IdPlataforma" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Script_CondicaoScript_Ambiente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdScript_CondicaoScript" Type="int" Nullable="false" />
+          <Property Name="IdAmbienteVirtual" Type="int" />
+          <Property Name="IdAmbienteExecucao" Type="int" />
+        </EntityType>
+        <EntityType Name="Script_CondicaoScript_CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdScript_CondicaoScript" Type="int" Nullable="false" />
+          <Property Name="IdCT" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusExecucao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TDM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="TdmPublico" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TDM_Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdTDM" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdTDM" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TelaMapaCalor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Imagem" Type="image" />
+          <Property Name="Caminho" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Resolucao" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExecucao" Type="int" />
+          <Property Name="IdDataPool" Type="int" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="IdScript_CondicaoScript" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="GerarMigracao" Type="bit" Nullable="false" />
+          <Property Name="CasoTesteRelativo" Type="varchar" MaxLength="500" />
+          <Property Name="Observacao" Type="varchar" MaxLength="500" />
+          <Property Name="GeradoPor" Type="varchar" MaxLength="500" />
+          <Property Name="DataGeracao" Type="datetime" />
+          <Property Name="CaminhoEvidencia" Type="varchar" MaxLength="500" />
+          <Property Name="TempoEstimadoExecucao" Type="datetime" Nullable="false" />
+          <Property Name="ClassificacaoMassa" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestData_CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCT" Type="int" Nullable="false" />
+          <Property Name="IdTestData" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoDadoParametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoFaseTeste">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoParametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Senha" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Agendamento_Execucao">
+          <End Role="Agendamento" Type="Self.Agendamento" Multiplicity="0..1" />
+          <End Role="Execucao" Type="Self.Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agendamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdAgendamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agendamento_TestData_Encadeamento">
+          <End Role="Agendamento" Type="Self.Agendamento" Multiplicity="1" />
+          <End Role="Agendamento_TestData" Type="Self.Agendamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agendamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Agendamento_TestData">
+              <PropertyRef Name="IdAgendamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agendamento_TestData_TestData">
+          <End Role="TestData" Type="Self.TestData" Multiplicity="1" />
+          <End Role="Agendamento_TestData" Type="Self.Agendamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Agendamento_TestData">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AmbienteExecucao_Id">
+          <End Role="AmbienteExecucao" Type="Self.AmbienteExecucao" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DeParaAtmpAlmFase" Type="Self.DeParaAtmpAlmFase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbienteExecucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeParaAtmpAlmFase">
+              <PropertyRef Name="IdAmbienteExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AUT_ID">
+          <End Role="AUT" Type="Self.AUT" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DeParaAtmpAlmSistema" Type="Self.DeParaAtmpAlmSistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeParaAtmpAlmSistema">
+              <PropertyRef Name="IdAut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_Aut">
+          <End Role="AUT" Type="Self.AUT" Multiplicity="1" />
+          <End Role="DataPool" Type="Self.DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdAut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_Demanda">
+          <End Role="Demanda" Type="Self.Demanda" Multiplicity="0..1" />
+          <End Role="DataPool" Type="Self.DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Demanda">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdDemanda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_Script_CondicaoScript">
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="1" />
+          <End Role="DataPool" Type="Self.DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_TDM">
+          <End Role="TDM" Type="Self.TDM" Multiplicity="1" />
+          <End Role="DataPool" Type="Self.DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TDM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdTDM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encadeamento_TestData_AmbienteExecucao">
+          <End Role="TestData" Type="Self.TestData" Multiplicity="1" />
+          <End Role="Encadeamento_TestData" Type="Self.Encadeamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadeamento_TestData">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encadeamento_TestData_Encadeamento">
+          <End Role="Encadeamento" Type="Self.Encadeamento" Multiplicity="1" />
+          <End Role="Encadeamento_TestData" Type="Self.Encadeamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encadeamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadeamento_TestData">
+              <PropertyRef Name="IdEncadeamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Historico" Type="Self.Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MapaCalor_Monitoramento_MapaCalor">
+          <End Role="TelaMapaCalor" Type="Self.TelaMapaCalor" Multiplicity="1" />
+          <End Role="MapaCalor" Type="Self.MapaCalor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TelaMapaCalor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MapaCalor">
+              <PropertyRef Name="IdTelaMapaCalor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MapaCalor_Monitoramento_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="MapaCalor" Type="Self.MapaCalor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MapaCalor">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_Parametro">
+          <End Role="Parametro" Type="Self.Parametro" Multiplicity="1" />
+          <End Role="ParametroScript" Type="Self.ParametroScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parametro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript">
+              <PropertyRef Name="IdParametro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_Script_CondicaoScript">
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="1" />
+          <End Role="ParametroScript" Type="Self.ParametroScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_TipoParametro">
+          <End Role="TipoParametro" Type="Self.TipoParametro" Multiplicity="1" />
+          <End Role="ParametroScript" Type="Self.ParametroScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoParametro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript">
+              <PropertyRef Name="IdTipoParametro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_Valor_ParametroScript">
+          <End Role="ParametroScript" Type="Self.ParametroScript" Multiplicity="1" />
+          <End Role="ParametroScript_Valor" Type="Self.ParametroScript_Valor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript_Valor">
+              <PropertyRef Name="IdParametroScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_Historico_ParametroValor">
+          <End Role="ParametroValor" Type="Self.ParametroValor" Multiplicity="1" />
+          <End Role="ParametroValor_Historico" Type="Self.ParametroValor_Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroValor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor_Historico">
+              <PropertyRef Name="IdParametroValor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_ParametroScript">
+          <End Role="ParametroScript" Type="Self.ParametroScript" Multiplicity="1" />
+          <End Role="ParametroValor" Type="Self.ParametroValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor">
+              <PropertyRef Name="IdParametroScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_ParametroValor">
+          <End Role="ParametroValor" Type="Self.ParametroValor" Multiplicity="0..1" />
+          <End Role="ParametroValor1" Type="Self.ParametroValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroValor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor1">
+              <PropertyRef Name="IdParametroValor_Origem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_TestData">
+          <End Role="TestData" Type="Self.TestData" Multiplicity="1" />
+          <End Role="ParametroValor" Type="Self.ParametroValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanoTeste_TI_Historico_PlanoTeste_TI">
+          <End Role="PlanoTeste_TI" Type="Self.PlanoTeste_TI" Multiplicity="1" />
+          <End Role="PlanoTeste_TI_Historico" Type="Self.PlanoTeste_TI_Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanoTeste_TI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PlanoTeste_TI_Historico">
+              <PropertyRef Name="IdPlanoTesteTI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_AUT">
+          <End Role="AUT" Type="Self.AUT" Multiplicity="0..1" />
+          <End Role="Script" Type="Self.Script" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script">
+              <PropertyRef Name="IdAUT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_AmbienteExeucao">
+          <End Role="AmbienteExecucao" Type="Self.AmbienteExecucao" Multiplicity="0..1" />
+          <End Role="Script_CondicaoScript_Ambiente" Type="Self.Script_CondicaoScript_Ambiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbienteExecucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="IdAmbienteExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_AmbienteVirtual">
+          <End Role="AmbienteVirtual" Type="Self.AmbienteVirtual" Multiplicity="0..1" />
+          <End Role="Script_CondicaoScript_Ambiente" Type="Self.Script_CondicaoScript_Ambiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbienteVirtual">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="IdAmbienteVirtual" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_CondicaoScript">
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="1" />
+          <End Role="Script_CondicaoScript_Ambiente" Type="Self.Script_CondicaoScript_Ambiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_Execucao">
+          <End Role="Script_CondicaoScript_Ambiente" Type="Self.Script_CondicaoScript_Ambiente" Multiplicity="0..1" />
+          <End Role="Execucao" Type="Self.Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdScript_CondicaoScript_Ambiente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_CondicaoScript">
+          <End Role="CondicaoScript" Type="Self.CondicaoScript" Multiplicity="0..1" />
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdCondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_CT_CT">
+          <End Role="CT" Type="Self.CT" Multiplicity="1" />
+          <End Role="Script_CondicaoScript_CT" Type="Self.Script_CondicaoScript_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_CT">
+              <PropertyRef Name="IdCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_CT_Script_CondicaoScript">
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="1" />
+          <End Role="Script_CondicaoScript_CT" Type="Self.Script_CondicaoScript_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_CT">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Plataforma">
+          <End Role="Plataforma" Type="Self.Plataforma" Multiplicity="1" />
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plataforma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdPlataforma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Script">
+          <End Role="Script" Type="Self.Script" Multiplicity="1" />
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_ScriptPai">
+          <End Role="Script" Type="Self.Script" Multiplicity="0..1" />
+          <End Role="Script1" Type="Self.Script" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script1">
+              <PropertyRef Name="IdScriptPai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TDM_Usuario_TDM">
+          <End Role="TDM" Type="Self.TDM" Multiplicity="1" />
+          <End Role="TDM_Usuario" Type="Self.TDM_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TDM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TDM_Usuario">
+              <PropertyRef Name="IdTDM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TDM_Usuario_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="TDM_Usuario" Type="Self.TDM_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TDM_Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_CT_CT">
+          <End Role="CT" Type="Self.CT" Multiplicity="1" />
+          <End Role="TestData_CT" Type="Self.TestData_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData_CT">
+              <PropertyRef Name="IdCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_CT_TestData">
+          <End Role="TestData" Type="Self.TestData" Multiplicity="1" />
+          <End Role="TestData_CT" Type="Self.TestData_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData_CT">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_DataPool">
+          <End Role="DataPool" Type="Self.DataPool" Multiplicity="1" />
+          <End Role="TestData" Type="Self.TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataPool">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdDataPool" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Execucao">
+          <End Role="Execucao" Type="Self.Execucao" Multiplicity="0..1" />
+          <End Role="TestData" Type="Self.TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Execucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Script_CondicaoScript">
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="1" />
+          <End Role="TestData" Type="Self.TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="TestData" Type="Self.TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="TestData" Type="Self.TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoFaseTeste_Execucao">
+          <End Role="TipoFaseTeste" Type="Self.TipoFaseTeste" Multiplicity="1" />
+          <End Role="Execucao" Type="Self.Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoFaseTeste">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdTipoFaseTeste" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoFaseTeste_StatusExecucao">
+          <End Role="StatusExecucao" Type="Self.StatusExecucao" Multiplicity="1" />
+          <End Role="Execucao" Type="Self.Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusExecucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdStatusExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="PR_LISTAR_DATAPOOL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DISPLAYLENGTH" Type="int" Mode="In" />
+          <Parameter Name="DISPLAYSTART" Type="int" Mode="In" />
+          <Parameter Name="SORTCOL" Type="int" Mode="In" />
+          <Parameter Name="SORTDIR" Type="nvarchar" Mode="In" />
+          <Parameter Name="SEARCH" Type="nvarchar" Mode="In" />
+          <Parameter Name="LISTARTODOS" Type="int" Mode="In" />
+          <Parameter Name="IDUSUARIO" Type="int" Mode="In" />
+          <Parameter Name="IDTDM" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="TDMDbModelStoreContainer">
+          <EntitySet Name="Agendamento" EntityType="Self.Agendamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Agendamento_TestData" EntityType="Self.Agendamento_TestData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AmbienteExecucao" EntityType="Self.AmbienteExecucao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AmbienteVirtual" EntityType="Self.AmbienteVirtual" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUT" EntityType="Self.AUT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CondicaoScript" EntityType="Self.CondicaoScript" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CT" EntityType="Self.CT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataPool" EntityType="Self.DataPool" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Demanda" EntityType="Self.Demanda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeParaAtmpAlmFase" EntityType="Self.DeParaAtmpAlmFase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeParaAtmpAlmSistema" EntityType="Self.DeParaAtmpAlmSistema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Encadeamento" EntityType="Self.Encadeamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Encadeamento_TestData" EntityType="Self.Encadeamento_TestData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Execucao" EntityType="Self.Execucao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historico" EntityType="Self.Historico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MapaCalor" EntityType="Self.MapaCalor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parametro" EntityType="Self.Parametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParametroScript" EntityType="Self.ParametroScript" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParametroScript_Valor" EntityType="Self.ParametroScript_Valor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParametroValor" EntityType="Self.ParametroValor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParametroValor_Historico" EntityType="Self.ParametroValor_Historico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanoTeste_TI" EntityType="Self.PlanoTeste_TI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanoTeste_TI_Historico" EntityType="Self.PlanoTeste_TI_Historico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plataforma" EntityType="Self.Plataforma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Script" EntityType="Self.Script" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Script_CondicaoScript" EntityType="Self.Script_CondicaoScript" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Script_CondicaoScript_Ambiente" EntityType="Self.Script_CondicaoScript_Ambiente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Script_CondicaoScript_CT" EntityType="Self.Script_CondicaoScript_CT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusExecucao" EntityType="Self.StatusExecucao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TDM" EntityType="Self.TDM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TDM_Usuario" EntityType="Self.TDM_Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelaMapaCalor" EntityType="Self.TelaMapaCalor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestData" EntityType="Self.TestData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestData_CT" EntityType="Self.TestData_CT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDadoParametro" EntityType="Self.TipoDadoParametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoFaseTeste" EntityType="Self.TipoFaseTeste" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoParametro" EntityType="Self.TipoParametro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MotivoExecucao" EntityType="Self.MotivoExecucao" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MotivoExecucao].[Id] AS [Id], 
+    [MotivoExecucao].[Descricao] AS [Descricao], 
+    [MotivoExecucao].[AtivaOfensor] AS [AtivaOfensor]
+    FROM [dbo].[MotivoExecucao] AS [MotivoExecucao]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Agendamento_Execucao" Association="Self.FK_Agendamento_Execucao">
+            <End Role="Agendamento" EntitySet="Agendamento" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agendamento_TestData_Encadeamento" Association="Self.FK_Agendamento_TestData_Encadeamento">
+            <End Role="Agendamento" EntitySet="Agendamento" />
+            <End Role="Agendamento_TestData" EntitySet="Agendamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agendamento_TestData_TestData" Association="Self.FK_Agendamento_TestData_TestData">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="Agendamento_TestData" EntitySet="Agendamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AmbienteExecucao_Id" Association="Self.FK_AmbienteExecucao_Id">
+            <End Role="AmbienteExecucao" EntitySet="AmbienteExecucao" />
+            <End Role="DeParaAtmpAlmFase" EntitySet="DeParaAtmpAlmFase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AUT_ID" Association="Self.FK_AUT_ID">
+            <End Role="AUT" EntitySet="AUT" />
+            <End Role="DeParaAtmpAlmSistema" EntitySet="DeParaAtmpAlmSistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_Aut" Association="Self.FK_DataPool_Aut">
+            <End Role="AUT" EntitySet="AUT" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_Demanda" Association="Self.FK_DataPool_Demanda">
+            <End Role="Demanda" EntitySet="Demanda" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_Script_CondicaoScript" Association="Self.FK_DataPool_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_TDM" Association="Self.FK_DataPool_TDM">
+            <End Role="TDM" EntitySet="TDM" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encadeamento_TestData_AmbienteExecucao" Association="Self.FK_Encadeamento_TestData_AmbienteExecucao">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="Encadeamento_TestData" EntitySet="Encadeamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encadeamento_TestData_Encadeamento" Association="Self.FK_Encadeamento_TestData_Encadeamento">
+            <End Role="Encadeamento" EntitySet="Encadeamento" />
+            <End Role="Encadeamento_TestData" EntitySet="Encadeamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Usuario" Association="Self.FK_Historico_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Historico" EntitySet="Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MapaCalor_Monitoramento_MapaCalor" Association="Self.FK_MapaCalor_Monitoramento_MapaCalor">
+            <End Role="TelaMapaCalor" EntitySet="TelaMapaCalor" />
+            <End Role="MapaCalor" EntitySet="MapaCalor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MapaCalor_Monitoramento_Usuario" Association="Self.FK_MapaCalor_Monitoramento_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="MapaCalor" EntitySet="MapaCalor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_Parametro" Association="Self.FK_ParametroScript_Parametro">
+            <End Role="Parametro" EntitySet="Parametro" />
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_Script_CondicaoScript" Association="Self.FK_ParametroScript_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_TipoParametro" Association="Self.FK_ParametroScript_TipoParametro">
+            <End Role="TipoParametro" EntitySet="TipoParametro" />
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_Valor_ParametroScript" Association="Self.FK_ParametroScript_Valor_ParametroScript">
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+            <End Role="ParametroScript_Valor" EntitySet="ParametroScript_Valor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_Historico_ParametroValor" Association="Self.FK_ParametroValor_Historico_ParametroValor">
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+            <End Role="ParametroValor_Historico" EntitySet="ParametroValor_Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_ParametroScript" Association="Self.FK_ParametroValor_ParametroScript">
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_ParametroValor" Association="Self.FK_ParametroValor_ParametroValor">
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+            <End Role="ParametroValor1" EntitySet="ParametroValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_TestData" Association="Self.FK_ParametroValor_TestData">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanoTeste_TI_Historico_PlanoTeste_TI" Association="Self.FK_PlanoTeste_TI_Historico_PlanoTeste_TI">
+            <End Role="PlanoTeste_TI" EntitySet="PlanoTeste_TI" />
+            <End Role="PlanoTeste_TI_Historico" EntitySet="PlanoTeste_TI_Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_AUT" Association="Self.FK_Script_AUT">
+            <End Role="AUT" EntitySet="AUT" />
+            <End Role="Script" EntitySet="Script" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_AmbienteExeucao" Association="Self.FK_Script_CondicaoScript_Ambiente_AmbienteExeucao">
+            <End Role="AmbienteExecucao" EntitySet="AmbienteExecucao" />
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_AmbienteVirtual" Association="Self.FK_Script_CondicaoScript_Ambiente_AmbienteVirtual">
+            <End Role="AmbienteVirtual" EntitySet="AmbienteVirtual" />
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_CondicaoScript" Association="Self.FK_Script_CondicaoScript_Ambiente_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_Execucao" Association="Self.FK_Script_CondicaoScript_Ambiente_Execucao">
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_CondicaoScript" Association="Self.FK_Script_CondicaoScript_CondicaoScript">
+            <End Role="CondicaoScript" EntitySet="CondicaoScript" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_CT_CT" Association="Self.FK_Script_CondicaoScript_CT_CT">
+            <End Role="CT" EntitySet="CT" />
+            <End Role="Script_CondicaoScript_CT" EntitySet="Script_CondicaoScript_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_CT_Script_CondicaoScript" Association="Self.FK_Script_CondicaoScript_CT_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="Script_CondicaoScript_CT" EntitySet="Script_CondicaoScript_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Plataforma" Association="Self.FK_Script_CondicaoScript_Plataforma">
+            <End Role="Plataforma" EntitySet="Plataforma" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Script" Association="Self.FK_Script_CondicaoScript_Script">
+            <End Role="Script" EntitySet="Script" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_ScriptPai" Association="Self.FK_Script_ScriptPai">
+            <End Role="Script" EntitySet="Script" />
+            <End Role="Script1" EntitySet="Script" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TDM_Usuario_TDM" Association="Self.FK_TDM_Usuario_TDM">
+            <End Role="TDM" EntitySet="TDM" />
+            <End Role="TDM_Usuario" EntitySet="TDM_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TDM_Usuario_Usuario" Association="Self.FK_TDM_Usuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="TDM_Usuario" EntitySet="TDM_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_CT_CT" Association="Self.FK_TestData_CT_CT">
+            <End Role="CT" EntitySet="CT" />
+            <End Role="TestData_CT" EntitySet="TestData_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_CT_TestData" Association="Self.FK_TestData_CT_TestData">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="TestData_CT" EntitySet="TestData_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_DataPool" Association="Self.FK_TestData_DataPool">
+            <End Role="DataPool" EntitySet="DataPool" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Execucao" Association="Self.FK_TestData_Execucao">
+            <End Role="Execucao" EntitySet="Execucao" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Script_CondicaoScript" Association="Self.FK_TestData_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Status" Association="Self.FK_TestData_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Usuario" Association="Self.FK_TestData_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoFaseTeste_Execucao" Association="Self.FK_TipoFaseTeste_Execucao">
+            <End Role="TipoFaseTeste" EntitySet="TipoFaseTeste" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoFaseTeste_StatusExecucao" Association="Self.FK_TipoFaseTeste_StatusExecucao">
+            <End Role="StatusExecucao" EntitySet="StatusExecucao" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TDM.DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="PR_LISTAR_DATAPOOL" ReturnType="Collection(TDM.DbModel.PR_LISTAR_DATAPOOL_Result)">
+            <Parameter Name="DISPLAYLENGTH" Mode="In" Type="Int32" />
+            <Parameter Name="DISPLAYSTART" Mode="In" Type="Int32" />
+            <Parameter Name="SORTCOL" Mode="In" Type="Int32" />
+            <Parameter Name="SORTDIR" Mode="In" Type="String" />
+            <Parameter Name="SEARCH" Mode="In" Type="String" />
+            <Parameter Name="LISTARTODOS" Mode="In" Type="Int32" />
+            <Parameter Name="IDUSUARIO" Mode="In" Type="Int32" />
+            <Parameter Name="IDTDM" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PR_LISTAR_EXECUCAO" ReturnType="Collection(TDM.DbModel.PR_LISTAR_EXECUCAO_Result)">
+            <Parameter Name="DISPLAYLENGTH" Mode="In" Type="Int32" />
+            <Parameter Name="DISPLAYSTART" Mode="In" Type="Int32" />
+            <Parameter Name="SORTCOL" Mode="In" Type="Int32" />
+            <Parameter Name="SORTDIR" Mode="In" Type="String" />
+            <Parameter Name="SEARCH" Mode="In" Type="String" />
+            <Parameter Name="LISTARTODOS" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="MapaCalor" EntityType="TDM.DbModel.MapaCalor" />
+          <EntitySet Name="StatusExecucao" EntityType="TDM.DbModel.StatusExecucao" />
+          <EntitySet Name="TelaMapaCalor" EntityType="TDM.DbModel.TelaMapaCalor" />
+          <AssociationSet Name="FK_MapaCalor_Monitoramento_MapaCalor" Association="TDM.DbModel.FK_MapaCalor_Monitoramento_MapaCalor">
+            <End Role="TelaMapaCalor" EntitySet="TelaMapaCalor" />
+            <End Role="MapaCalor" EntitySet="MapaCalor" />
+          </AssociationSet>
+          <EntitySet Name="Agendamento" EntityType="TDM.DbModel.Agendamento" />
+          <EntitySet Name="Agendamento_TestData" EntityType="TDM.DbModel.Agendamento_TestData" />
+          <EntitySet Name="AmbienteExecucao" EntityType="TDM.DbModel.AmbienteExecucao" />
+          <EntitySet Name="AmbienteVirtual" EntityType="TDM.DbModel.AmbienteVirtual" />
+          <EntitySet Name="AUT" EntityType="TDM.DbModel.AUT" />
+          <EntitySet Name="CondicaoScript" EntityType="TDM.DbModel.CondicaoScript" />
+          <EntitySet Name="CT" EntityType="TDM.DbModel.CT" />
+          <EntitySet Name="DataPool" EntityType="TDM.DbModel.DataPool" />
+          <EntitySet Name="Demanda" EntityType="TDM.DbModel.Demanda" />
+          <EntitySet Name="DeParaAtmpAlmFase" EntityType="TDM.DbModel.DeParaAtmpAlmFase" />
+          <EntitySet Name="DeParaAtmpAlmSistema" EntityType="TDM.DbModel.DeParaAtmpAlmSistema" />
+          <EntitySet Name="Encadeamento" EntityType="TDM.DbModel.Encadeamento" />
+          <EntitySet Name="Encadeamento_TestData" EntityType="TDM.DbModel.Encadeamento_TestData" />
+          <EntitySet Name="Execucao" EntityType="TDM.DbModel.Execucao" />
+          <EntitySet Name="Historico" EntityType="TDM.DbModel.Historico" />
+          <EntitySet Name="Parametro" EntityType="TDM.DbModel.Parametro" />
+          <EntitySet Name="ParametroScript" EntityType="TDM.DbModel.ParametroScript" />
+          <EntitySet Name="ParametroScript_Valor" EntityType="TDM.DbModel.ParametroScript_Valor" />
+          <EntitySet Name="ParametroValor" EntityType="TDM.DbModel.ParametroValor" />
+          <EntitySet Name="ParametroValor_Historico" EntityType="TDM.DbModel.ParametroValor_Historico" />
+          <EntitySet Name="PlanoTeste_TI" EntityType="TDM.DbModel.PlanoTeste_TI" />
+          <EntitySet Name="PlanoTeste_TI_Historico" EntityType="TDM.DbModel.PlanoTeste_TI_Historico" />
+          <EntitySet Name="Plataforma" EntityType="TDM.DbModel.Plataforma" />
+          <EntitySet Name="Script" EntityType="TDM.DbModel.Script" />
+          <EntitySet Name="Script_CondicaoScript" EntityType="TDM.DbModel.Script_CondicaoScript" />
+          <EntitySet Name="Script_CondicaoScript_Ambiente" EntityType="TDM.DbModel.Script_CondicaoScript_Ambiente" />
+          <EntitySet Name="Script_CondicaoScript_CT" EntityType="TDM.DbModel.Script_CondicaoScript_CT" />
+          <EntitySet Name="Status" EntityType="TDM.DbModel.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="TDM.DbModel.sysdiagrams" />
+          <EntitySet Name="TDM" EntityType="TDM.DbModel.TDM" />
+          <EntitySet Name="TDM_Usuario" EntityType="TDM.DbModel.TDM_Usuario" />
+          <EntitySet Name="TestData" EntityType="TDM.DbModel.TestData" />
+          <EntitySet Name="TestData_CT" EntityType="TDM.DbModel.TestData_CT" />
+          <EntitySet Name="TipoDadoParametro" EntityType="TDM.DbModel.TipoDadoParametro" />
+          <EntitySet Name="TipoFaseTeste" EntityType="TDM.DbModel.TipoFaseTeste" />
+          <EntitySet Name="TipoParametro" EntityType="TDM.DbModel.TipoParametro" />
+          <EntitySet Name="Usuario" EntityType="TDM.DbModel.Usuario" />
+          <EntitySet Name="MotivoExecucao" EntityType="TDM.DbModel.MotivoExecucao" />
+          <AssociationSet Name="FK_Agendamento_Execucao" Association="TDM.DbModel.FK_Agendamento_Execucao">
+            <End Role="Agendamento" EntitySet="Agendamento" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agendamento_TestData_Encadeamento" Association="TDM.DbModel.FK_Agendamento_TestData_Encadeamento">
+            <End Role="Agendamento" EntitySet="Agendamento" />
+            <End Role="Agendamento_TestData" EntitySet="Agendamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Agendamento_TestData_TestData" Association="TDM.DbModel.FK_Agendamento_TestData_TestData">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="Agendamento_TestData" EntitySet="Agendamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AmbienteExecucao_Id" Association="TDM.DbModel.FK_AmbienteExecucao_Id">
+            <End Role="AmbienteExecucao" EntitySet="AmbienteExecucao" />
+            <End Role="DeParaAtmpAlmFase" EntitySet="DeParaAtmpAlmFase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_AmbienteExeucao" Association="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_AmbienteExeucao">
+            <End Role="AmbienteExecucao" EntitySet="AmbienteExecucao" />
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_AmbienteVirtual" Association="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_AmbienteVirtual">
+            <End Role="AmbienteVirtual" EntitySet="AmbienteVirtual" />
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AUT_ID" Association="TDM.DbModel.FK_AUT_ID">
+            <End Role="AUT" EntitySet="AUT" />
+            <End Role="DeParaAtmpAlmSistema" EntitySet="DeParaAtmpAlmSistema" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_Aut" Association="TDM.DbModel.FK_DataPool_Aut">
+            <End Role="AUT" EntitySet="AUT" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_AUT" Association="TDM.DbModel.FK_Script_AUT">
+            <End Role="AUT" EntitySet="AUT" />
+            <End Role="Script" EntitySet="Script" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_CondicaoScript" Association="TDM.DbModel.FK_Script_CondicaoScript_CondicaoScript">
+            <End Role="CondicaoScript" EntitySet="CondicaoScript" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_CT_CT" Association="TDM.DbModel.FK_Script_CondicaoScript_CT_CT">
+            <End Role="CT" EntitySet="CT" />
+            <End Role="Script_CondicaoScript_CT" EntitySet="Script_CondicaoScript_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_CT_CT" Association="TDM.DbModel.FK_TestData_CT_CT">
+            <End Role="CT" EntitySet="CT" />
+            <End Role="TestData_CT" EntitySet="TestData_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_Demanda" Association="TDM.DbModel.FK_DataPool_Demanda">
+            <End Role="Demanda" EntitySet="Demanda" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_Script_CondicaoScript" Association="TDM.DbModel.FK_DataPool_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataPool_TDM" Association="TDM.DbModel.FK_DataPool_TDM">
+            <End Role="TDM" EntitySet="TDM" />
+            <End Role="DataPool" EntitySet="DataPool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_DataPool" Association="TDM.DbModel.FK_TestData_DataPool">
+            <End Role="DataPool" EntitySet="DataPool" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encadeamento_TestData_Encadeamento" Association="TDM.DbModel.FK_Encadeamento_TestData_Encadeamento">
+            <End Role="Encadeamento" EntitySet="Encadeamento" />
+            <End Role="Encadeamento_TestData" EntitySet="Encadeamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encadeamento_TestData_AmbienteExecucao" Association="TDM.DbModel.FK_Encadeamento_TestData_AmbienteExecucao">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="Encadeamento_TestData" EntitySet="Encadeamento_TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_Execucao" Association="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_Execucao">
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Execucao" Association="TDM.DbModel.FK_TestData_Execucao">
+            <End Role="Execucao" EntitySet="Execucao" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoFaseTeste_Execucao" Association="TDM.DbModel.FK_TipoFaseTeste_Execucao">
+            <End Role="TipoFaseTeste" EntitySet="TipoFaseTeste" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoFaseTeste_StatusExecucao" Association="TDM.DbModel.FK_TipoFaseTeste_StatusExecucao">
+            <End Role="StatusExecucao" EntitySet="StatusExecucao" />
+            <End Role="Execucao" EntitySet="Execucao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Historico_Usuario" Association="TDM.DbModel.FK_Historico_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Historico" EntitySet="Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MapaCalor_Monitoramento_Usuario" Association="TDM.DbModel.FK_MapaCalor_Monitoramento_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="MapaCalor" EntitySet="MapaCalor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_Parametro" Association="TDM.DbModel.FK_ParametroScript_Parametro">
+            <End Role="Parametro" EntitySet="Parametro" />
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_Script_CondicaoScript" Association="TDM.DbModel.FK_ParametroScript_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_TipoParametro" Association="TDM.DbModel.FK_ParametroScript_TipoParametro">
+            <End Role="TipoParametro" EntitySet="TipoParametro" />
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroScript_Valor_ParametroScript" Association="TDM.DbModel.FK_ParametroScript_Valor_ParametroScript">
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+            <End Role="ParametroScript_Valor" EntitySet="ParametroScript_Valor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_ParametroScript" Association="TDM.DbModel.FK_ParametroValor_ParametroScript">
+            <End Role="ParametroScript" EntitySet="ParametroScript" />
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_Historico_ParametroValor" Association="TDM.DbModel.FK_ParametroValor_Historico_ParametroValor">
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+            <End Role="ParametroValor_Historico" EntitySet="ParametroValor_Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_ParametroValor" Association="TDM.DbModel.FK_ParametroValor_ParametroValor">
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+            <End Role="ParametroValor1" EntitySet="ParametroValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ParametroValor_TestData" Association="TDM.DbModel.FK_ParametroValor_TestData">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="ParametroValor" EntitySet="ParametroValor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanoTeste_TI_Historico_PlanoTeste_TI" Association="TDM.DbModel.FK_PlanoTeste_TI_Historico_PlanoTeste_TI">
+            <End Role="PlanoTeste_TI" EntitySet="PlanoTeste_TI" />
+            <End Role="PlanoTeste_TI_Historico" EntitySet="PlanoTeste_TI_Historico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Plataforma" Association="TDM.DbModel.FK_Script_CondicaoScript_Plataforma">
+            <End Role="Plataforma" EntitySet="Plataforma" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Script" Association="TDM.DbModel.FK_Script_CondicaoScript_Script">
+            <End Role="Script" EntitySet="Script" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_ScriptPai" Association="TDM.DbModel.FK_Script_ScriptPai">
+            <End Role="Script" EntitySet="Script" />
+            <End Role="Script1" EntitySet="Script" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_Ambiente_CondicaoScript" Association="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="Script_CondicaoScript_Ambiente" EntitySet="Script_CondicaoScript_Ambiente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_CT_Script_CondicaoScript" Association="TDM.DbModel.FK_Script_CondicaoScript_CT_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="Script_CondicaoScript_CT" EntitySet="Script_CondicaoScript_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Script_CondicaoScript" Association="TDM.DbModel.FK_TestData_Script_CondicaoScript">
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Status" Association="TDM.DbModel.FK_TestData_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TDM_Usuario_TDM" Association="TDM.DbModel.FK_TDM_Usuario_TDM">
+            <End Role="TDM" EntitySet="TDM" />
+            <End Role="TDM_Usuario" EntitySet="TDM_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TDM_Usuario_Usuario" Association="TDM.DbModel.FK_TDM_Usuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="TDM_Usuario" EntitySet="TDM_Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_CT_TestData" Association="TDM.DbModel.FK_TestData_CT_TestData">
+            <End Role="TestData" EntitySet="TestData" />
+            <End Role="TestData_CT" EntitySet="TestData_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestData_Usuario" Association="TDM.DbModel.FK_TestData_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="TestData" EntitySet="TestData" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="PR_LISTAR_DATAPOOL_Result">
+          <Property Type="Int64" Name="RowNum" Nullable="true" />
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="DescricaoDataPool" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DescricaoDemanda" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DescricaoSistema" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TipoMassa" Nullable="false" MaxLength="4" />
+          <Property Type="Int32" Name="QtdSolicitada" Nullable="true" />
+          <Property Type="Int32" Name="QtdDisponivel" Nullable="true" />
+          <Property Type="Int32" Name="QtdReservada" Nullable="true" />
+          <Property Type="Int32" Name="QtdUtilizada" Nullable="true" />
+          <Property Type="Int32" Name="Farol" Nullable="false" />
+          <Property Type="DateTime" Name="DataSolicitacao" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="PR_LISTAR_EXECUCAO_Result">
+          <Property Type="Int64" Name="RowNum" Nullable="true" />
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="DescricaoExecucao" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="DescricaoTipoFaseTeste" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="MapaCalor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTelaMapaCalor" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PosX" Type="Int32" Nullable="false" />
+          <Property Name="PosY" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TelaMapaCalor" Relationship="TDM.DbModel.FK_MapaCalor_Monitoramento_MapaCalor" FromRole="MapaCalor" ToRole="TelaMapaCalor" />
+          <Property Name="Resolucao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="TDM.DbModel.FK_MapaCalor_Monitoramento_Usuario" FromRole="MapaCalor" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="StatusExecucao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Execucao" Relationship="TDM.DbModel.FK_TipoFaseTeste_StatusExecucao" FromRole="StatusExecucao" ToRole="Execucao" />
+        </EntityType>
+        <EntityType Name="TelaMapaCalor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Imagem" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="MapaCalor" Relationship="TDM.DbModel.FK_MapaCalor_Monitoramento_MapaCalor" FromRole="TelaMapaCalor" ToRole="MapaCalor" />
+          <Property Name="Caminho" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Resolucao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_MapaCalor_Monitoramento_MapaCalor">
+          <End Type="TDM.DbModel.TelaMapaCalor" Role="TelaMapaCalor" Multiplicity="1" />
+          <End Type="TDM.DbModel.MapaCalor" Role="MapaCalor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TelaMapaCalor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MapaCalor">
+              <PropertyRef Name="IdTelaMapaCalor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Agendamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RotinaDiaria" Type="Boolean" />
+          <Property Name="InicioAgendamento" Type="DateTime" Precision="3" />
+          <Property Name="TerminoAgendamento" Type="DateTime" Precision="3" />
+          <Property Name="Output" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Execucao" Relationship="TDM.DbModel.FK_Agendamento_Execucao" FromRole="Agendamento" ToRole="Execucao" />
+          <NavigationProperty Name="Agendamento_TestData" Relationship="TDM.DbModel.FK_Agendamento_TestData_Encadeamento" FromRole="Agendamento" ToRole="Agendamento_TestData" />
+        </EntityType>
+        <EntityType Name="Agendamento_TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAgendamento" Type="Int32" Nullable="false" />
+          <Property Name="IdTestData" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Agendamento" Relationship="TDM.DbModel.FK_Agendamento_TestData_Encadeamento" FromRole="Agendamento_TestData" ToRole="Agendamento" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_Agendamento_TestData_TestData" FromRole="Agendamento_TestData" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="AmbienteExecucao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DeParaAtmpAlmFase" Relationship="TDM.DbModel.FK_AmbienteExecucao_Id" FromRole="AmbienteExecucao" ToRole="DeParaAtmpAlmFase" />
+          <NavigationProperty Name="Script_CondicaoScript_Ambiente" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_AmbienteExeucao" FromRole="AmbienteExecucao" ToRole="Script_CondicaoScript_Ambiente" />
+        </EntityType>
+        <EntityType Name="AmbienteVirtual">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IP" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Script_CondicaoScript_Ambiente" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_AmbienteVirtual" FromRole="AmbienteVirtual" ToRole="Script_CondicaoScript_Ambiente" />
+        </EntityType>
+        <EntityType Name="AUT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DeParaAtmpAlmSistema" Relationship="TDM.DbModel.FK_AUT_ID" FromRole="AUT" ToRole="DeParaAtmpAlmSistema" />
+          <NavigationProperty Name="DataPool" Relationship="TDM.DbModel.FK_DataPool_Aut" FromRole="AUT" ToRole="DataPool" />
+          <NavigationProperty Name="Script" Relationship="TDM.DbModel.FK_Script_AUT" FromRole="AUT" ToRole="Script" />
+        </EntityType>
+        <EntityType Name="CondicaoScript">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CondicaoScript" FromRole="CondicaoScript" ToRole="Script_CondicaoScript" />
+        </EntityType>
+        <EntityType Name="CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sistema" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fase" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Script_CondicaoScript_CT" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CT_CT" FromRole="CT" ToRole="Script_CondicaoScript_CT" />
+          <NavigationProperty Name="TestData_CT" Relationship="TDM.DbModel.FK_TestData_CT_CT" FromRole="CT" ToRole="TestData_CT" />
+        </EntityType>
+        <EntityType Name="DataPool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTDM" Type="Int32" Nullable="false" />
+          <Property Name="IdAut" Type="Int32" Nullable="false" />
+          <Property Name="IdDemanda" Type="Int32" />
+          <Property Name="IdScript_CondicaoScript" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="QtdSolicitada" Type="Int32" />
+          <Property Name="Observacao" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="DataSolicitacao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DataInicioExecucao" Type="DateTime" Precision="3" />
+          <Property Name="DataTermino" Type="DateTime" Precision="3" />
+          <Property Name="ConsiderarRotinaDiaria" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AUT" Relationship="TDM.DbModel.FK_DataPool_Aut" FromRole="DataPool" ToRole="AUT" />
+          <NavigationProperty Name="Demanda" Relationship="TDM.DbModel.FK_DataPool_Demanda" FromRole="DataPool" ToRole="Demanda" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_DataPool_Script_CondicaoScript" FromRole="DataPool" ToRole="Script_CondicaoScript" />
+          <NavigationProperty Name="TDM" Relationship="TDM.DbModel.FK_DataPool_TDM" FromRole="DataPool" ToRole="TDM" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_DataPool" FromRole="DataPool" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="Demanda">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Complemento" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DataPool" Relationship="TDM.DbModel.FK_DataPool_Demanda" FromRole="Demanda" ToRole="DataPool" />
+        </EntityType>
+        <EntityType Name="DeParaAtmpAlmFase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAmbienteExecucao" Type="Int32" />
+          <Property Name="Fase" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AmbienteExecucao" Relationship="TDM.DbModel.FK_AmbienteExecucao_Id" FromRole="DeParaAtmpAlmFase" ToRole="AmbienteExecucao" />
+        </EntityType>
+        <EntityType Name="DeParaAtmpAlmSistema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAut" Type="Int32" />
+          <Property Name="DescricaoALM" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AUT" Relationship="TDM.DbModel.FK_AUT_ID" FromRole="DeParaAtmpAlmSistema" ToRole="AUT" />
+        </EntityType>
+        <EntityType Name="Encadeamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Encadeamento_TestData" Relationship="TDM.DbModel.FK_Encadeamento_TestData_Encadeamento" FromRole="Encadeamento" ToRole="Encadeamento_TestData" />
+        </EntityType>
+        <EntityType Name="Encadeamento_TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTestData" Type="Int32" Nullable="false" />
+          <Property Name="IdEncadeamento" Type="Int32" Nullable="false" />
+          <Property Name="Ordem" Type="Int32" Nullable="false" />
+          <Property Name="IdAmbienteExecucao" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Encadeamento" Relationship="TDM.DbModel.FK_Encadeamento_TestData_Encadeamento" FromRole="Encadeamento_TestData" ToRole="Encadeamento" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_Encadeamento_TestData_AmbienteExecucao" FromRole="Encadeamento_TestData" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="Execucao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdScript_CondicaoScript_Ambiente" Type="Int32" />
+          <Property Name="IdTestData" Type="Int32" />
+          <Property Name="IdStatusExecucao" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoFaseTeste" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SituacaoAmbiente" Type="Int32" />
+          <Property Name="DataAgendamento" Type="DateTime" Precision="3" />
+          <Property Name="InicioExecucao" Type="DateTime" Precision="3" />
+          <Property Name="TerminoExecucao" Type="DateTime" Precision="3" />
+          <Property Name="ToscaInput" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ToscaOutput" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EnvioTelegram" Type="Boolean" Nullable="false" />
+          <Property Name="IdAgendamento" Type="Int32" />
+          <NavigationProperty Name="Agendamento" Relationship="TDM.DbModel.FK_Agendamento_Execucao" FromRole="Execucao" ToRole="Agendamento" />
+          <NavigationProperty Name="Script_CondicaoScript_Ambiente" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_Execucao" FromRole="Execucao" ToRole="Script_CondicaoScript_Ambiente" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_Execucao" FromRole="Execucao" ToRole="TestData" />
+          <NavigationProperty Name="TipoFaseTeste" Relationship="TDM.DbModel.FK_TipoFaseTeste_Execucao" FromRole="Execucao" ToRole="TipoFaseTeste" />
+          <NavigationProperty Name="StatusExecucao" Relationship="TDM.DbModel.FK_TipoFaseTeste_StatusExecucao" FromRole="Execucao" ToRole="StatusExecucao" />
+        </EntityType>
+        <EntityType Name="Historico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdDataPool" Type="Int32" />
+          <Property Name="IdTestData" Type="Int32" />
+          <Property Name="IdExecucao" Type="Int32" />
+          <Property Name="Acao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Valores" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Entidade" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Usuario" Relationship="TDM.DbModel.FK_Historico_Usuario" FromRole="Historico" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Parametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ColunaTecnicaTosca" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ParametroScript" Relationship="TDM.DbModel.FK_ParametroScript_Parametro" FromRole="Parametro" ToRole="ParametroScript" />
+        </EntityType>
+        <EntityType Name="ParametroScript">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdParametro" Type="Int32" Nullable="false" />
+          <Property Name="IdScript_CondicaoScript" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoParametro" Type="Int32" Nullable="false" />
+          <Property Name="Obrigatorio" Type="Boolean" Nullable="false" />
+          <Property Name="ValorDefault" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="VisivelEmTela" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Parametro" Relationship="TDM.DbModel.FK_ParametroScript_Parametro" FromRole="ParametroScript" ToRole="Parametro" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_ParametroScript_Script_CondicaoScript" FromRole="ParametroScript" ToRole="Script_CondicaoScript" />
+          <NavigationProperty Name="TipoParametro" Relationship="TDM.DbModel.FK_ParametroScript_TipoParametro" FromRole="ParametroScript" ToRole="TipoParametro" />
+          <NavigationProperty Name="ParametroScript_Valor" Relationship="TDM.DbModel.FK_ParametroScript_Valor_ParametroScript" FromRole="ParametroScript" ToRole="ParametroScript_Valor" />
+          <NavigationProperty Name="ParametroValor" Relationship="TDM.DbModel.FK_ParametroValor_ParametroScript" FromRole="ParametroScript" ToRole="ParametroValor" />
+        </EntityType>
+        <EntityType Name="ParametroScript_Valor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdParametroScript" Type="Int32" Nullable="false" />
+          <Property Name="ValorSugerido" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Usada" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ParametroScript" Relationship="TDM.DbModel.FK_ParametroScript_Valor_ParametroScript" FromRole="ParametroScript_Valor" ToRole="ParametroScript" />
+        </EntityType>
+        <EntityType Name="ParametroValor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTestData" Type="Int32" Nullable="false" />
+          <Property Name="IdParametroScript" Type="Int32" Nullable="false" />
+          <Property Name="IdParametroValor_Origem" Type="Int32" />
+          <Property Name="Valor" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ParametroScript" Relationship="TDM.DbModel.FK_ParametroValor_ParametroScript" FromRole="ParametroValor" ToRole="ParametroScript" />
+          <NavigationProperty Name="ParametroValor_Historico" Relationship="TDM.DbModel.FK_ParametroValor_Historico_ParametroValor" FromRole="ParametroValor" ToRole="ParametroValor_Historico" />
+          <NavigationProperty Name="ParametroValor1" Relationship="TDM.DbModel.FK_ParametroValor_ParametroValor" FromRole="ParametroValor" ToRole="ParametroValor1" />
+          <NavigationProperty Name="ParametroValor2" Relationship="TDM.DbModel.FK_ParametroValor_ParametroValor" FromRole="ParametroValor1" ToRole="ParametroValor" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_ParametroValor_TestData" FromRole="ParametroValor" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="ParametroValor_Historico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdParametroValor" Type="Int32" Nullable="false" />
+          <Property Name="TempoInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TempoTermino" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Valor" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ParametroValor" Relationship="TDM.DbModel.FK_ParametroValor_Historico_ParametroValor" FromRole="ParametroValor_Historico" ToRole="ParametroValor" />
+        </EntityType>
+        <EntityType Name="PlanoTeste_TI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExecucaoAutomatizada_ATMP" Type="Boolean" />
+          <Property Name="MotivoExecucao_ATMP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OFENSOR_ATMP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Plataforma_ATMP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SUBPROJETO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ENTREGA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PROJETO" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PLANO_TESTE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TESTE" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="CT" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="RELEASE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CICLO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FORNECEDOR" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="SISTEMA" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="NOME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="COMPLEXIDADE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="UAT" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MASSA_TESTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DT_PLANEJAMENTO" Type="DateTime" Precision="7" />
+          <Property Name="DT_EXECUCAO" Type="DateTime" Precision="7" />
+          <Property Name="STATUS_EXEC_CT" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MOTIVO_CANCELAMENTO_CT" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TESTADOR" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="QT_STEPS" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="PASTA_LM" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CT_AUTOMATIZADO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EXECUCAO_AUTOMATICA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MOTIVO_EXECUCAO_MANUAL" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FABRICA_TESTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ITERATIONS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="VARIANTE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PRE_CONDICAO" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OBS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="NRO_CENARIO" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NRO_CT" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EVIDENCIA_VALIDACAO_TECNICA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PLANO_VALIDACAO_CLIENTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PLANO_VALIDACAO_TECNICA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CT_SUCESSOR" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="PRE_REQUISITO" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="DT_CARGA" Type="DateTime" Precision="7" />
+          <Property Name="SCRIPT_TOSCA_ATMP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SCRIPT_RFT_ATMP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PlanoTeste_TI_Historico" Relationship="TDM.DbModel.FK_PlanoTeste_TI_Historico_PlanoTeste_TI" FromRole="PlanoTeste_TI" ToRole="PlanoTeste_TI_Historico" />
+        </EntityType>
+        <EntityType Name="PlanoTeste_TI_Historico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPlanoTesteTI" Type="Int32" Nullable="false" />
+          <Property Name="ExecucaoAutomatizada_ATMP" Type="Boolean" />
+          <Property Name="MotivoExecucao_ATMP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OFENSOR_ATMP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Plataforma_ATMP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SUBPROJETO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ENTREGA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PROJETO" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PLANO_TESTE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TESTE" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="CT" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="RELEASE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CICLO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FORNECEDOR" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="SISTEMA" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="NOME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="COMPLEXIDADE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="UAT" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MASSA_TESTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DT_PLANEJAMENTO" Type="DateTime" Precision="7" />
+          <Property Name="DT_EXECUCAO" Type="DateTime" Precision="7" />
+          <Property Name="STATUS_EXEC_CT" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MOTIVO_CANCELAMENTO_CT" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TESTADOR" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="QT_STEPS" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="PASTA_LM" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CT_AUTOMATIZADO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EXECUCAO_AUTOMATICA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="MOTIVO_EXECUCAO_MANUAL" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FABRICA_TESTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ITERATIONS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="VARIANTE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PRE_CONDICAO" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OBS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="NRO_CENARIO" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="NRO_CT" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EVIDENCIA_VALIDACAO_TECNICA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PLANO_VALIDACAO_CLIENTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="PLANO_VALIDACAO_TECNICA" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CT_SUCESSOR" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="PRE_REQUISITO" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="DT_CARGA" Type="DateTime" Precision="7" />
+          <Property Name="DT_HISTORICO" Type="DateTime" Precision="7" />
+          <Property Name="FONTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="OPERACAO" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="SCRIPT_TOSCA_ATMP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SCRIPT_RFT_ATMP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PlanoTeste_TI" Relationship="TDM.DbModel.FK_PlanoTeste_TI_Historico_PlanoTeste_TI" FromRole="PlanoTeste_TI_Historico" ToRole="PlanoTeste_TI" />
+        </EntityType>
+        <EntityType Name="Plataforma">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Plataforma" FromRole="Plataforma" ToRole="Script_CondicaoScript" />
+        </EntityType>
+        <EntityType Name="Script">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdScriptPai" Type="Int32" />
+          <Property Name="IdAUT" Type="Int32" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AUT" Relationship="TDM.DbModel.FK_Script_AUT" FromRole="Script" ToRole="AUT" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Script" FromRole="Script" ToRole="Script_CondicaoScript" />
+          <NavigationProperty Name="Script1" Relationship="TDM.DbModel.FK_Script_ScriptPai" FromRole="Script" ToRole="Script1" />
+          <NavigationProperty Name="Script2" Relationship="TDM.DbModel.FK_Script_ScriptPai" FromRole="Script1" ToRole="Script" />
+        </EntityType>
+        <EntityType Name="Script_CondicaoScript">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdScript" Type="Int32" Nullable="false" />
+          <Property Name="IdCondicaoScript" Type="Int32" />
+          <Property Name="QueryTosca" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ListaExecucaoTosca" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CaminhoArquivoTCS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DiretorioRelatorio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TempoEstimadoExecucao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NomeTecnicoScript" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DisponivelATMP" Type="Boolean" />
+          <Property Name="TempFase" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CaminhoArquivoSVN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WorkspaceCompartilhado" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdPlataforma" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="CondicaoScript" />
+          <NavigationProperty Name="DataPool" Relationship="TDM.DbModel.FK_DataPool_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="DataPool" />
+          <NavigationProperty Name="ParametroScript" Relationship="TDM.DbModel.FK_ParametroScript_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="ParametroScript" />
+          <NavigationProperty Name="Plataforma" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Plataforma" FromRole="Script_CondicaoScript" ToRole="Plataforma" />
+          <NavigationProperty Name="Script" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Script" FromRole="Script_CondicaoScript" ToRole="Script" />
+          <NavigationProperty Name="Script_CondicaoScript_Ambiente" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="Script_CondicaoScript_Ambiente" />
+          <NavigationProperty Name="Script_CondicaoScript_CT" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CT_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="Script_CondicaoScript_CT" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="Script_CondicaoScript_Ambiente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdScript_CondicaoScript" Type="Int32" Nullable="false" />
+          <Property Name="IdAmbienteVirtual" Type="Int32" />
+          <Property Name="IdAmbienteExecucao" Type="Int32" />
+          <NavigationProperty Name="AmbienteExecucao" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_AmbienteExeucao" FromRole="Script_CondicaoScript_Ambiente" ToRole="AmbienteExecucao" />
+          <NavigationProperty Name="AmbienteVirtual" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_AmbienteVirtual" FromRole="Script_CondicaoScript_Ambiente" ToRole="AmbienteVirtual" />
+          <NavigationProperty Name="Execucao" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_Execucao" FromRole="Script_CondicaoScript_Ambiente" ToRole="Execucao" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_CondicaoScript" FromRole="Script_CondicaoScript_Ambiente" ToRole="Script_CondicaoScript" />
+        </EntityType>
+        <EntityType Name="Script_CondicaoScript_CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdScript_CondicaoScript" Type="Int32" Nullable="false" />
+          <Property Name="IdCT" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CT" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CT_CT" FromRole="Script_CondicaoScript_CT" ToRole="CT" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CT_Script_CondicaoScript" FromRole="Script_CondicaoScript_CT" ToRole="Script_CondicaoScript" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_Status" FromRole="Status" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TDM">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TdmPublico" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DataPool" Relationship="TDM.DbModel.FK_DataPool_TDM" FromRole="TDM" ToRole="DataPool" />
+          <NavigationProperty Name="TDM_Usuario" Relationship="TDM.DbModel.FK_TDM_Usuario_TDM" FromRole="TDM" ToRole="TDM_Usuario" />
+        </EntityType>
+        <EntityType Name="TDM_Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdTDM" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdTDM" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TDM" Relationship="TDM.DbModel.FK_TDM_Usuario_TDM" FromRole="TDM_Usuario" ToRole="TDM" />
+          <NavigationProperty Name="Usuario" Relationship="TDM.DbModel.FK_TDM_Usuario_Usuario" FromRole="TDM_Usuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="TestData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExecucao" Type="Int32" />
+          <Property Name="IdDataPool" Type="Int32" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="IdScript_CondicaoScript" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GerarMigracao" Type="Boolean" Nullable="false" />
+          <Property Name="CasoTesteRelativo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Observacao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GeradoPor" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DataGeracao" Type="DateTime" Precision="3" />
+          <Property Name="CaminhoEvidencia" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TempoEstimadoExecucao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ClassificacaoMassa" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Agendamento_TestData" Relationship="TDM.DbModel.FK_Agendamento_TestData_TestData" FromRole="TestData" ToRole="Agendamento_TestData" />
+          <NavigationProperty Name="DataPool" Relationship="TDM.DbModel.FK_TestData_DataPool" FromRole="TestData" ToRole="DataPool" />
+          <NavigationProperty Name="Encadeamento_TestData" Relationship="TDM.DbModel.FK_Encadeamento_TestData_AmbienteExecucao" FromRole="TestData" ToRole="Encadeamento_TestData" />
+          <NavigationProperty Name="Execucao" Relationship="TDM.DbModel.FK_TestData_Execucao" FromRole="TestData" ToRole="Execucao" />
+          <NavigationProperty Name="ParametroValor" Relationship="TDM.DbModel.FK_ParametroValor_TestData" FromRole="TestData" ToRole="ParametroValor" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_TestData_Script_CondicaoScript" FromRole="TestData" ToRole="Script_CondicaoScript" />
+          <NavigationProperty Name="Status" Relationship="TDM.DbModel.FK_TestData_Status" FromRole="TestData" ToRole="Status" />
+          <NavigationProperty Name="TestData_CT" Relationship="TDM.DbModel.FK_TestData_CT_TestData" FromRole="TestData" ToRole="TestData_CT" />
+          <NavigationProperty Name="Usuario" Relationship="TDM.DbModel.FK_TestData_Usuario" FromRole="TestData" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="TestData_CT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCT" Type="Int32" Nullable="false" />
+          <Property Name="IdTestData" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CT" Relationship="TDM.DbModel.FK_TestData_CT_CT" FromRole="TestData_CT" ToRole="CT" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_CT_TestData" FromRole="TestData_CT" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="TipoDadoParametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TipoFaseTeste">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Execucao" Relationship="TDM.DbModel.FK_TipoFaseTeste_Execucao" FromRole="TipoFaseTeste" ToRole="Execucao" />
+        </EntityType>
+        <EntityType Name="TipoParametro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ParametroScript" Relationship="TDM.DbModel.FK_ParametroScript_TipoParametro" FromRole="TipoParametro" ToRole="ParametroScript" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Senha" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Historico" Relationship="TDM.DbModel.FK_Historico_Usuario" FromRole="Usuario" ToRole="Historico" />
+          <NavigationProperty Name="MapaCalor" Relationship="TDM.DbModel.FK_MapaCalor_Monitoramento_Usuario" FromRole="Usuario" ToRole="MapaCalor" />
+          <NavigationProperty Name="TDM_Usuario" Relationship="TDM.DbModel.FK_TDM_Usuario_Usuario" FromRole="Usuario" ToRole="TDM_Usuario" />
+          <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_Usuario" FromRole="Usuario" ToRole="TestData" />
+        </EntityType>
+        <EntityType Name="MotivoExecucao">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Descricao" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AtivaOfensor" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Agendamento_Execucao">
+          <End Type="TDM.DbModel.Agendamento" Role="Agendamento" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Execucao" Role="Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agendamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdAgendamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agendamento_TestData_Encadeamento">
+          <End Type="TDM.DbModel.Agendamento" Role="Agendamento" Multiplicity="1" />
+          <End Type="TDM.DbModel.Agendamento_TestData" Role="Agendamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agendamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Agendamento_TestData">
+              <PropertyRef Name="IdAgendamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agendamento_TestData_TestData">
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="1" />
+          <End Type="TDM.DbModel.Agendamento_TestData" Role="Agendamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Agendamento_TestData">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AmbienteExecucao_Id">
+          <End Type="TDM.DbModel.AmbienteExecucao" Role="AmbienteExecucao" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TDM.DbModel.DeParaAtmpAlmFase" Role="DeParaAtmpAlmFase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbienteExecucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeParaAtmpAlmFase">
+              <PropertyRef Name="IdAmbienteExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_AmbienteExeucao">
+          <End Type="TDM.DbModel.AmbienteExecucao" Role="AmbienteExecucao" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript_Ambiente" Role="Script_CondicaoScript_Ambiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbienteExecucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="IdAmbienteExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_AmbienteVirtual">
+          <End Type="TDM.DbModel.AmbienteVirtual" Role="AmbienteVirtual" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript_Ambiente" Role="Script_CondicaoScript_Ambiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbienteVirtual">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="IdAmbienteVirtual" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AUT_ID">
+          <End Type="TDM.DbModel.AUT" Role="AUT" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TDM.DbModel.DeParaAtmpAlmSistema" Role="DeParaAtmpAlmSistema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeParaAtmpAlmSistema">
+              <PropertyRef Name="IdAut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_Aut">
+          <End Type="TDM.DbModel.AUT" Role="AUT" Multiplicity="1" />
+          <End Type="TDM.DbModel.DataPool" Role="DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdAut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_AUT">
+          <End Type="TDM.DbModel.AUT" Role="AUT" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Script" Role="Script" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script">
+              <PropertyRef Name="IdAUT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_CondicaoScript">
+          <End Type="TDM.DbModel.CondicaoScript" Role="CondicaoScript" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdCondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_CT_CT">
+          <End Type="TDM.DbModel.CT" Role="CT" Multiplicity="1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript_CT" Role="Script_CondicaoScript_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_CT">
+              <PropertyRef Name="IdCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_CT_CT">
+          <End Type="TDM.DbModel.CT" Role="CT" Multiplicity="1" />
+          <End Type="TDM.DbModel.TestData_CT" Role="TestData_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData_CT">
+              <PropertyRef Name="IdCT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_Demanda">
+          <End Type="TDM.DbModel.Demanda" Role="Demanda" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.DataPool" Role="DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Demanda">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdDemanda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_Script_CondicaoScript">
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.DataPool" Role="DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataPool_TDM">
+          <End Type="TDM.DbModel.TDM" Role="TDM" Multiplicity="1" />
+          <End Type="TDM.DbModel.DataPool" Role="DataPool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TDM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataPool">
+              <PropertyRef Name="IdTDM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_DataPool">
+          <End Type="TDM.DbModel.DataPool" Role="DataPool" Multiplicity="1" />
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataPool">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdDataPool" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encadeamento_TestData_Encadeamento">
+          <End Type="TDM.DbModel.Encadeamento" Role="Encadeamento" Multiplicity="1" />
+          <End Type="TDM.DbModel.Encadeamento_TestData" Role="Encadeamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encadeamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadeamento_TestData">
+              <PropertyRef Name="IdEncadeamento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encadeamento_TestData_AmbienteExecucao">
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="1" />
+          <End Type="TDM.DbModel.Encadeamento_TestData" Role="Encadeamento_TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Encadeamento_TestData">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_Execucao">
+          <End Type="TDM.DbModel.Script_CondicaoScript_Ambiente" Role="Script_CondicaoScript_Ambiente" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Execucao" Role="Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdScript_CondicaoScript_Ambiente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Execucao">
+          <End Type="TDM.DbModel.Execucao" Role="Execucao" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Execucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoFaseTeste_Execucao">
+          <End Type="TDM.DbModel.TipoFaseTeste" Role="TipoFaseTeste" Multiplicity="1" />
+          <End Type="TDM.DbModel.Execucao" Role="Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoFaseTeste">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdTipoFaseTeste" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoFaseTeste_StatusExecucao">
+          <End Type="TDM.DbModel.StatusExecucao" Role="StatusExecucao" Multiplicity="1" />
+          <End Type="TDM.DbModel.Execucao" Role="Execucao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusExecucao">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Execucao">
+              <PropertyRef Name="IdStatusExecucao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Historico_Usuario">
+          <End Type="TDM.DbModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="TDM.DbModel.Historico" Role="Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Historico">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MapaCalor_Monitoramento_Usuario">
+          <End Type="TDM.DbModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="TDM.DbModel.MapaCalor" Role="MapaCalor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MapaCalor">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_Parametro">
+          <End Type="TDM.DbModel.Parametro" Role="Parametro" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroScript" Role="ParametroScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parametro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript">
+              <PropertyRef Name="IdParametro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_Script_CondicaoScript">
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroScript" Role="ParametroScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_TipoParametro">
+          <End Type="TDM.DbModel.TipoParametro" Role="TipoParametro" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroScript" Role="ParametroScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoParametro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript">
+              <PropertyRef Name="IdTipoParametro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroScript_Valor_ParametroScript">
+          <End Type="TDM.DbModel.ParametroScript" Role="ParametroScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroScript_Valor" Role="ParametroScript_Valor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroScript_Valor">
+              <PropertyRef Name="IdParametroScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_ParametroScript">
+          <End Type="TDM.DbModel.ParametroScript" Role="ParametroScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroValor" Role="ParametroValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor">
+              <PropertyRef Name="IdParametroScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_Historico_ParametroValor">
+          <End Type="TDM.DbModel.ParametroValor" Role="ParametroValor" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroValor_Historico" Role="ParametroValor_Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroValor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor_Historico">
+              <PropertyRef Name="IdParametroValor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_ParametroValor">
+          <End Type="TDM.DbModel.ParametroValor" Role="ParametroValor" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.ParametroValor" Role="ParametroValor1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParametroValor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor1">
+              <PropertyRef Name="IdParametroValor_Origem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ParametroValor_TestData">
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="1" />
+          <End Type="TDM.DbModel.ParametroValor" Role="ParametroValor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ParametroValor">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanoTeste_TI_Historico_PlanoTeste_TI">
+          <End Type="TDM.DbModel.PlanoTeste_TI" Role="PlanoTeste_TI" Multiplicity="1" />
+          <End Type="TDM.DbModel.PlanoTeste_TI_Historico" Role="PlanoTeste_TI_Historico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanoTeste_TI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PlanoTeste_TI_Historico">
+              <PropertyRef Name="IdPlanoTesteTI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Plataforma">
+          <End Type="TDM.DbModel.Plataforma" Role="Plataforma" Multiplicity="1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plataforma">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdPlataforma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Script">
+          <End Type="TDM.DbModel.Script" Role="Script" Multiplicity="1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_ScriptPai">
+          <End Type="TDM.DbModel.Script" Role="Script" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Script" Role="Script1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script1">
+              <PropertyRef Name="IdScriptPai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_Ambiente_CondicaoScript">
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript_Ambiente" Role="Script_CondicaoScript_Ambiente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_Ambiente">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Script_CondicaoScript_CT_Script_CondicaoScript">
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript_CT" Role="Script_CondicaoScript_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript_CT">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Script_CondicaoScript">
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="1" />
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Script_CondicaoScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdScript_CondicaoScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Status">
+          <End Type="TDM.DbModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TDM_Usuario_TDM">
+          <End Type="TDM.DbModel.TDM" Role="TDM" Multiplicity="1" />
+          <End Type="TDM.DbModel.TDM_Usuario" Role="TDM_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TDM">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TDM_Usuario">
+              <PropertyRef Name="IdTDM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TDM_Usuario_Usuario">
+          <End Type="TDM.DbModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="TDM.DbModel.TDM_Usuario" Role="TDM_Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TDM_Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_CT_TestData">
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="1" />
+          <End Type="TDM.DbModel.TestData_CT" Role="TestData_CT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData_CT">
+              <PropertyRef Name="IdTestData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestData_Usuario">
+          <End Type="TDM.DbModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestData">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TDMDbModelStoreContainer" CdmEntityContainer="DbEntities">
+          <FunctionImportMapping FunctionImportName="PR_LISTAR_DATAPOOL" FunctionName="TDM.DbModel.Store.PR_LISTAR_DATAPOOL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDM.DbModel.PR_LISTAR_DATAPOOL_Result">
+                <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DescricaoDataPool" ColumnName="DescricaoDataPool" />
+                <ScalarProperty Name="DescricaoDemanda" ColumnName="DescricaoDemanda" />
+                <ScalarProperty Name="DescricaoSistema" ColumnName="DescricaoSistema" />
+                <ScalarProperty Name="TipoMassa" ColumnName="TipoMassa" />
+                <ScalarProperty Name="QtdSolicitada" ColumnName="QtdSolicitada" />
+                <ScalarProperty Name="QtdDisponivel" ColumnName="QtdDisponivel" />
+                <ScalarProperty Name="QtdReservada" ColumnName="QtdReservada" />
+                <ScalarProperty Name="QtdUtilizada" ColumnName="QtdUtilizada" />
+                <ScalarProperty Name="Farol" ColumnName="Farol" />
+                <ScalarProperty Name="DataSolicitacao" ColumnName="DataSolicitacao" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="MapaCalor">
+            <EntityTypeMapping TypeName="TDM.DbModel.MapaCalor">
+              <MappingFragment StoreEntitySet="MapaCalor">
+                <ScalarProperty Name="Resolucao" ColumnName="Resolucao" />
+                <ScalarProperty Name="PosY" ColumnName="PosY" />
+                <ScalarProperty Name="PosX" ColumnName="PosX" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdTelaMapaCalor" ColumnName="IdTelaMapaCalor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusExecucao">
+            <EntityTypeMapping TypeName="TDM.DbModel.StatusExecucao">
+              <MappingFragment StoreEntitySet="StatusExecucao">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TelaMapaCalor">
+            <EntityTypeMapping TypeName="TDM.DbModel.TelaMapaCalor">
+              <MappingFragment StoreEntitySet="TelaMapaCalor">
+                <ScalarProperty Name="Resolucao" ColumnName="Resolucao" />
+                <ScalarProperty Name="Caminho" ColumnName="Caminho" />
+                <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Agendamento">
+            <EntityTypeMapping TypeName="TDM.DbModel.Agendamento">
+              <MappingFragment StoreEntitySet="Agendamento">
+                <ScalarProperty Name="Output" ColumnName="Output" />
+                <ScalarProperty Name="TerminoAgendamento" ColumnName="TerminoAgendamento" />
+                <ScalarProperty Name="InicioAgendamento" ColumnName="InicioAgendamento" />
+                <ScalarProperty Name="RotinaDiaria" ColumnName="RotinaDiaria" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Agendamento_TestData">
+            <EntityTypeMapping TypeName="TDM.DbModel.Agendamento_TestData">
+              <MappingFragment StoreEntitySet="Agendamento_TestData">
+                <ScalarProperty Name="IdTestData" ColumnName="IdTestData" />
+                <ScalarProperty Name="IdAgendamento" ColumnName="IdAgendamento" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AmbienteExecucao">
+            <EntityTypeMapping TypeName="TDM.DbModel.AmbienteExecucao">
+              <MappingFragment StoreEntitySet="AmbienteExecucao">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AmbienteVirtual">
+            <EntityTypeMapping TypeName="TDM.DbModel.AmbienteVirtual">
+              <MappingFragment StoreEntitySet="AmbienteVirtual">
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AUT">
+            <EntityTypeMapping TypeName="TDM.DbModel.AUT">
+              <MappingFragment StoreEntitySet="AUT">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CondicaoScript">
+            <EntityTypeMapping TypeName="TDM.DbModel.CondicaoScript">
+              <MappingFragment StoreEntitySet="CondicaoScript">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CT">
+            <EntityTypeMapping TypeName="TDM.DbModel.CT">
+              <MappingFragment StoreEntitySet="CT">
+                <ScalarProperty Name="Fase" ColumnName="Fase" />
+                <ScalarProperty Name="Sistema" ColumnName="Sistema" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataPool">
+            <EntityTypeMapping TypeName="TDM.DbModel.DataPool">
+              <MappingFragment StoreEntitySet="DataPool">
+                <ScalarProperty Name="ConsiderarRotinaDiaria" ColumnName="ConsiderarRotinaDiaria" />
+                <ScalarProperty Name="DataTermino" ColumnName="DataTermino" />
+                <ScalarProperty Name="DataInicioExecucao" ColumnName="DataInicioExecucao" />
+                <ScalarProperty Name="DataSolicitacao" ColumnName="DataSolicitacao" />
+                <ScalarProperty Name="Observacao" ColumnName="Observacao" />
+                <ScalarProperty Name="QtdSolicitada" ColumnName="QtdSolicitada" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdScript_CondicaoScript" ColumnName="IdScript_CondicaoScript" />
+                <ScalarProperty Name="IdDemanda" ColumnName="IdDemanda" />
+                <ScalarProperty Name="IdAut" ColumnName="IdAut" />
+                <ScalarProperty Name="IdTDM" ColumnName="IdTDM" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Demanda">
+            <EntityTypeMapping TypeName="TDM.DbModel.Demanda">
+              <MappingFragment StoreEntitySet="Demanda">
+                <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeParaAtmpAlmFase">
+            <EntityTypeMapping TypeName="TDM.DbModel.DeParaAtmpAlmFase">
+              <MappingFragment StoreEntitySet="DeParaAtmpAlmFase">
+                <ScalarProperty Name="Fase" ColumnName="Fase" />
+                <ScalarProperty Name="IdAmbienteExecucao" ColumnName="IdAmbienteExecucao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeParaAtmpAlmSistema">
+            <EntityTypeMapping TypeName="TDM.DbModel.DeParaAtmpAlmSistema">
+              <MappingFragment StoreEntitySet="DeParaAtmpAlmSistema">
+                <ScalarProperty Name="DescricaoALM" ColumnName="DescricaoALM" />
+                <ScalarProperty Name="IdAut" ColumnName="IdAut" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Encadeamento">
+            <EntityTypeMapping TypeName="TDM.DbModel.Encadeamento">
+              <MappingFragment StoreEntitySet="Encadeamento">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Encadeamento_TestData">
+            <EntityTypeMapping TypeName="TDM.DbModel.Encadeamento_TestData">
+              <MappingFragment StoreEntitySet="Encadeamento_TestData">
+                <ScalarProperty Name="IdAmbienteExecucao" ColumnName="IdAmbienteExecucao" />
+                <ScalarProperty Name="Ordem" ColumnName="Ordem" />
+                <ScalarProperty Name="IdEncadeamento" ColumnName="IdEncadeamento" />
+                <ScalarProperty Name="IdTestData" ColumnName="IdTestData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Execucao">
+            <EntityTypeMapping TypeName="TDM.DbModel.Execucao">
+              <MappingFragment StoreEntitySet="Execucao">
+                <ScalarProperty Name="IdAgendamento" ColumnName="IdAgendamento" />
+                <ScalarProperty Name="EnvioTelegram" ColumnName="EnvioTelegram" />
+                <ScalarProperty Name="ToscaOutput" ColumnName="ToscaOutput" />
+                <ScalarProperty Name="ToscaInput" ColumnName="ToscaInput" />
+                <ScalarProperty Name="TerminoExecucao" ColumnName="TerminoExecucao" />
+                <ScalarProperty Name="InicioExecucao" ColumnName="InicioExecucao" />
+                <ScalarProperty Name="DataAgendamento" ColumnName="DataAgendamento" />
+                <ScalarProperty Name="SituacaoAmbiente" ColumnName="SituacaoAmbiente" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IdTipoFaseTeste" ColumnName="IdTipoFaseTeste" />
+                <ScalarProperty Name="IdStatusExecucao" ColumnName="IdStatusExecucao" />
+                <ScalarProperty Name="IdTestData" ColumnName="IdTestData" />
+                <ScalarProperty Name="IdScript_CondicaoScript_Ambiente" ColumnName="IdScript_CondicaoScript_Ambiente" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historico">
+            <EntityTypeMapping TypeName="TDM.DbModel.Historico">
+              <MappingFragment StoreEntitySet="Historico">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Entidade" ColumnName="Entidade" />
+                <ScalarProperty Name="Valores" ColumnName="Valores" />
+                <ScalarProperty Name="Acao" ColumnName="Acao" />
+                <ScalarProperty Name="IdExecucao" ColumnName="IdExecucao" />
+                <ScalarProperty Name="IdTestData" ColumnName="IdTestData" />
+                <ScalarProperty Name="IdDataPool" ColumnName="IdDataPool" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametro">
+            <EntityTypeMapping TypeName="TDM.DbModel.Parametro">
+              <MappingFragment StoreEntitySet="Parametro">
+                <ScalarProperty Name="ColunaTecnicaTosca" ColumnName="ColunaTecnicaTosca" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParametroScript">
+            <EntityTypeMapping TypeName="TDM.DbModel.ParametroScript">
+              <MappingFragment StoreEntitySet="ParametroScript">
+                <ScalarProperty Name="VisivelEmTela" ColumnName="VisivelEmTela" />
+                <ScalarProperty Name="ValorDefault" ColumnName="ValorDefault" />
+                <ScalarProperty Name="Obrigatorio" ColumnName="Obrigatorio" />
+                <ScalarProperty Name="IdTipoParametro" ColumnName="IdTipoParametro" />
+                <ScalarProperty Name="IdScript_CondicaoScript" ColumnName="IdScript_CondicaoScript" />
+                <ScalarProperty Name="IdParametro" ColumnName="IdParametro" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParametroScript_Valor">
+            <EntityTypeMapping TypeName="TDM.DbModel.ParametroScript_Valor">
+              <MappingFragment StoreEntitySet="ParametroScript_Valor">
+                <ScalarProperty Name="Usada" ColumnName="Usada" />
+                <ScalarProperty Name="ValorSugerido" ColumnName="ValorSugerido" />
+                <ScalarProperty Name="IdParametroScript" ColumnName="IdParametroScript" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParametroValor">
+            <EntityTypeMapping TypeName="TDM.DbModel.ParametroValor">
+              <MappingFragment StoreEntitySet="ParametroValor">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="IdParametroValor_Origem" ColumnName="IdParametroValor_Origem" />
+                <ScalarProperty Name="IdParametroScript" ColumnName="IdParametroScript" />
+                <ScalarProperty Name="IdTestData" ColumnName="IdTestData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParametroValor_Historico">
+            <EntityTypeMapping TypeName="TDM.DbModel.ParametroValor_Historico">
+              <MappingFragment StoreEntitySet="ParametroValor_Historico">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="TempoTermino" ColumnName="TempoTermino" />
+                <ScalarProperty Name="TempoInicio" ColumnName="TempoInicio" />
+                <ScalarProperty Name="IdParametroValor" ColumnName="IdParametroValor" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanoTeste_TI">
+            <EntityTypeMapping TypeName="TDM.DbModel.PlanoTeste_TI">
+              <MappingFragment StoreEntitySet="PlanoTeste_TI">
+                <ScalarProperty Name="SCRIPT_RFT_ATMP" ColumnName="SCRIPT_RFT_ATMP" />
+                <ScalarProperty Name="SCRIPT_TOSCA_ATMP" ColumnName="SCRIPT_TOSCA_ATMP" />
+                <ScalarProperty Name="DT_CARGA" ColumnName="DT_CARGA" />
+                <ScalarProperty Name="PRE_REQUISITO" ColumnName="PRE_REQUISITO" />
+                <ScalarProperty Name="CT_SUCESSOR" ColumnName="CT_SUCESSOR" />
+                <ScalarProperty Name="PLANO_VALIDACAO_TECNICA" ColumnName="PLANO_VALIDACAO_TECNICA" />
+                <ScalarProperty Name="PLANO_VALIDACAO_CLIENTE" ColumnName="PLANO_VALIDACAO_CLIENTE" />
+                <ScalarProperty Name="EVIDENCIA_VALIDACAO_TECNICA" ColumnName="EVIDENCIA_VALIDACAO_TECNICA" />
+                <ScalarProperty Name="EVIDENCIA_VALIDACAO_CLIENTE" ColumnName="EVIDENCIA_VALIDACAO_CLIENTE" />
+                <ScalarProperty Name="NRO_CT" ColumnName="NRO_CT" />
+                <ScalarProperty Name="NRO_CENARIO" ColumnName="NRO_CENARIO" />
+                <ScalarProperty Name="OBS" ColumnName="OBS" />
+                <ScalarProperty Name="PRE_CONDICAO" ColumnName="PRE_CONDICAO" />
+                <ScalarProperty Name="VARIANTE" ColumnName="VARIANTE" />
+                <ScalarProperty Name="ITERATIONS" ColumnName="ITERATIONS" />
+                <ScalarProperty Name="FABRICA_TESTE" ColumnName="FABRICA_TESTE" />
+                <ScalarProperty Name="MOTIVO_EXECUCAO_MANUAL" ColumnName="MOTIVO_EXECUCAO_MANUAL" />
+                <ScalarProperty Name="EXECUCAO_AUTOMATICA" ColumnName="EXECUCAO_AUTOMATICA" />
+                <ScalarProperty Name="CT_AUTOMATIZADO" ColumnName="CT_AUTOMATIZADO" />
+                <ScalarProperty Name="PASTA_LM" ColumnName="PASTA_LM" />
+                <ScalarProperty Name="QT_STEPS" ColumnName="QT_STEPS" />
+                <ScalarProperty Name="TESTADOR" ColumnName="TESTADOR" />
+                <ScalarProperty Name="MOTIVO_CANCELAMENTO_CT" ColumnName="MOTIVO_CANCELAMENTO_CT" />
+                <ScalarProperty Name="STATUS_EXEC_CT" ColumnName="STATUS_EXEC_CT" />
+                <ScalarProperty Name="DT_EXECUCAO" ColumnName="DT_EXECUCAO" />
+                <ScalarProperty Name="DT_PLANEJAMENTO" ColumnName="DT_PLANEJAMENTO" />
+                <ScalarProperty Name="MASSA_TESTE" ColumnName="MASSA_TESTE" />
+                <ScalarProperty Name="UAT" ColumnName="UAT" />
+                <ScalarProperty Name="COMPLEXIDADE" ColumnName="COMPLEXIDADE" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="SISTEMA" ColumnName="SISTEMA" />
+                <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+                <ScalarProperty Name="CICLO" ColumnName="CICLO" />
+                <ScalarProperty Name="RELEASE" ColumnName="RELEASE" />
+                <ScalarProperty Name="CT" ColumnName="CT" />
+                <ScalarProperty Name="TESTE" ColumnName="TESTE" />
+                <ScalarProperty Name="PLANO_TESTE" ColumnName="PLANO_TESTE" />
+                <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+                <ScalarProperty Name="ENTREGA" ColumnName="ENTREGA" />
+                <ScalarProperty Name="SUBPROJETO" ColumnName="SUBPROJETO" />
+                <ScalarProperty Name="Plataforma_ATMP" ColumnName="Plataforma_ATMP" />
+                <ScalarProperty Name="OFENSOR_ATMP" ColumnName="OFENSOR_ATMP" />
+                <ScalarProperty Name="MotivoExecucao_ATMP" ColumnName="MotivoExecucao_ATMP" />
+                <ScalarProperty Name="ExecucaoAutomatizada_ATMP" ColumnName="ExecucaoAutomatizada_ATMP" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanoTeste_TI_Historico">
+            <EntityTypeMapping TypeName="TDM.DbModel.PlanoTeste_TI_Historico">
+              <MappingFragment StoreEntitySet="PlanoTeste_TI_Historico">
+                <ScalarProperty Name="SCRIPT_RFT_ATMP" ColumnName="SCRIPT_RFT_ATMP" />
+                <ScalarProperty Name="SCRIPT_TOSCA_ATMP" ColumnName="SCRIPT_TOSCA_ATMP" />
+                <ScalarProperty Name="OPERACAO" ColumnName="OPERACAO" />
+                <ScalarProperty Name="FONTE" ColumnName="FONTE" />
+                <ScalarProperty Name="DT_HISTORICO" ColumnName="DT_HISTORICO" />
+                <ScalarProperty Name="DT_CARGA" ColumnName="DT_CARGA" />
+                <ScalarProperty Name="PRE_REQUISITO" ColumnName="PRE_REQUISITO" />
+                <ScalarProperty Name="CT_SUCESSOR" ColumnName="CT_SUCESSOR" />
+                <ScalarProperty Name="PLANO_VALIDACAO_TECNICA" ColumnName="PLANO_VALIDACAO_TECNICA" />
+                <ScalarProperty Name="PLANO_VALIDACAO_CLIENTE" ColumnName="PLANO_VALIDACAO_CLIENTE" />
+                <ScalarProperty Name="EVIDENCIA_VALIDACAO_TECNICA" ColumnName="EVIDENCIA_VALIDACAO_TECNICA" />
+                <ScalarProperty Name="EVIDENCIA_VALIDACAO_CLIENTE" ColumnName="EVIDENCIA_VALIDACAO_CLIENTE" />
+                <ScalarProperty Name="NRO_CT" ColumnName="NRO_CT" />
+                <ScalarProperty Name="NRO_CENARIO" ColumnName="NRO_CENARIO" />
+                <ScalarProperty Name="OBS" ColumnName="OBS" />
+                <ScalarProperty Name="PRE_CONDICAO" ColumnName="PRE_CONDICAO" />
+                <ScalarProperty Name="VARIANTE" ColumnName="VARIANTE" />
+                <ScalarProperty Name="ITERATIONS" ColumnName="ITERATIONS" />
+                <ScalarProperty Name="FABRICA_TESTE" ColumnName="FABRICA_TESTE" />
+                <ScalarProperty Name="MOTIVO_EXECUCAO_MANUAL" ColumnName="MOTIVO_EXECUCAO_MANUAL" />
+                <ScalarProperty Name="EXECUCAO_AUTOMATICA" ColumnName="EXECUCAO_AUTOMATICA" />
+                <ScalarProperty Name="CT_AUTOMATIZADO" ColumnName="CT_AUTOMATIZADO" />
+                <ScalarProperty Name="PASTA_LM" ColumnName="PASTA_LM" />
+                <ScalarProperty Name="QT_STEPS" ColumnName="QT_STEPS" />
+                <ScalarProperty Name="TESTADOR" ColumnName="TESTADOR" />
+                <ScalarProperty Name="MOTIVO_CANCELAMENTO_CT" ColumnName="MOTIVO_CANCELAMENTO_CT" />
+                <ScalarProperty Name="STATUS_EXEC_CT" ColumnName="STATUS_EXEC_CT" />
+                <ScalarProperty Name="DT_EXECUCAO" ColumnName="DT_EXECUCAO" />
+                <ScalarProperty Name="DT_PLANEJAMENTO" ColumnName="DT_PLANEJAMENTO" />
+                <ScalarProperty Name="MASSA_TESTE" ColumnName="MASSA_TESTE" />
+                <ScalarProperty Name="UAT" ColumnName="UAT" />
+                <ScalarProperty Name="COMPLEXIDADE" ColumnName="COMPLEXIDADE" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="SISTEMA" ColumnName="SISTEMA" />
+                <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+                <ScalarProperty Name="CICLO" ColumnName="CICLO" />
+                <ScalarProperty Name="RELEASE" ColumnName="RELEASE" />
+                <ScalarProperty Name="CT" ColumnName="CT" />
+                <ScalarProperty Name="TESTE" ColumnName="TESTE" />
+                <ScalarProperty Name="PLANO_TESTE" ColumnName="PLANO_TESTE" />
+                <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+                <ScalarProperty Name="ENTREGA" ColumnName="ENTREGA" />
+                <ScalarProperty Name="SUBPROJETO" ColumnName="SUBPROJETO" />
+                <ScalarProperty Name="Plataforma_ATMP" ColumnName="Plataforma_ATMP" />
+                <ScalarProperty Name="OFENSOR_ATMP" ColumnName="OFENSOR_ATMP" />
+                <ScalarProperty Name="MotivoExecucao_ATMP" ColumnName="MotivoExecucao_ATMP" />
+                <ScalarProperty Name="ExecucaoAutomatizada_ATMP" ColumnName="ExecucaoAutomatizada_ATMP" />
+                <ScalarProperty Name="IdPlanoTesteTI" ColumnName="IdPlanoTesteTI" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plataforma">
+            <EntityTypeMapping TypeName="TDM.DbModel.Plataforma">
+              <MappingFragment StoreEntitySet="Plataforma">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Script">
+            <EntityTypeMapping TypeName="TDM.DbModel.Script">
+              <MappingFragment StoreEntitySet="Script">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdAUT" ColumnName="IdAUT" />
+                <ScalarProperty Name="IdScriptPai" ColumnName="IdScriptPai" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Script_CondicaoScript">
+            <EntityTypeMapping TypeName="TDM.DbModel.Script_CondicaoScript">
+              <MappingFragment StoreEntitySet="Script_CondicaoScript">
+                <ScalarProperty Name="IdPlataforma" ColumnName="IdPlataforma" />
+                <ScalarProperty Name="WorkspaceCompartilhado" ColumnName="WorkspaceCompartilhado" />
+                <ScalarProperty Name="CaminhoArquivoSVN" ColumnName="CaminhoArquivoSVN" />
+                <ScalarProperty Name="TempFase" ColumnName="TempFase" />
+                <ScalarProperty Name="DisponivelATMP" ColumnName="DisponivelATMP" />
+                <ScalarProperty Name="NomeTecnicoScript" ColumnName="NomeTecnicoScript" />
+                <ScalarProperty Name="TempoEstimadoExecucao" ColumnName="TempoEstimadoExecucao" />
+                <ScalarProperty Name="DiretorioRelatorio" ColumnName="DiretorioRelatorio" />
+                <ScalarProperty Name="CaminhoArquivoTCS" ColumnName="CaminhoArquivoTCS" />
+                <ScalarProperty Name="ListaExecucaoTosca" ColumnName="ListaExecucaoTosca" />
+                <ScalarProperty Name="QueryTosca" ColumnName="QueryTosca" />
+                <ScalarProperty Name="IdCondicaoScript" ColumnName="IdCondicaoScript" />
+                <ScalarProperty Name="IdScript" ColumnName="IdScript" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Script_CondicaoScript_Ambiente">
+            <EntityTypeMapping TypeName="TDM.DbModel.Script_CondicaoScript_Ambiente">
+              <MappingFragment StoreEntitySet="Script_CondicaoScript_Ambiente">
+                <ScalarProperty Name="IdAmbienteExecucao" ColumnName="IdAmbienteExecucao" />
+                <ScalarProperty Name="IdAmbienteVirtual" ColumnName="IdAmbienteVirtual" />
+                <ScalarProperty Name="IdScript_CondicaoScript" ColumnName="IdScript_CondicaoScript" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Script_CondicaoScript_CT">
+            <EntityTypeMapping TypeName="TDM.DbModel.Script_CondicaoScript_CT">
+              <MappingFragment StoreEntitySet="Script_CondicaoScript_CT">
+                <ScalarProperty Name="IdCT" ColumnName="IdCT" />
+                <ScalarProperty Name="IdScript_CondicaoScript" ColumnName="IdScript_CondicaoScript" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="TDM.DbModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TDM.DbModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TDM">
+            <EntityTypeMapping TypeName="TDM.DbModel.TDM">
+              <MappingFragment StoreEntitySet="TDM">
+                <ScalarProperty Name="TdmPublico" ColumnName="TdmPublico" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TDM_Usuario">
+            <EntityTypeMapping TypeName="TDM.DbModel.TDM_Usuario">
+              <MappingFragment StoreEntitySet="TDM_Usuario">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdTDM" ColumnName="IdTDM" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestData">
+            <EntityTypeMapping TypeName="TDM.DbModel.TestData">
+              <MappingFragment StoreEntitySet="TestData">
+                <ScalarProperty Name="ClassificacaoMassa" ColumnName="ClassificacaoMassa" />
+                <ScalarProperty Name="TempoEstimadoExecucao" ColumnName="TempoEstimadoExecucao" />
+                <ScalarProperty Name="CaminhoEvidencia" ColumnName="CaminhoEvidencia" />
+                <ScalarProperty Name="DataGeracao" ColumnName="DataGeracao" />
+                <ScalarProperty Name="GeradoPor" ColumnName="GeradoPor" />
+                <ScalarProperty Name="Observacao" ColumnName="Observacao" />
+                <ScalarProperty Name="CasoTesteRelativo" ColumnName="CasoTesteRelativo" />
+                <ScalarProperty Name="GerarMigracao" ColumnName="GerarMigracao" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdScript_CondicaoScript" ColumnName="IdScript_CondicaoScript" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="IdDataPool" ColumnName="IdDataPool" />
+                <ScalarProperty Name="IdExecucao" ColumnName="IdExecucao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestData_CT">
+            <EntityTypeMapping TypeName="TDM.DbModel.TestData_CT">
+              <MappingFragment StoreEntitySet="TestData_CT">
+                <ScalarProperty Name="IdTestData" ColumnName="IdTestData" />
+                <ScalarProperty Name="IdCT" ColumnName="IdCT" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDadoParametro">
+            <EntityTypeMapping TypeName="TDM.DbModel.TipoDadoParametro">
+              <MappingFragment StoreEntitySet="TipoDadoParametro">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoFaseTeste">
+            <EntityTypeMapping TypeName="TDM.DbModel.TipoFaseTeste">
+              <MappingFragment StoreEntitySet="TipoFaseTeste">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoParametro">
+            <EntityTypeMapping TypeName="TDM.DbModel.TipoParametro">
+              <MappingFragment StoreEntitySet="TipoParametro">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="TDM.DbModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MotivoExecucao">
+            <EntityTypeMapping TypeName="TDM.DbModel.MotivoExecucao">
+              <MappingFragment StoreEntitySet="MotivoExecucao">
+                <ScalarProperty Name="AtivaOfensor" ColumnName="AtivaOfensor" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

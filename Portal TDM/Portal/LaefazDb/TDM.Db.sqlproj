@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>TDM.Db</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{393ed8e2-5406-4cf5-ab28-7d8cd75b5af9}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>LaefazDb</RootNamespace>
+    <AssemblyName>LaefazDb</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>True</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Post-deployment" />
+    <Folder Include="Procedures" />
+    <Folder Include="Functions" />
+    <Folder Include="Template_Importacao" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\Usuario.sql" />
+    <Build Include="Tables\AUT.sql" />
+    <None Include="Scripts\Post-deployment\Data.AUT.sql" />
+    <Build Include="Tables\AmbienteVirtual.sql" />
+    <None Include="Scripts\Post-deployment\Data.AmbienteVirtual.sql" />
+    <Build Include="Tables\CondicaoScript.sql" />
+    <None Include="Scripts\Post-deployment\Data.CondicaoScript.sql" />
+    <Build Include="Tables\DataPool.sql" />
+    <Build Include="Tables\Demanda.sql" />
+    <None Include="Scripts\Post-deployment\Data.Demanda.sql" />
+    <Build Include="Tables\TipoFaseTeste.sql" />
+    <None Include="Scripts\Post-deployment\Data.TipoFaseTeste.sql" />
+    <Build Include="Tables\Parametro.sql" />
+    <None Include="Scripts\Post-deployment\Data.Parametro.sql" />
+    <Build Include="Tables\ParametroScript.sql" />
+    <Build Include="Tables\TipoParametro.sql" />
+    <None Include="Scripts\Post-deployment\Data.TipoParametro.sql" />
+    <Build Include="Tables\Script.sql" />
+    <Build Include="Tables\ParametroValor.sql" />
+    <Build Include="Tables\TestData.sql" />
+    <Build Include="Tables\Status.sql" />
+    <Build Include="Tables\TDM.sql" />
+    <None Include="Scripts\Post-deployment\Data.TDM.sql" />
+    <None Include="Scripts\Post-deployment\Data.DataPool.sql" />
+    <None Include="Scripts\Post-deployment\Data.Script.sql" />
+    <None Include="Scripts\Post-deployment\Data.Status.sql" />
+    <Build Include="Tables\Execucao.sql" />
+    <Build Include="Procedures\PR_LISTAR_DATAPOOL.sql" />
+    <Build Include="Tables\TDM_Usuario.sql" />
+    <Build Include="Tables\Script_CondicaoScript.sql" />
+    <Build Include="Tables\AmbienteExecucao.sql" />
+    <None Include="Scripts\Post-deployment\Data.AmbienteExecucao.sql" />
+    <Build Include="Tables\Script_CondicaoScript_Ambiente.sql" />
+    <None Include="Scripts\Post-deployment\Data.ParametroScript.sql" />
+    <None Include="Scripts\Post-deployment\Data.ParametroValor.sql" />
+    <Build Include="Tables\MapaCalor.sql" />
+    <Build Include="Tables\StatusExecucao.sql" />
+    <None Include="Scripts\Post-deployment\Data.StatusExecucao.sql" />
+    <Build Include="Tables\TelaMapaCalor.sql" />
+    <None Include="Scripts\Post-deployment\Data.Script_CondicaoScript_Ambiente.sql" />
+    <None Include="Scripts\Post-deployment\Data.TelaMapaCalor.sql" />
+    <None Include="Scripts\Post-deployment\Data.MapaCalor.sql" />
+    <Build Include="Tables\Historico.sql" />
+    <None Include="Scripts\Post-deployment\Data.TipoDadoParametro.sql" />
+    <Build Include="Tables\TipoDadoParametro.sql" />
+    <Build Include="Tables\Encadeamento_TestData.sql" />
+    <Build Include="Tables\Encadeamento.sql" />
+    <Build Include="Procedures\PR_LISTAR_DADOS_EXECUCAO.sql" />
+    <Build Include="Procedures\PR_LISTAR_TEST_DATA.sql" />
+    <Build Include="Procedures\PR_LISTAR_ENCADEAMENTO.sql" />
+    <Build Include="Procedures\PR_LISTAR_PARAMETRO_TESTDATA.sql" />
+    <Build Include="Tables\ParametroValor_Historico.sql" />
+    <Build Include="Tables\ParametroScript_Valor.sql" />
+    <Build Include="Procedures\PR_LISTAR_TESTDATA.sql" />
+    <Build Include="Procedures\PR_LISTAR_AMBIENTE_VIRTUAL_DISPONIVEL.sql" />
+    <Build Include="Procedures\PR_LISTAR_AMBIENTE_EXECUCAO.sql" />
+    <Build Include="Procedures\PR_LISTAR_DATAPOOL_COM_TESTDATA.sql" />
+    <Build Include="Procedures\PR_LISTAR_EXECUCAO.sql" />
+    <Build Include="Procedures\PR_LISTAR_DATAPOOL.sql" />
+    <Build Include="Procedures\PR_LISTAR_EXECUCAO.sql" />
+    <Build Include="Procedures\PR_LISTAR_DATAPOOL_COM_TESTDATA.sql" />
+    <Build Include="Procedures\PR_LISTAR_DATAPOOL_SEM_USUARIO.sql" />
+    <Build Include="Tables\Agendamento.sql" />
+    <Build Include="Tables\Agendamento_TestData.sql" />
+    <Build Include="Procedures\PR_CARREGAR_ENCADEAMENTOS.sql" />
+    <Build Include="Procedures\PR_LISTAR_TESTDATA_ENCADEAMENTO.sql" />
+    <Build Include="Procedures\PR_LISTAR_DATAPOOL_ENVIO_EMAIL.sql" />
+    <Build Include="Tables\Script_CondicaoScript_CT.sql" />
+    <Build Include="Tables\PlanoTeste_TI.sql" />
+    <Build Include="Tables\Plataforma.sql" />
+    <Build Include="Tables\CT.sql" />
+    <Build Include="Procedures\PR_LISTAR_EXECUCAO_TESTE_.sql" />
+    <Build Include="Procedures\PR_LISTAR_SCRIPT.sql" />
+    <Build Include="Procedures\PR_LISTAR_CT.sql" />
+    <Build Include="Procedures\PR_LISTAR_TESTDATA_CT.sql" />
+    <Build Include="Procedures\PR_LISTAR_SCRIPT_CONDICAO_SCRIPT_CT.sql" />
+    <Build Include="Procedures\PR_LISTAR_SCRIPT_CONDICAO_SCRIPT.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LOCAL.TDM.Db.publish.xml" />
+    <None Include="Scripts\Post-deployment\Data.TDM_Usuario.sql" />
+    <None Include="Scripts\Post-deployment\Data.TestData.sql" />
+    <None Include="Scripts\Post-deployment\Data.Script_CondicaoScript.sql" />
+    <None Include="VDI_160.TDM.Db.publish.xml" />
+    <None Include="Template_Importacao\AccessDatabaseEngine_X64.exe" />
+    <None Include="Template_Importacao\Template_Planilha_TDM.xlsb" />
+    <None Include="Dev-VDI_160.DevTDM.Db.publish.xml" />
+    <None Include="DEV-LOCAL.TDM.Db.publish.xml" />
+    <None Include="Scripts\Post-deployment\Data.Plataforma.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Post-deployment\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Post-deployment\Data.Usuario.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TDM.Db.refactorlog" />
+  </ItemGroup>
+</Project>

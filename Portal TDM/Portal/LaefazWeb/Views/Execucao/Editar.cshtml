@@ -1,0 +1,101 @@
+﻿@using TDMWeb.Extensions
+@model LaefazWeb.Models.Execucao
+
+@{
+    ViewBag.Title = "Execução";
+}
+
+@section styles {
+    <style type="text/css">
+        .form-control[readonly] {
+            background-color: white;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("SalvarEdicao", "Execucao", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Editar Sistema</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("descricao", "Descrição")
+                @Html.TextBoxFor(m => m.Descricao, new { @class = "form-control", required = "required" })
+                @Html.HiddenFor(m => m.Id, new { Id = "id" })
+                @Html.HiddenFor(m => m.TipoFaseTeste.Id, new { Id = "idFase" })
+            </div>
+            <div class="form-group">
+                @Html.Label("descricao_fase", "Fase")
+
+                @Html.DropDownList("listfase", new SelectList(ViewBag.listTipoFaseTeste, "Id", "Descricao"), null, new
+           {
+               @class = "form-control",
+               @id = "list-tipo-fase-teste",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required",
+
+           }
+                        )
+
+
+                @*@Html.DropDownList("listfase", null, htmlAttributes: new { @class = "form-control" })*@
+
+                @*@Html.DropDownListFor(m => m.Descricao, ((IEnumerable<LaefazWeb.Models.TipoFaseTeste>)ViewBag.listTipoFaseTeste).Select(fase => new SelectListItem
+                    {
+                        Text = fase.Descricao,
+                        Value = fase.Id+"",
+                        Selected = (@Model != null) && (@Model.TipoFaseTeste.Descricao == fase.Descricao)
+                    }), new { @class = "form-control", @name = "listfase" }
+
+                      )*@
+
+
+
+                @*<select id="fase" class="form-control">
+                        @foreach (var item in ViewBag.listTipoFaseTeste)
+                        {
+                            if (@item.Descricao == @Model.TipoFaseTeste.Descricao)
+                            {
+                                <option selected value=@item.Id>@item.Descricao</option>
+                            }
+                            else
+                            {
+                                <option value=@item.Id>@item.Descricao</option>
+                            }
+
+                        }
+
+                    </select>*@
+            </div>
+
+        </div>
+        <div class="box-footer" align="right">
+            <a href="@Url.Action("index", "Execucao")" class="btn btn-danger" id="cancelar">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var id = $('#idFase').attr("value");
+            // get the OPTION we want selected
+            var $option = $('#list-tipo-fase-teste').children('option[value="' + id + '"]');
+            // and now set the option we want selected
+            $option.attr('selected', true);
+
+            $("#list-tipo-fase-teste").select2({
+                "language": {
+                    "noResults": function () {
+                        return "Nenhum resultado encontrado.";
+                    }
+                },
+                allowClear: true
+            });
+        });
+    </script>
+}

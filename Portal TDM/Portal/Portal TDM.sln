@@ -1,0 +1,119 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TDM.Db", "LaefazDb\TDM.Db.sqlproj", "{393ED8E2-5406-4CF5-AB28-7D8CD75B5AF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDM.Web", "LaefazWeb\TDM.Web.csproj", "{B76D5E5D-A2C6-4B99-B32C-A492BADF63C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDM.Jenkins.PosBuild", "TDM.Jenkins.PosBuild\TDM.Jenkins.PosBuild.csproj", "{9B11C0C0-A966-4DEF-B4A7-C1C35D916204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDM.Jenkins.PosBuild2", "TDM.Jenkins.PosBuild2\TDM.Jenkins.PosBuild2.csproj", "{F2DD18C7-7E26-49F2-AB34-9EDBBBC27249}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDM.Agendamento", "Agendamento\TDM.Agendamento.csproj", "{C3CB5F05-54F3-4AF4-A508-9F9943680E9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotinaDiaria", "RotinaDiaria\RotinaDiaria.csproj", "{8A4D7462-7E6B-4E7B-9E0E-1B57F2D441AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvioDeEmailAutomatico", "EnvioDeEmailAutomatico\EnvioDeEmailAutomatico.csproj", "{9DBC1880-5D65-4F2B-BF51-9E458051DE9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POC-SqLite", "POC-SqLite\POC-SqLite.csproj", "{A800C40A-C002-45B6-883F-16143AF29D01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{393ED8E2-5406-4CF5-AB28-7D8CD75B5AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393ED8E2-5406-4CF5-AB28-7D8CD75B5AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393ED8E2-5406-4CF5-AB28-7D8CD75B5AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393ED8E2-5406-4CF5-AB28-7D8CD75B5AF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{393ED8E2-5406-4CF5-AB28-7D8CD75B5AF9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B76D5E5D-A2C6-4B99-B32C-A492BADF63C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B76D5E5D-A2C6-4B99-B32C-A492BADF63C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B76D5E5D-A2C6-4B99-B32C-A492BADF63C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B76D5E5D-A2C6-4B99-B32C-A492BADF63C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B11C0C0-A966-4DEF-B4A7-C1C35D916204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B11C0C0-A966-4DEF-B4A7-C1C35D916204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B11C0C0-A966-4DEF-B4A7-C1C35D916204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B11C0C0-A966-4DEF-B4A7-C1C35D916204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2DD18C7-7E26-49F2-AB34-9EDBBBC27249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2DD18C7-7E26-49F2-AB34-9EDBBBC27249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2DD18C7-7E26-49F2-AB34-9EDBBBC27249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2DD18C7-7E26-49F2-AB34-9EDBBBC27249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3CB5F05-54F3-4AF4-A508-9F9943680E9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CB5F05-54F3-4AF4-A508-9F9943680E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CB5F05-54F3-4AF4-A508-9F9943680E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CB5F05-54F3-4AF4-A508-9F9943680E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A4D7462-7E6B-4E7B-9E0E-1B57F2D441AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A4D7462-7E6B-4E7B-9E0E-1B57F2D441AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A4D7462-7E6B-4E7B-9E0E-1B57F2D441AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A4D7462-7E6B-4E7B-9E0E-1B57F2D441AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DBC1880-5D65-4F2B-BF51-9E458051DE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DBC1880-5D65-4F2B-BF51-9E458051DE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DBC1880-5D65-4F2B-BF51-9E458051DE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DBC1880-5D65-4F2B-BF51-9E458051DE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A800C40A-C002-45B6-883F-16143AF29D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A800C40A-C002-45B6-883F-16143AF29D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A800C40A-C002-45B6-883F-16143AF29D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A800C40A-C002-45B6-883F-16143AF29D01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://teamproject.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Agendamento\\TDM.Agendamento.csproj
+		SccProjectName1 = Agendamento
+		SccLocalPath1 = Agendamento
+		SccProjectUniqueName2 = LaefazDb\\TDM.Db.sqlproj
+		SccProjectName2 = LaefazDb
+		SccLocalPath2 = LaefazDb
+		SccProjectUniqueName3 = LaefazWeb\\TDM.Web.csproj
+		SccProjectName3 = LaefazWeb
+		SccLocalPath3 = LaefazWeb
+		SccProjectUniqueName4 = TDM.Jenkins.PosBuild2\\TDM.Jenkins.PosBuild2.csproj
+		SccProjectName4 = TDM.Jenkins.PosBuild2
+		SccLocalPath4 = TDM.Jenkins.PosBuild2
+		SccProjectUniqueName5 = TDM.Jenkins.PosBuild\\TDM.Jenkins.PosBuild.csproj
+		SccProjectName5 = TDM.Jenkins.PosBuild
+		SccLocalPath5 = TDM.Jenkins.PosBuild
+		SccProjectUniqueName6 = RotinaDiaria\\RotinaDiaria.csproj
+		SccProjectName6 = RotinaDiaria
+		SccLocalPath6 = RotinaDiaria
+		SccProjectUniqueName7 = EnvioDeEmailAutomatico\\EnvioDeEmailAutomatico.csproj
+		SccProjectName7 = EnvioDeEmailAutomatico
+		SccLocalPath7 = EnvioDeEmailAutomatico
+		SccProjectUniqueName8 = POC-SqLite\\POC-SqLite.csproj
+		SccProjectName8 = POC-SqLite
+		SccLocalPath8 = POC-SqLite
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://teamproject.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Agendamento\\TDM.Agendamento.csproj
+		SccProjectName1 = Agendamento
+		SccLocalPath1 = Agendamento
+		SccProjectUniqueName2 = LaefazDb\\TDM.Db.sqlproj
+		SccProjectName2 = LaefazDb
+		SccLocalPath2 = LaefazDb
+		SccProjectUniqueName3 = LaefazWeb\\TDM.Web.csproj
+		SccProjectName3 = LaefazWeb
+		SccLocalPath3 = LaefazWeb
+		SccProjectUniqueName4 = TDM.Jenkins.PosBuild2\\TDM.Jenkins.PosBuild2.csproj
+		SccProjectName4 = TDM.Jenkins.PosBuild2
+		SccLocalPath4 = TDM.Jenkins.PosBuild2
+		SccProjectUniqueName5 = TDM.Scheduler\\TDM.Scheduler.csproj
+		SccProjectName5 = TDM.Scheduler
+		SccLocalPath5 = TDM.Scheduler
+		SccProjectUniqueName6 = Agendamento\\TDM.Agendamento.csproj
+		SccProjectName6 = Agendamento
+		SccLocalPath6 = Agendamento
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,964 @@
+﻿@model IEnumerable<LaefazWeb.Models.Encadeamento>
+
+    @{
+        ViewBag.Titulo = "Execução Encadeada";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <!-- /.box -->
+    <div class="box box-comment">
+        <button type="button" class="btn btn-primary" id="hiddenRemover" style="display: none;">Remover</button>
+        <div class="box-header">
+            <a href="@Url.Action("Adicionar", "Encadeamento")" class="btn btn-block btn-success pull-right" style="width: 100px;">Criar</a>
+            <input type="button" class="btn btn-block btn-info pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Editar" id="btnEditar" />
+            <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+        </div>
+        <div class="box-body">
+            <table id="grid" class="table table-bordered table-striped dataTable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>
+                            @Html.DisplayName("Encadeamento")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd TestData")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd Cadastrada")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd Em Geração")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd Disponível")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd Erro")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd Reservada")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Qtd Utilizada")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Gerado Por")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Play")
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <div class="modal fade in" id="modal-play">
+        <div class="modal-dialog" style="margin-top:15%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Escolher Ambiente de Execução</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-4 form-group">
+                            @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
+                            @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirt, "IdAmbienteVirtual", "DescricaoAmbienteVirtual"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_maquina_virtual",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
+                            @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_tipo_fase_teste",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            @Html.Label("deseja_receber_status_via_telegram", "Receber Notificação via Telegram?")
+                            <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
+                                <option value='1'>Sim</option>
+                                <option value='0'>Não</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="ConfirmarEscolhaAmbiente" onclick="play()">Executar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @section scripts
+{
+        <script type="text/javascript" charset="utf-8">
+
+            var rowNumber = 0;
+
+
+            function Remover(ids) {
+
+                var num = ids;
+
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: '@Url.Action("Remover", "Encadeamento")',
+                    data: JSON.stringify(ids),
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+
+                        $.MessageBoxOK({
+                            mensagem: data,
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function (status) {
+                                //if (status == 0)
+                                    window.location = '@Url.Action("Index", "Encadeamento")';
+                            }
+                        });
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            alert(data.responseText);
+                        } else {
+                            alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            }
+
+            //Função ModalPlay, após click na imagem de paly do grid na Coluna Play ///////////////////////////////////
+            function ModalPlay(Id) {
+
+                var idEncadeamento = Id;
+
+                if (idEncadeamento === "" || idEncadeamento.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Datapool selecionado." });
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("GetDadosModalPlay", "Encadeamento")',
+                    type: 'POST',
+                    data: '{id:' + idEncadeamento + '}',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        $("#list_escolher_maquina_virtual").empty();
+                        var obj2 = JSON.parse(data.ambvirtu);
+
+                        obj2.forEach(function (o, index) {
+                            $("#list_escolher_maquina_virtual").append('<option value="' + o.IdAmbienteVirtual + '">' + o.DescricaoAmbienteVirtual + '</option>');
+                        });
+
+                        if (data.ambvirtu == "[]") {
+                            {
+                                $.MessageBoxOK({ mensagem: "Não existe ambiente disponível para execução." });
+                            }
+                        } else {
+                            $('#modal-play').modal('show');
+                        }
+                    },
+                    error: function (erro) {
+                        $.MessageBoxOK({ mensagem: "Erro ao carregar os dados do Ambiente de Execução." });
+                    }
+                });
+            }
+            //Fim da função ModalPlay ////////////////////////////////////////////////////////////////////
+
+            //Função Play ao clicar no botão executar ////////////////////////////////////////////////////
+            function play() {
+
+                //var idEncadeamento = $('table.display:visible').find('tr.selected').find('input.hidden-encadeamento-id').map(function (idx, elem) {
+                //    return $(elem).val();
+                //}).get();
+                var idEncadeamento = $('#grid').find('tr.selected').find('td').eq(0).find('input').val();
+
+                var idFaseTeste = $('#list_escolher_tipo_fase_teste').val();
+                var notificacaoTelegram = $('#opcaoNotificacaoTelegram').val() == 1 ? true : false;
+                var idMaquinaVirtual = $('#list_escolher_maquina_virtual').val();
+
+                //var idAmbienteExecucao = $('#list_escolher_ambiente').val();
+                if (idEncadeamento === "" || idEncadeamento.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Encadeamento selecionado." });
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Play", "Encadeamento")',
+                    type: 'POST',
+                    data: "{Ids:" + idEncadeamento + ", idFaseTeste:" + idFaseTeste + ", idMaquinaVirtual:" + idMaquinaVirtual + ", NotificacaoTelegram:" + notificacaoTelegram + "}",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-play').modal('toggle');
+                        $.MessageBoxOK({ mensagem: data.Data });
+                    },
+                    error: function (erro) {
+                        $.MessageBoxOK({ mensagem: "Não foi possível iniciar a execução." });
+                    }
+                });
+            }
+            // fim da função Play() /////////////////////////////////////////////////////////////////////
+
+            $(document).ready(function () {
+
+                $(".ul li").removeClass("active");
+                $('#Ambiente').addClass('active');
+
+                $("#btnEditar").click(function () {
+
+                    var id = $('#grid').find('tr.selected').find('td').eq(0).find('input').val();
+
+                    var link = '@Url.Action("Editar", "Encadeamento", new { idEncadeamento = 1 })';
+                    link = link.replace("1", id);
+                    window.location = link;
+                });
+
+                $('#btnExcluir').click(function () {
+
+                    var ids = [];
+
+                    var id = $('#grid').find('tr.selected').find('input#idEncadeamento').each(function (idx, elem) {
+                        ids.push($(elem).val());
+                    });
+
+                    //var id = $('#grid').find('tr.selected').find('td').eq(0).find('input').val();
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhum registro selecionado." });
+                        return;
+                    }
+
+                    $.MessageBoxSimNao({
+                        titulo: "Remover Encadeamento",
+                        mensagem: "Confirma remoção do Encadeamento?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            Remover(ids);
+                        }
+                    });
+                });
+
+
+                $('#grid').DataTable({
+
+                    "processing": true,
+                    "serverSide": true,
+                    ajax: {
+                        url: "@Url.Action("CarregarEncadeamento", "Encadeamento")",
+                        type: "POST",
+                        data: function (d) {
+                            return $.extend(d, {
+                                idTDM: $("#tdm-processar").val()
+                            });
+                        }
+                    },
+                    order: [[7, "desc"]],
+                    //select: {
+                    //    style: 'os',
+                    //    selector: 'td:not(.column-play)'
+
+                    //},
+                    columns: [
+                        {
+                            data: "IdEncadeamento",
+                            name: "IdEncadeamento",
+                            render: function (data, type, row) {
+                                return '<input class="hidden-encadeamento-id" data-val="true" id="idEncadeamento" name="item.Id" type="hidden" value="' + data + '">';
+                            }
+
+                        },
+                        {
+                            data: "Descricao",
+                            name: "Descricao",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="Descricao">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+
+
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "qtdTds",
+                            name: "qtdTds",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QTD TestData">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+
+
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "QtdCadastrada",
+                            name: "QtdCadastrada",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QtdCadastrada">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+
+
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "QtdEmGeracao",
+                            name: "QtdEmGeracao",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QtdEmGeracao">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
+                                return data;
+                            }
+                        },
+
+                        {
+                            data: "QtdDisponivel",
+                            name: "QtdDisponivel",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QtdDisponivel">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "QtdErro",
+                            name: "QtdErro",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QtdErro">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "QtdReservada",
+                            name: "QtdReservada",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QtdReservada">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "QtdUtilizada",
+                            name: "QtdUtilizada",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="QtdUtilizada">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
+                                return data;
+                            }
+                        },
+                        {
+                            data: "GeradoPor",
+                            name: "GeradoPor",
+                            render: function (data, type, row) {
+                                if (type === 'display') {
+
+                                    if (data !== null) {
+                                        return '<div class="text-desc" name="GeradoPor">' + data + '</div>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+
+                                return data;
+                            }
+                        },
+                       {
+
+                           data: "QtdEmGeracao",
+                           name: "QtdEmGeracao",
+                           render: function (data, type, row) {
+                               if (type === 'display') {
+
+                                   if (data > 0) {
+                                       return '<center><img src="@Url.Content("~/Assets/Images/media_stop.png")" height="20" id="btnPlay" value="' + row.IdEncadeamento + '" onclick="paraExecucaoDatapool(' + row.IdEncadeamento + ')"/></center>';
+                                   } else {
+                                       return '<center><img src="@Url.Content("~/Assets/Images/media_play_green.png")" height="20" id="btnPlay" value="' + row.IdEncadeamento + '" onclick="ModalPlay(' + row.IdEncadeamento + ')"/></center>';
+                                   }
+
+                               }
+
+                               return "";
+                           }
+                       },
+                    ],
+                    "iDisplayLength": 50,
+                    "aLengthMenu": [5, 50, 500, 1000, 10000],
+
+                    columnDefs: [
+                        {
+                            targets: [0],
+                            sortable: false,
+                            order: false,
+                            width: '3%',
+                            class: 'details-control',
+                        },
+                        {
+                            targets: [1],
+                            sortable: true,
+                            width: '22%',
+                        },
+                        {
+                            targets: [2],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [3],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [4],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [5],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [6],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [7],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [8],
+                            sortable: true,
+                            width: '8%'
+                        },
+                        {
+                            targets: [9],
+                            sortable: true,
+                            width: '12%'
+                        },
+                        {
+                            targets: [10],
+                            sortable: false,
+                            order: false,
+                            width: '7%'
+                        },
+                    ],
+                    aoColumnDef: [
+                       null,
+                       { "sSortDataType": "dom-text", "sType": 'string' },
+                       null
+                    ],
+
+                    aoColumnDef: [
+                        null,
+                        { "sSortDataType": "dom-text", "sType": 'string' },
+                        null
+                    ],
+                    order: [[1, "asc"]],
+                    oLanguage: {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                        "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sInfoThousands": ".",
+                        "sLengthMenu": "_MENU_ resultados por página",
+                        "sLoadingRecords": "Carregando...",
+                        "sProcessing": "Processando...",
+                        "sZeroRecords": "Nenhum registro encontrado",
+                        "sSearch": "Pesquisar",
+                        "oPaginate": {
+                            "sNext": "Próximo",
+                            "sPrevious": "Anterior",
+                            "sFirst": "Primeiro",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
+                    }
+                });
+
+                var detailRows = [];
+                var idDataTable = "";
+
+                var oTable = $('#grid').DataTable();
+
+                $('#grid tbody').on('click', 'tr td', function () {
+                    var col = 0;
+
+                    if (oTable.cell(this).index() != undefined)
+                        col = oTable.cell(this).index().column;
+
+                    if (col != 0) {
+                        oTable.$('tr.selected').removeClass('selected');
+                        $(this).parent().toggleClass('selected');
+                    }
+
+                    //var row = oTable.row(pos).data();
+                    //console.log(row);
+                });
+
+                $('#grid tbody').on('click', 'tr td.details-control', function () {
+                    var tr = $(this).closest('tr');
+                    var row = $('#grid').DataTable().row(tr);
+                    var idx = $.inArray(tr.attr('id'), detailRows);
+
+                    var dataTestDatas = [];
+                    dataTestDatas.push($(this).find('input[name="item.Id"]').val());
+
+                    var dataParametros = [];
+
+                    if (row.child.isShown()) {
+                        tr.removeClass('details');
+                        //tr.addClass('selected');
+                        row.child.hide();
+
+                        // Remove from the 'open' array
+                        detailRows.splice(idx, 1);
+                    } else {
+                        tr.addClass('details');
+                        tr.addClass('selected');
+                        row.child(montarGridTestDatas(dataTestDatas)).show();
+                    }
+
+                });
+
+
+
+                function addLinha(campos) {
+                    var iniLinha = "<div class=\"row\">";
+                    var linha = "";
+                    var fimLinha = "</div>";
+                    for (var i = 0; i < campos.length; i++) {
+                        linha += campos[i];
+                    }
+
+                    return iniLinha + linha + fimLinha;
+                }
+
+                function montarParametros(IdTestData) {
+
+                    var div = $('<div id="parametros' + IdTestData[0] + '"' + '><div/>')
+                          .addClass('loading')
+                          .text('Loading...');
+
+
+                    var linhas = "";
+
+                    $.ajax({
+                        url: '@Url.Action("CarregarParametros", "Encadeamento")',
+                        type: "POST",
+                        data: "{\"idTestData\":\"" + IdTestData[0] + "\"}",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (json) {
+
+                            var $divProdutos = $('#parametros' + IdTestData[0]);
+                            var obj = JSON.parse(json);
+
+                            var divForm = "<form action='/TestData/SalvarEdicao' class='formLoading' enctype='multipart/form-data' id='form-test-data' method='post'>    <input type='hidden' name='MAX_FILE_SIZE' value='314572800'>";
+                            var idGridParametros = 'gridParametros' + IdTestData[0];
+
+                            paramEntrada = "<div class='box box-primary' id='box-parametros-entrada'><div class='box-header with-border'><h3 class='box-title'>Parâmetros de Entrada</h3></div><div class='box-body' id='parametros-entrada'>";
+                            paramSaida = "<div class='box box-primary' id='box-parametros-saida'><div class='box-header with-border'><h3 class='box-title'>Parâmetros de Saída</h3></div><div class='box-body' id='parametros-saida'>";
+
+                            var input = "";
+                            var linhaSaida = "";
+                            var linhaEntrada = "";
+                            var contSaida = 1;
+                            var contEntrada = 1;
+                            var total = obj.length;
+                            var totalEntrada = 0;
+                            var totalSaida = 0;
+                            var divParametro;
+                            var contParametroEntrada = false;
+                            var contParametroSaida = false;
+
+
+                            obj.forEach(function (o, index) {
+                                if (o.IdTipoParametro == 2) {
+                                    totalSaida++;
+                                    contParametroSaida = true;
+
+                                } else {
+                                    totalEntrada++;
+                                    contParametroEntrada = true;
+                                }
+                            });
+
+                            var camposEntrada = [];
+                            var camposSaida = [];
+                            var readOnly = "";
+                            var asteristico = "";
+
+                            obj.forEach(function (o, index) {
+
+                                if (o.Obrigatorio == true) {
+                                    asteristico = "required";
+                                } else {
+                                    asteristico = "";
+                                }
+
+                                switch (o.Tipo) {
+                                    case "NUMBER":
+                                        input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico + ">" + o.Descricao + "</label><input readonly IdParametroScript=" + o.IdParametroScript + " idValor=" + o.Id + " tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" onkeypress=\"if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;\" value=\"" + o.Valor + "\" class=\"form-control\" id=\"" + o.Descricao + "\"  " + (o.IdTipoParametro == 1 ? "" : "readonly") + " /></div>";
+                                        break;
+                                    case "DATE":
+                                        input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico + ">" + o.Descricao + "</label><div class=\"input-group date\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div><input  readonly IdParametroScript=" + o.IdParametroScript + " idValor=" + o.Id + " tipo=\"parametro\" name=\"" + o.Descricao + "\" class=\"form-control pull-right\" data-val=\"true\" data-val-date=\"The field DataSolicitacao must be a date.\" data-val-required=\"The DataSolicitacao field is required.\" name=\"DataSolicitacao\" " + (o.IdTipoParametro == 1 ? "" : "readonly") + " type=\"text\" data-mask=\"00/00/0000\" id=\"data-parametro\" value=\"" + o.Valor + "\" aria-required=\"true\"  aria-invalid=\"false\"></div></div>";
+                                        break;
+                                    default:
+                                        input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico + ">" + o.Descricao + "</label><input readonly  IdParametroScript=" + o.IdParametroScript + " idValor=" + o.Id + " tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" value=\"" + o.Valor + "\" class=\"form-control\" id=\"" + o.Descricao + "\" " + (o.IdTipoParametro == 1 ? "" : "readonly") + " /></div>";
+                                        break;
+                                }
+
+                                if (o.IdTipoParametro == 1) {
+                                    camposEntrada.push(input);
+                                } else {
+                                    camposSaida.push(input);
+                                }
+                            });
+
+                            //adicionando parâmetros de entrada
+                            if (camposEntrada.length > 0) {
+                                var ultimaPosicao = 0;
+                                var qtdLinhaExtra = camposEntrada.length < 3 ? 0 : Math.round(camposEntrada.length % 3);
+                                var qtdLinha = camposEntrada.length < 3 ? 1 : Math.round(camposEntrada.length / 3);
+
+
+                                for (var i = 0; i < qtdLinha; i++) {
+                                    var campos = [];
+                                    for (var j = 0; j < 3; j++) {
+                                        if (camposEntrada[ultimaPosicao] != undefined) {
+                                            campos[j] = camposEntrada[ultimaPosicao];
+                                            ultimaPosicao++;
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    var linha = addLinha(campos);
+                                    paramEntrada += linha;
+                                }
+
+                                if (camposEntrada.length > 3) {
+                                    for (var i = 0; i < qtdLinhaExtra; i++) {
+                                        var campos = [];
+                                        for (var j = 0; j < 3; j++) {
+                                            if (camposEntrada[ultimaPosicao] != undefined) {
+                                                campos[j] = camposEntrada[ultimaPosicao];
+                                                ultimaPosicao++;
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                        var linha = addLinha(campos);
+                                        paramEntrada += linha;
+                                    }
+                                }
+                                paramEntrada += "</div></div>";
+
+
+                            } else {
+                                $("#box-parametros-entrada").toggle();
+                            }
+
+                            //adicionando parâmetros de saida
+                            if (camposSaida.length > 0) {
+                                var ultimaPosicao = 0;
+                                var qtdLinhaExtra = camposSaida.length < 3 ? 0 : Math.round(camposSaida.length % 3);
+                                var qtdLinha = camposSaida.length < 3 ? 1 : Math.round(camposSaida.length / 3);
+
+
+                                for (var i = 0; i < qtdLinha; i++) {
+                                    var campos = [];
+                                    for (var j = 0; j < 3; j++) {
+                                        if (camposSaida[ultimaPosicao] != undefined) {
+                                            campos[j] = camposSaida[ultimaPosicao];
+                                            ultimaPosicao++;
+                                        } else {
+                                            break;
+                                        }
+
+                                    }
+                                    var linha = addLinha(campos);
+                                    div.append(linha);
+                                }
+
+                                if (camposSaida.length > 3) {
+                                    for (var i = 0; i < qtdLinhaExtra; i++) {
+                                        var campos = [];
+                                        for (var j = 0; j < 3; j++) {
+                                            if (camposSaida[ultimaPosicao] != undefined) {
+                                                campos[j] = camposSaida[ultimaPosicao];
+                                                ultimaPosicao++;
+                                            } else {
+                                                break;
+                                            }
+
+                                        }
+                                        var linha = addLinha(campos);
+                                        paramSaida += linha;
+                                    }
+                                }
+                                paramSaida += "</div></div>";
+                                divForm += paramEntrada + paramSaida + "</form>";
+
+
+                            } else {
+                                $("#box-parametros-saida").toggle();
+                            }
+
+                            $divProdutos.removeClass('loading');
+                            $divProdutos.html(divForm);
+                        }
+                    });
+
+                    return div;
+                }
+
+
+
+                function montarGridTestDatas(d) {
+                    //<div class="box box-default" data-widget="box-widget">
+                    var div = $('<div id="testDatas' + d[0] + '"' + ' ><div/>')
+                          .addClass('loading')
+                          .text('Loading...');
+
+                    var linhas = "";
+
+                    $.ajax({
+                        url: '@Url.Action("CarregarTestDatas", "Encadeamento")',
+                        type: "POST",
+                        data: "{\"idEncadeamento\":\"" + d[0] + "\"}",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (json) {
+
+                            var $divProdutos = $('#testDatas' + d[0]);
+                            var obj = JSON.parse(json);
+
+
+
+                            idDataTable = 'gridTestDatas' + d[0];
+                            //<div class="box box-default" data-widget="box-widget">
+
+                            //input = "<div class='box box-primary' data-widget='box-widget'><h3 class='box-title'>TestDatas</h3></div>";
+                            var input = "";
+                            //input += "<div class='box-body'>";
+                            //
+                            input += "<table id='" + idDataTable + "' class='ui celled table' style='width: 100%'><thead><tr><th>ID</th><th>Evidência</th><th>Datapool</th><th>Sistema</th><th>Nº Caso de Teste</th><th>Massa de Dados</th><th>Data de Geração</th><th>Status</th><th>Ordem</th></tr></thead><tbody>";
+
+
+                            var DataGeracao = "";
+                            var CaminhoEvidencia = "";
+
+                            obj.forEach(function (o, index) {
+
+                                DataGeracao = "";
+                                CaminhoEvidencia = "";
+
+                                if (o.DataGeracao != null) {
+                                    DataGeracao = o.DataGeracao;
+                                }
+                                if (o.CaminhoEvidencia != null) {
+                                    CaminhoEvidencia = "<div id='evidencia'><img id='imgAnexo' src='/Assets/Images/Attachment.png' width='23' height='23' border='0'></div>";
+                                }
+
+                                input += "<tr role='row' class='odd'>";
+                                input += "<input class='hidden-id' data-val='true' data-val-number='The field Id must be a number.' data-val-required='O campo Id é obrigatório.' id='idTestData' name='testData.Id' type='hidden' value='" + o.IdTestData + "'>";
+                                input += "<td>" + o.IdTestData + "</td><td>" + CaminhoEvidencia + "</td><td>" + o.DescricaoDataPool + "</td><td>" + o.DescricaoAut + "</td><td>" + o.CasoTesteRelativo + "</td><td>" + o.Descricao + "</td><td>" + DataGeracao + "</td><td>" + o.DescricaoStatus + "</td><td>" + o.OrdemEncadeamento + "</td>";
+
+
+                                input += "</tr>";
+
+                                rowNumber++;
+                                DataGeracao = "";
+                                CaminhoEvidencia = "";
+                            });
+
+                            input += "</tbody></table>";
+
+                            //adicionando parâmetros de entrada
+
+                            $divProdutos.removeClass('loading');
+                            $divProdutos.html(input);
+
+                            $('#' + idDataTable).DataTable({
+                                searching: false,
+                                paging: false,
+                                info: false,
+                                columnDefs: [
+                                    {
+                                        targets: [0], //coluna ID
+                                        sortable: true,
+                                        width: '3%',
+                                    },
+                                    {
+                                        targets: [1],// Coluna Evidência
+                                        sortable: true,
+                                        width: '3%'
+                                    },
+                                    {
+                                        targets: [2], // Coluna Datapool
+                                        sortable: true,
+                                        width: '20%'
+                                    },
+                                    {
+                                        targets: [3], //Coluna Sistema
+                                        sortable: true,
+                                        width: '10%'
+                                    },
+                                    {
+                                        targets: [4], //coluna Nº CT
+                                        sortable: true,
+                                        width: '10%'
+                                    },
+                                    {
+                                        targets: [5], // coluna Massa de dados
+                                        sortable: true,
+                                        width: '20%'
+                                    },
+                                    {
+                                        targets: [6], //coluna DT de Geração
+                                        sortable: true,
+                                        width: '10%'
+                                    },
+                                    {
+                                        targets: [7], //coluna Status
+                                        sortable: true,
+                                        width: '10%'
+                                    },
+                                    {
+                                        targets: [8], //coluna ordem
+                                        sortable: true,
+                                        width: '3%'
+                                    },
+                                ],
+                                order: [[0, "asc"]],
+                                oLanguage: {
+                                    "sEmptyTable": "Nenhum registro encontrado",
+                                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                                    "sInfoPostFix": "",
+                                    "sInfoThousands": ".",
+                                    "sLengthMenu": "_MENU_ resultados por página",
+                                    "sLoadingRecords": "Carregando...",
+                                    "sProcessing": "Processando...",
+                                    "sZeroRecords": "Nenhum registro encontrado",
+                                    "sSearch": "Pesquisar",
+                                    "oPaginate": {
+                                        "sNext": "Próximo",
+                                        "sPrevious": "Anterior",
+                                        "sFirst": "Primeiro",
+                                        "sLast": "Último"
+                                    },
+                                    "oAria": {
+                                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    return div;
+                }
+
+                var table = $('#grid').DataTable();
+
+            });
+        </script>
+    }

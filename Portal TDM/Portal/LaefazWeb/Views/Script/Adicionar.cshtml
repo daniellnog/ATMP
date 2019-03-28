@@ -1,0 +1,817 @@
+﻿@using TDMWeb.Extensions
+@model LaefazWeb.Models.VOs.ScriptVO
+@{
+    ViewBag.Titulo = "Script";
+}
+
+@section styles {
+    @Styles.Render("~/Asset/Vendor/jquery-upload-file/css")
+
+    <style type="text/css">
+        .select2-dropdown .select2-search__field:focus, .select2-search--inline .select2-search__field:focus {
+            outline: none;
+            border: 1px solid #ffffff;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("Salvar", "Script", FormMethod.Post, new { @id = "form-test-data", @class = "formLoading", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Adicionar Script</h3>
+        </div>
+        <div class="box-body">
+
+            <div class="row">
+                <input type="hidden" id="idParamEntrada" name="ParametrosEntrada" value="">
+                <input type="hidden" id="idParamSaida" name="ParametrosSaida" value="">
+                <div class="col-xs-3 form-group">
+                    @Html.Label("descricao", "Descrição")
+                    @Html.TextBoxFor(m => m.Script.Descricao, new { @class = "form-control", required = "required", @id = "Descricao" })
+                </div>
+                <div class="col-xs-3 form-group">
+                    @Html.HiddenFor(m => m.Script.IdAUT, new { Id = "IdAUT" })
+                    @Html.Label("aut", "AUT")
+                    @Html.DropDownList("listaAUT", new SelectList(ViewBag.ListaAUT, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control",
+                   //@id = "list-script",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                        )
+                </div>
+                <div class="col-xs-3 form-group">
+                    @Html.Label("nome_tecnico", "Nome Técnico do Script")
+                    @Html.TextBoxFor(m => m.Script_CondicaoScript.NomeTecnicoScript, new { @class = "form-control", required = "required", @id = "NomeTecnicoScript" })
+                </div>
+                <div class="col-xs-3 form-group">
+                    @Html.Label("script_pai", "Script pai")
+                    @Html.DropDownList("listScriptPai", new SelectList(ViewBag.ListaScriptPai, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control",
+                   @id = "list-script-pai",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               }
+                       )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3 form-group">
+                    @Html.Label("condicao_script", "Condição Script")
+                    @Html.DropDownList("listCondicaoScript", new SelectList(ViewBag.CondicaoScript, "Id", "Descricao"), "N/A", new
+               {
+                   @class = "form-control",
+                   @id = "list-condicao-script",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               }
+                        )
+
+                </div>
+                <div class="col-xs-3 form-group">
+                    @Html.Label("ambienteexec", "Ambiente de Execução")
+                    @Html.DropDownList("listambientesexec", new SelectList(ViewBag.ListaAmbientesExec, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control select2 select2-hidden-accessible",
+                   @multiple = "",
+                   @tabindex = "-1",
+                   @id = "list-ambientes-exec",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                        )
+                </div>
+                <div class="col-xs-3 form-group">
+                    <input type="hidden" id="viewBagTipoDadoParametro" data-value="@ViewBag.TipoDadoParametro" />
+                    @Html.Label("ambientevirtual", "Ambiente Virtual")
+                    @Html.DropDownList("listambientesvirtual", new SelectList(ViewBag.ListaAmbientesVirtual, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control select2 select2-hidden-accessible",
+                   @multiple = "",
+                   @tabindex = "-1",
+                   @id = "list-ambientes-virtual",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                       )
+                </div>
+                <div class="col-xs-3 form-group">
+                    @Html.Label("tempo_estimado", "Tempo estimado (h:m)")
+                    <input type="text" name="tempoEstimado" class="form-control pull-right timepicker" id="tempo-estimado">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 form-group">
+                    @Html.Label("param-entrada", "Parâmetros de Entrada")
+                    @Html.DropDownList("ListaParametrosEntrada", new SelectList(ViewBag.ListaParametros, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control select2 select2-hidden-accessible",
+                   @multiple = "",
+                   @tabindex = "-1",
+                   @id = "list-param-entrada",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               }
+                        )
+                </div>
+                <div class="col-xs-6 form-group">
+                    <input type="hidden" id="viewBagTipoDadoParametro" data-value="@ViewBag.TipoDadoParametro" />
+                    @Html.Label("param-saida", "Parâmetros de Saída")
+                    @Html.DropDownList("ListaParametrosSaida", new SelectList(ViewBag.ListaParametros, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control select2 select2-hidden-accessible",
+                   @multiple = "",
+                   @tabindex = "-1",
+                   @id = "list-param-saida",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               }
+                       )
+                </div>
+            </div>
+            <div class="box-footer" align="right">
+                <a href="@Url.Action("Index", "Script")" class="btn btn-danger" id="cancelar">Cancelar</a>
+                <input type='button' class='btn btn-primary' id="salvarScript" value='Salvar' />
+                @*<button type="submit" class="btn btn-primary" id="submit-form">Salvar</button>*@
+                <a class="btn btn-success" id="novo-parametro">Novo Parâmetro</a>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="box box-primary" id="box-parametros">
+        <div class="box-header with-border">
+            <h4 class="box-title">Configurações dos Parâmetros</h4>
+            <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Parâmetro")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Tipo")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Valor Padrão")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Obrigatório")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Visível em Tela")
+                        </th>
+                        @*<th>
+                                @Html.DisplayName("Status")
+                            </th>*@
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade in" id="modal-novo-parametro">
+        <div class="modal-dialog" style="margin-top:15%">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="modal-form">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Adicionar Parâmetro</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-4 form-group">
+                                    @Html.Label("descricao", "Descrição")
+                                    @Html.TextBox("descricao", null, new { @id = "idDescricao", @class = "form-control", required = "required" })
+
+                                </div>
+                                <div class="col-xs-4 form-group">
+                                    @Html.Label("nome-tecnico-tosca", "Nome Técnico Tosca")
+                                    @Html.TextBox("colunaTecnicaTosca", null, new { @id = "idNomeTecnico", @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-xs-4 form-group">
+                                    @Html.Label("tipo-de-dado", "Tipo de dado")
+                                    @Html.DropDownList("tipo_dado_parametro", new SelectList(ViewBag.TipoDadoParametro, "Id", "Descricao"), "", new
+                               {
+                                   @class = "form-control",
+                                   @id = "list_tipo_dado_parametro",
+                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                   @required = "required",
+                               }
+                                        )
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer" align="right">
+                            <button type="button" id="CancelarNovoParametro" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="NovoParametro" onclick="confirmarNovoParametro()">Salvar</button>
+                        </div>
+                        <!-- /.box-body -->
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+}
+<!-- /.box -->
+@section scripts
+{
+    @Styles.Render("~/Asset/Vendor/jquery-upload-file/js")
+
+    <script type="text/javascript">
+
+        //variaveis globais
+        var script =
+           {
+               Id: null,
+               IdScriptPai: null,
+               IdAUT: null,
+               Descricao: null,
+           };
+
+        var scriptCondicaoScript =
+            {
+                Id: null,
+                IdScript: null,
+                IdCondicaoScript: null,
+                QueryTosca: null,
+                ListaExecucaoTosca: null,
+                CaminhoArquivoTCS: null,
+                DiretorioRelatorio: null,
+                TempoEstimadoExecucao: null,
+                NomeTecnicoScript: null,
+            };
+
+        //var ambienteExecucao =
+        //    {
+        //        Id: null,
+        //        Descricao: null,
+        //    };
+
+        //var ambienteVirtual =
+        //    {
+        //        Id: null,
+        //        Descricao: null,
+        //    };
+
+        //var parametroVO = {
+        //    Descricao : null,
+        //    IdParametroScript:null,
+        //    IdParametro : null,
+        //    IdTipoParametro : null,
+        //    Tipo : null,
+        //    Obrigatorio: null,
+        //    IdScript_CondicaoScript: null,
+        //    ColunaTecnicaTosca : null,
+        //    ValorParametroDefault : null,
+        //    VisivelEmTela : null,
+        //    ValorDefault: null,
+        //}
+
+
+        var listaParametros = [];
+        var listaParametrosEntrada = [];
+        var listaParametrosSaida = [];
+        var listaAmbienteExecucao = [];
+        var listaAmbienteVirtual = [];
+
+        var scriptVO =
+            {
+                Script_CondicaoScript: scriptCondicaoScript,
+                Script: script,
+                AmbienteExecucao: listaAmbienteExecucao,
+                AmbienteVirtual: listaAmbienteVirtual,
+                ListaParametros: listaParametros,
+                ListaParametrosEntrada: listaParametrosEntrada,
+                ListaParametrosSaida: listaParametrosSaida,
+
+            };
+
+
+
+        $(document).ready(function () {
+            $('.select2').select2();
+            //searchBox();
+            initTable();
+
+        });
+
+        var dataSet1 = [
+            //{ parametro: 'ADDONS', tipo: 'Entrada', valor_default: '<input style="width:100%" id="valorDefault123" value="ABC" onchange=saveRow("ADDON",123,"valorDefault")></input><input type="hidden" id=param123></input>', obrigatorio: '<input type="checkbox" name=obrigatorio123 onclick=saveRow("ADDON",123,"obrigatorio") checked>', visivel_em_tela: '<input type="checkbox" name=visivel_em_tela123 onclick=saveRow("ADDON",123,"visivelEmTela") checked>' },
+            //{ parametro: 'ADDONS', tipo: 'Entrada', valor_default: '<input style="width:100%" id="valorDefault123" value="DEF" onchange=saveRow("ADDON",123,"valorDefault")></input><input type="hidden" id=param123></input>', obrigatorio: '<input type="checkbox" name=obrigatorio123 onclick=saveRow("ADDON",123,"obrigatorio") checked>', visivel_em_tela: '<input type="checkbox" name=visivel_em_tela123 onclick=saveRow("ADDON",123,"visivelEmTela") checked>' },
+            //{ parametro: 'ADDONS', tipo: 'Entrada', valor_default: '<input style="width:100%" id="valorDefault123" value="GHI" onchange=saveRow("ADDON",123,"valorDefault")></input><input type="hidden" id=param123></input>', obrigatorio: '<input type="checkbox" name=obrigatorio123 onclick=saveRow("ADDON",123,"obrigatorio") checked>', visivel_em_tela: '<input type="checkbox" name=visivel_em_tela123 onclick=saveRow("ADDON",123,"visivelEmTela") checked>' },
+        ];
+
+        var table;
+
+        function initTable() {
+
+            table = $('#grid').DataTable({
+                data: dataSet1,
+                retrieve: true,
+                order: [[0, "asc"]],
+                bPaginate: false,
+                columns: [
+                { data: "parametro" },
+                { data: "tipo" },
+                { data: "valor_default" },
+                { data: "obrigatorio" },
+                { data: "visivel_em_tela" },
+
+                ],
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                }
+            });
+            SortParametros();
+        }
+        //setando os valores do script
+        $('#Descricao').on('change', function (e) {
+            scriptVO.Script.Descricao = $('#Descricao').val();
+        });
+
+        $('#list-script').on('change', function (e) {
+            scriptVO.Script.IdAUT = $('#list-script').val();
+        });
+
+        $('#list-script-pai').on('change', function (e) {
+            scriptVO.Script.IdScriptPai = $('#list-script-pai').val();
+        });
+        //setando os valores do script_condicaoScript
+        $('#NomeTecnicoScript').on('change', function (e) {
+            scriptVO.Script_CondicaoScript.NomeTecnicoScript = $('#NomeTecnicoScript').val();
+        });
+        $('#list-condicao-script').on('change', function (e) {
+            scriptVO.Script_CondicaoScript.IdCondicaoScript = $('#list-condicao-script').val();
+        });
+        $('#tempo-estimado').on('change', function (e) {
+            scriptVO.Script_CondicaoScript.TempoEstimadoExecucao = $('#tempo-estimado').val();
+        });
+
+
+        //evento para quando adicionar um parametro de entrada, chamar a função de adicionar o mesmo parametro da tabela
+        $('#list-param-entrada').on('select2:select', function (e) {
+            var data = e.params.data;
+            var tipo = 'Entrada';
+
+            //atualizando objeto com os parametros de entrada
+            var parametroVOTemp = {
+                Descricao: data.text,
+                IdParametroScript: null,
+                IdParametro: data.id,
+                IdTipoParametro: null,
+                Tipo: tipo,
+                Obrigatorio: null,
+                IdScript_CondicaoScript: null,
+                ColunaTecnicaTosca: null,
+                ValorParametroDefault: null,
+                VisivelEmTela: null,
+                ValorDefault: null,
+            }
+
+            scriptVO.ListaParametrosEntrada.push(parametroVOTemp);
+            scriptVO.ListaParametros.push(parametroVOTemp);
+
+            AddTableRow(data.id, data.text, tipo);
+            RemoverParametroDaLista(data.id, data.text, tipo);
+
+
+
+        });
+        //evento para quando adicionar um parametro de saida, chamar a função de adicionar o mesmo parametro da tabela
+        $('#list-param-saida').on('select2:select', function (e) {
+            var data = e.params.data;
+            var tipo = 'Saída';
+
+            //atualizando objeto com os parametros de saida
+            var parametroVOTemp = {
+                Descricao: data.text,
+                IdParametroScript: null,
+                IdParametro: data.id,
+                IdTipoParametro: null,
+                Tipo: tipo,
+                Obrigatorio: null,
+                IdScript_CondicaoScript: null,
+                ColunaTecnicaTosca: null,
+                ValorParametroDefault: null,
+                VisivelEmTela: null,
+                ValorDefault: null,
+            }
+
+            scriptVO.ListaParametrosSaida.push(parametroVOTemp);
+            scriptVO.ListaParametros.push(parametroVOTemp);
+
+            AddTableRow(data.id, data.text, tipo);
+            RemoverParametroDaLista(data.id, data.text, tipo);
+
+
+
+        });
+
+
+        function RemoverParametroDaLista(idParam, nomeParam, tipoParam) {
+            if (tipoParam == 'Entrada') {
+                $('#list-param-saida option[value=' + idParam + ']').each(function () {
+                    $(this).remove();
+                })
+                return false;
+            } else {
+                $('#list-param-entrada option[value=' + idParam + ']').each(function () {
+                    $(this).remove();
+                })
+                return false;
+            }
+        }
+
+        // Função para salvar as alterações nas configurações dos parâmetros dinâmicamente
+        function saveRow(nomeParam, idParam, campo) {
+            nomeParam = nomeParam.replace("_", " ");
+            for (i = 0; i < dataSet1.length; i++) {
+                if (dataSet1[i].parametro == nomeParam) {
+                    if (campo == "valorDefault") {
+                        var selector = $('#' + "valorDefault" + idParam);
+                        var valor = selector.val();
+                        dataSet1[i].valor_default = '<input style="width:100%" name="valorDefault" id="valorDefault' + idParam + '" onchange=saveRow("' + nomeParam + '") value=' + valor + '></input><input type="hidden" id=param' + idParam + '>';
+                    } else if (campo == "obrigatorio") {
+                        if ($("input[name=obrigatorio" + idParam + "]").is(':checked')) {
+                            dataSet1[i].obrigatorio = '<input type="checkbox" checked name=obrigatorio' + idParam + ' onclick=saveRow("' + nomeParam + '",' + idParam + ',"obrigatorio")>'
+                        } else {
+                            dataSet1[i].obrigatorio = '<input type="checkbox" name=obrigatorio' + idParam + ' onclick=saveRow("' + nomeParam + '",' + idParam + ',"obrigatorio")>'
+                        }
+                    } else if (campo == "visivelEmTela") {
+                        if ($("input[name=visivel_em_tela" + idParam + "]").is(':checked')) {
+                            dataSet1[i].visivel_em_tela = '<input type="checkbox" checked name=visivel_em_tela' + idParam + ' onclick=saveRow("' + nomeParam + '",' + idParam + ',"visivelEmTela")>'
+                        } else {
+                            dataSet1[i].visivel_em_tela = '<input type="checkbox" name=visivel_em_tela' + idParam + ' onclick=saveRow("' + nomeParam + '",' + idParam + ',"visivelEmTela")>'
+                        }
+                    }
+                }
+            }
+            table.destroy();
+
+            initTable();
+
+            popularCamposHiddenParametros();
+        }
+
+        //função para reordenar o select dos parâmetros
+        function SortParametros() {
+
+            var optEntrada = $('#list-param-entrada option').sort(function (a, b) { return a.text.toUpperCase().localeCompare(b.text.toUpperCase()) });
+            $("#list-param-entrada").append(optEntrada);
+
+            var optSaida = $('#list-param-saida option').sort(function (a, b) { return a.text.toUpperCase().localeCompare(b.text.toUpperCase()) });
+            $("#list-param-saida").append(optSaida);
+
+        }
+
+        //função de adicionar os parametros na tabela.
+        function AddTableRow(idParam, nomeParam, tipo) {
+
+            var res = nomeParam.replace(" ", "_");
+
+            //var obj = { parametro: nomeParam, tipo: tipo, valor_default: '<input style="width:100%" name="valorDefault" id="valorDefault' + idParam + '" onchange=saveRow("' + res + '",' + idParam + ',"valorDefault")></input><input type="hidden" id=param' + idParam + '></input>', obrigatorio: '<input type="checkbox" name=obrigatorio' + idParam + ' onclick=saveRow("' + res + '",' + idParam + ',"obrigatorio") checked>', visivel_em_tela: '<input type="checkbox" name=visivel_em_tela' + idParam + ' onclick=saveRow("' + res + '",' + idParam + ',"visivelEmTela") checked>' };
+
+            var obj = { parametro: nomeParam, tipo: tipo, valor_default: '<input style="width:100%" name="valorDefault" id="valorDefault' + idParam + '" onchange=changeParameter(' + idParam + ')></input><input type="hidden" id=param' + idParam + '></input>', obrigatorio: '<input type="checkbox" name=obrigatorio' + idParam + ' onclick=changeParameter(' + idParam + ') checked>', visivel_em_tela: '<input type="checkbox" name=visivel_em_tela' + idParam + ' onclick=changeParameter(' + idParam + ') checked>' };
+
+            dataSet1.push(obj);
+
+            table.destroy();
+
+            initTable();
+
+
+            changeParameter(idParam);
+
+
+            return false;
+        }
+
+
+
+
+        //evento para quando remover um parametro de entrada, chamar a função de remover o mesmo parametro da tabela
+        $('#list-param-entrada').on('select2:unselecting', function (e) {
+            var data = e.params.args.data;
+            tipo = 'Entrada';
+            RemoveTableRow(data.id, data.text, tipo);
+
+            //atualizando objeto com os parametros de saida
+            removeParameterArray(scriptVO.ListaParametrosEntrada, data.id);
+
+        });
+        //evento para quando remover um parametro de saída, chamar a função de remover o mesmo parametro da tabela
+        $('#list-param-saida').on('select2:unselecting', function (e) {
+            var data = e.params.args.data;
+            tipo = 'Saida';
+            RemoveTableRow(data.id, data.text, tipo);
+
+            //atualizando objeto com os parametros de saida
+            removeParameterArray(scriptVO.ListaParametrosSaida, data.id);
+
+        });
+        //função para remover as linhas da tabela de acordo com o parametro que foi removido
+        function RemoveTableRow(idParam, nomeParam, tipoParam) {
+
+            //percorrendo o array de parametros e buscando o parâmetro a ser excluído
+            for (i = 0; i < dataSet1.length; i++) {
+                if (dataSet1[i].parametro == nomeParam) {
+                    dataSet1.splice(i, 1)
+                }
+            }
+
+            //adicionando o parâmetro de volta à lista dos parametros
+            if (tipoParam == 'Entrada') {
+                $('#list-param-saida').append('<option value=' + idParam + '>' + nomeParam + '</option>');
+            } else {
+                $('#list-param-entrada').append('<option value=' + idParam + '>' + nomeParam + '</option>');
+            }
+
+            //destruindo a instância do datatable
+            table.destroy();
+            //reiniciando a instância do datatable agora com os parâmetros atualizados
+            initTable();
+
+            return false;
+        }
+
+        function changeParameter(idParam) {
+            var obrigatorio = $('input[name=obrigatorio' + idParam).is(':checked');
+            var visivelEmTela = $('input[name=visivel_em_tela' + idParam).is(':checked');
+            var valorDefault = $('#valorDefault' + idParam).val();
+            var tipo = $('#valorDefault' + idParam).parent().parent().find("td").eq(1)[0].textContent;
+
+            if (tipo == 'Entrada') {
+                $.each(scriptVO.ListaParametrosEntrada, function (i, el) {
+                    if (this.IdParametro == idParam) {
+                        this.Obrigatorio = obrigatorio;
+                        this.VisivelEmTela = visivelEmTela;
+                        this.ValorDefault = valorDefault;
+                        this.IdParametroScript = 0;
+                        this.IdTipoParametro = 1;
+                        this.IdScript_CondicaoScript = 0;
+                    }
+                });
+            } else {
+                $.each(scriptVO.ListaParametrosSaida, function (i, el) {
+                    if (this.IdParametro == idParam) {
+                        this.Obrigatorio = obrigatorio;
+                        this.VisivelEmTela = visivelEmTela;
+                        this.ValorDefault = valorDefault;
+                        this.IdParametroScript = 0;
+                        this.IdTipoParametro = 0;
+                        this.IdScript_CondicaoScript = 0;
+                    }
+                });
+            }
+        }
+
+        $('#novo-parametro').click(function () {
+            $('#modal-novo-parametro').modal('show');
+        });
+
+        $('#list-ambientes-exec').on('select2:unselecting', function (e) {
+            var Id = e.params.args.data.id;
+            var Descricao = e.params.args.data.text;
+
+            var ambsExec = scriptVO.AmbienteExecucao;
+
+            var index = ambsExec.indexOf(ambsExec.find(x => x.Id == Id));
+            
+            if (index > -1) {
+                ambsExec.splice(index, 1);
+            }
+        });
+
+        $('#list-ambientes-exec').on('select2:select', function (e) {
+
+            var idAmbiente = e.params.data.id;
+            var text = e.params.data.text;
+
+            var AmbExec = {
+                "Id": idAmbiente,
+                "Descricao": text
+            };
+
+            scriptVO.AmbienteExecucao.push(AmbExec);
+        });
+
+        $('#list-ambientes-virtual').on('select2:select', function (e) {
+
+            var idAmbiente = e.params.data.id;
+            var text = e.params.data.text;
+
+            var AmbVirt = {
+                "Id": idAmbiente,
+                "Descricao": text
+            };
+
+            scriptVO.AmbienteVirtual.push(AmbVirt);
+        });
+
+        $('#list-ambientes-virtual').on('select2:unselecting', function (e) {
+            var Id = e.params.args.data.id;
+            var Descricao = e.params.args.data.text;
+
+            var ambsVirt = scriptVO.AmbienteVirtual;
+
+            var index = ambsVirt.indexOf(ambsVirt.find(x => x.Id == Id));
+
+            if (index > -1) {
+                ambsVirt.splice(index, 1);
+            }
+        });
+
+        function popularCamposHiddenParametros() {
+            //var arrayParamEntrada = new Array();
+            //var arrayParamSaida = new Array();
+
+            var parametrosEntrada = "";
+            var parametrosSaida = "";
+
+            if (dataSet1.length > 0) {
+                for (i = 0; i < dataSet1.length; i++) {
+                    var strValorDefault = dataSet1[i].valor_default.split('</input>');
+                    var str_replaced = strValorDefault[0].split('value=');
+                    var strIdParam = strValorDefault[1].split('param');
+
+                    var strObrigatorio = dataSet1[i].obrigatorio.split(')');
+                    var obrigatorio;
+                    if (strObrigatorio[1].indexOf('checked') == 1) {
+                        obrigatorio = 1;
+                    } else {
+                        obrigatorio = 0;
+                    }
+
+                    var strVisivelEmTela = dataSet1[i].visivel_em_tela.split(')');
+                    var visivelEmTela;
+                    if (strVisivelEmTela[1].indexOf('checked') == 1) {
+                        visivelEmTela = 1;
+                    } else {
+                        visivelEmTela = 0;
+                    }
+
+                    var idParam = strIdParam[1].substr(0, (strIdParam[1].length - 1));
+                    var valorDefault;
+                    if (str_replaced[1] != 'undefined' && str_replaced.length > 1) {
+                        valorDefault = str_replaced[1].substr(0, (str_replaced[1].length - 1));
+                    } else {
+                        valorDefault = "";
+                    }
+                    var nomeParam = dataSet1[i].parametro;
+                    var tipoParam = dataSet1[i].tipo;
+
+                    if (dataSet1[i].tipo == 'Entrada') {
+                        parametrosEntrada += idParam + "," + nomeParam + "," + tipoParam + "," + valorDefault + "," + obrigatorio + "," + visivelEmTela + "|";
+                    } else {
+                        parametrosSaida += idParam + "," + nomeParam + "," + tipoParam + "," + valorDefault + "," + obrigatorio + "," + visivelEmTela + "|";
+                    }
+                }
+            }
+
+            parametrosEntrada.substr(0, parametrosEntrada.length - 1);
+            parametrosSaida.substr(0, parametrosSaida.length - 1);
+
+            $('#idParamEntrada').val(parametrosEntrada);
+            $('#idParamSaida').val(parametrosSaida);
+        }
+
+        var options = {
+            now: "00:00", //hh:mm 24 hour format only, defaults to current time
+            twentyFour: true, //Display 24 hour format, defaults to false
+            upArrow: 'wickedpicker__controls__control-up', //The up arrow class selector to use, for custom CSS
+            downArrow: 'wickedpicker__controls__control-down', //The down arrow class selector to use, for custom CSS
+            close: 'wickedpicker__close', //The close class selector to use, for custom CSS
+            hoverState: 'hover-state', //The hover state class to use, for custom CSS
+            title: 'Tempo estimado de execução', //The Wickedpicker's title,
+            showSeconds: false, //Whether or not to show seconds,
+            secondsInterval: 1, //Change interval for seconds, defaults to 1  ,
+            minutesInterval: 15, //Change interval for minutes, defaults to 1
+            beforeShow: null, //A function to be called before the Wickedpicker is shown
+            show: null, //A function to be called when the Wickedpicker is shown
+            clearable: false, //Make the picker's input clearable (has clickable "x")
+        };
+
+        $('#tempo-estimado').wickedpicker(options);
+
+        function confirmarNovoParametro() {
+            var Descricao = $('#idDescricao').val() + '';
+            var NomeTecnico = $('#idNomeTecnico').val() + '';
+            var Tipo = $('#list_tipo_dado_parametro').val() + '';
+
+            $.ajax({
+                url: '@Url.Action("SalvarParametro", "Script")',
+                type: 'POST',
+                async: true,
+                cache: false,
+                data: "{'descricao':'" + Descricao.toString() + "', 'nome_tecnico':'" + NomeTecnico.toString() + "', 'tipo':'" + Tipo.toString() + "'}",
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    $('#modal-novo-parametro').modal('hide');
+                    // status retornado caso já exista um parâmetro com a descrição escolhida.
+                    if (result.Status == 16) {
+                        $.MessageBoxOK({
+                            mensagem: "Já existe um parâmetro com essa descrição.",
+                            argFuncao: result.Status,
+                            funcaoBotaoOK: function (status) {
+                                $('#idDescricao').val("");
+                                $('#idNomeTecnico').val("");
+                                $('#list_tipo_dado_parametro').val("");
+                                $('.modal').modal('hide');
+                            }
+                        });
+                    } else {
+                        $.MessageBoxOK({
+                            mensagem: "Parâmetro adicionado com sucesso",
+                            argFuncao: result.Status,
+                            funcaoBotaoOK: function (status) {
+                                listaDE = "<li data-draggable='item' value='0' class='ui-draggable ui-draggable-handle list-group-item' draggable='true' aria-grabbed='false' tabindex='0'>" + Descricao.toString() + "<input name='checkBox' descricao='" + Descricao.toString() + "' id='" + result.Id + "' colunaTecnica='" + NomeTecnico.toString() + "' type='checkbox' checked class='pull-right'></li>";
+                                $("#panel_left").append(listaDE);
+                                $('#idDescricao').val("");
+                                $('#idNomeTecnico').val("");
+                                $('#list_tipo_dado_parametro').val("");
+                                $('.modal').modal('hide');
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+                }
+            });
+        }
+
+        function removeParameterArray(array, IdParametro) {
+            $.each(array, function (i, el) {
+                if (this.IdParametro == IdParametro) {
+                    array.splice(i, 1);
+                }
+            });
+        }
+
+        $('#salvarScript').on('click', function () {
+            salvarScript();
+        });
+
+        function salvarScript() {
+
+            $("#Loading").show();
+
+
+            //popularCamposHiddenParametros();
+            //removendo o html do modal
+            $('#modal-novo-parametro').remove();
+
+            scriptVO.Script_CondicaoScript.Id = 0;
+            scriptVO.Script_CondicaoScript.IdScript = 0;
+
+            scriptVO.Script_CondicaoScript.IdScript = 0;
+            scriptVO.Script.Id = 0;
+
+            var myJSON = JSON.stringify(scriptVO);
+
+            $.ajax({
+                url: '@Url.Action("Salvar", "Script")',
+                type: 'POST',
+                async: true,
+                cache: false,
+                data: "{'scriptJson':'" + myJSON + "'}",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "true") {
+                        $("#Loading").fadeOut();
+                        $.MessageBoxOK({
+                            mensagem: "Script criado com sucesso.",
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function () {
+                                window.location = '@Url.Action("Index", "Script")';
+                            }
+                        });
+                    } else {
+                        $.MessageBoxOK({
+                            mensagem: "Erro ao salvar o Script.",
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function () {
+                                return;
+                            }
+                        });
+                        //$.MessageBoxOK({ mensagem: xhr + " - " + statusText + " - " + errorThrown });
+                    }
+                },
+                error: function (xhr, statusText, errorThrown) {
+                    $.MessageBoxOK({ mensagem: xhr + " - " + statusText + " - " + errorThrown });
+                }
+            });
+        }
+
+    </script>
+}

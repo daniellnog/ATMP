@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="5c2e66dd-7378-4397-b3c1-f4ec14539848" ChangeDateTime="12/21/2017 21:50:57">
+    <Property Name="ElementName" Value="[dbo].[Analise].[Descricao]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Analise]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdTipoMassa" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bb2a72ed-deb2-4b15-a95f-3cb3b799ad58" ChangeDateTime="12/22/2017 13:25:42">
+    <Property Name="ElementName" Value="[dbo].[Analise].[Observacao]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Analise]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Descricao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2d4e43a0-3108-4215-882b-c8996d6579ec" ChangeDateTime="12/27/2017 17:04:04">
+    <Property Name="ElementName" Value="[dbo].[Analise_TipoMassa].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Analise_TipoMassa]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdAnalise" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7b4703f6-cac2-47c2-9d74-60a35f25a683" ChangeDateTime="12/28/2017 19:40:19">
+    <Property Name="ElementName" Value="[dbo].[Ambiente].[ip]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ambiente]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IP" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="155cf62e-094e-4fb9-a21b-d791899a29b8" ChangeDateTime="12/28/2017 20:53:40">
+    <Property Name="ElementName" Value="[dbo].[Script].[Nome]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Script]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Arquivo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="47e5eac6-a7f5-45eb-b992-685ba78f5d22" ChangeDateTime="01/03/2018 20:43:29">
+    <Property Name="ElementName" Value="[dbo].[AmbienteUsuario].[StatusExecucao]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AmbienteUsuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdStatusExecucao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="752663a2-16a3-4330-bf5e-9c3a868dddc1" ChangeDateTime="01/05/2018 19:47:56">
+    <Property Name="ElementName" Value="[dbo].[Ambiente].[Usuario]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ambiente]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UsuarioAlteracao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="74200b01-8b9a-490c-a6c6-2635d55ad569" ChangeDateTime="01/11/2018 20:20:06">
+    <Property Name="ElementName" Value="[dbo].[DataPool].[Qtd]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DataPool]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="QtdSolicitada" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="29d1f710-bb1c-4268-a594-df922f6a686c" ChangeDateTime="01/22/2018 14:20:35">
+    <Property Name="ElementName" Value="[dbo].[AK_AUT_Column]" />
+    <Property Name="ElementType" Value="SqlUniqueConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[AUT]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[AK_AUT_Descricao]" />
+  </Operation>
+</Operations>

@@ -1,0 +1,90 @@
+﻿@using TDMWeb.Extensions
+@using TDMWeb.Models
+@model Analise
+
+@{
+    ViewBag.Title = "Análises";
+}
+
+@section styles {
+    <style type="text/css">
+        .form-control[readonly] {
+            background-color: white;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("SalvarEdicao", "Analises", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Editar Análise</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("descricao", "Descrição")
+                @Html.TextBoxFor(m => m.Descricao, new { @readonly = true, @class = "form-control" })
+                @Html.HiddenFor(m => m.Id, new { Id ="idAnalise" })
+                @*@Html.TextBox("descricao", null, new { @class = "form-control", required = "required" })*@
+            </div>
+            @Html.InputFile("estoque_inicial", "Estoque Inicial")
+            @Html.InputFile("estoque_final", "Estoque Final")
+            @Html.InputFile("entradas", "Entradas")
+            @Html.InputFile("saidas", "Saídas")
+            <!-- /input-group -->
+        </div>
+        <div class="box-footer" align="right">
+            @*<button type="reset" class="btn btn-danger">Cancelar</button>*@
+            <button type="submit" class="btn btn-primary">Importar</button>
+        </div>
+        <!-- /.box-body -->
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$("#parent-analise").select2({
+            //    placeholder: "Selecione a análise para aproveitar os produtos unificados...",
+            //    allowClear: true,
+            //    language: 'pt-BR'
+            //});
+
+            $('.custom-file-upload').each(function () {
+                var formGroup = this;
+
+                var fileElem = $(formGroup).find('input[type="file"]');
+
+                $(formGroup).find('.input-file-filename, .btn-selecionar-arquivo').click(function () {
+                    fileElem.click();
+                });
+
+                $(formGroup).find('.btn-limpar-arquivo').click(function () {
+                    fileElem.val('').change();
+                });
+
+                fileElem.change(function () {
+                    var input = document.getElementById(this.id);
+                    var filename = "";
+
+                    for (var i = 0; i < input.files.length; i++) {
+                        var filename = filename + "'" + input.files[i].name + "' ";
+                    }
+
+                    $(formGroup).find('.input-file-filename').val(filename);
+                    $(formGroup).find('.btn-limpar-arquivo').prop('disabled', filename.length == 0);
+                });
+            });
+
+            var MAX_FILE_SIZE = 314572800;
+            var fileRules = { filesize: MAX_FILE_SIZE };
+            var fileMessage = "Você deve selecionar um arquivo excel com no máximo " + (MAX_FILE_SIZE / 1024 / 1024) + " MB.";
+
+            $('form').validate({
+                rules: { estoque_inicial: fileRules, estoque_final: fileRules, entradas: fileRules, saidas: fileRules },
+                messages: { estoque_inicial: fileMessage, estoque_final: fileMessage, entradas: fileMessage, saidas: fileMessage }
+            });
+        });
+    </script>
+}

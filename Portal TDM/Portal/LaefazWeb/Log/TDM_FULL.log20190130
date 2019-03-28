@@ -1,0 +1,116 @@
+30-01-2019 10:52:28 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:52:28 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 35
+30-01-2019 10:52:28 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 35
+30-01-2019 10:52:28 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:52:32 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:52:32 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 76
+30-01-2019 10:52:32 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 76
+30-01-2019 10:52:32 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:52:36 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:52:36 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 5
+30-01-2019 10:52:36 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 5
+30-01-2019 10:52:36 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:52:47 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:52:47 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 129
+30-01-2019 10:52:47 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 129
+30-01-2019 10:52:47 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:52:57 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:52:57 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 130
+30-01-2019 10:52:57 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 130
+30-01-2019 10:52:57 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:53:03 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:53:03 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 125
+30-01-2019 10:53:03 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 125
+30-01-2019 10:53:03 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:53:20 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:53:20 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 160
+30-01-2019 10:53:20 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 160
+30-01-2019 10:53:20 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:53:24 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:53:24 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 140
+30-01-2019 10:53:24 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 140
+30-01-2019 10:53:24 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 2 registros.
+30-01-2019 10:53:25 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preenchimento dos parametros do testData executado com sucesso e foram retornados 17 registros.
+30-01-2019 10:53:25 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preenchimento dos parametros do testData executado com sucesso e foram retornados 17 registros.
+30-01-2019 10:54:13 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:54:13 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 119
+30-01-2019 10:54:13 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 119
+30-01-2019 10:54:13 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 0 registros.
+30-01-2019 10:54:16 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+30-01-2019 10:54:16 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 120
+30-01-2019 10:54:16 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 120
+30-01-2019 10:54:16 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - PROC 'PR_LISTAR_TESTDATA_ENCADEAMENTO' executada com sucesso e foram retornados 1 registros.
+30-01-2019 10:54:17 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preenchimento dos parametros do testData executado com sucesso e foram retornados 15 registros.
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Resultado Json: System.Web.Mvc.JsonResult
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Entrada na Condicao de objetos diferentes de Null.
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Parametros do ManterAgendamento: 
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAgendamento: 0
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - dtAgendamento: 2019-01-30T21:00
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idTestData: 5698
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idFaseTeste: 2
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idMaquinaVirtual: 3
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - opcaoTelegram: 0
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAmbienteExecucao: 1
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - rotinaDiaria: False
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Nova instancia do DbEntities criada com sucesso.
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Iniciando validação de disponibilidade...
+30-01-2019 11:00:10 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Entrada no metodo de Validar Disponibilidade de Ambiente.
+30-01-2019 11:00:10 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Ret: True
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAmbExec: 1
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAmbVirt: 3
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAgend: 0
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - date: 30/01/2019 21:00:00
+30-01-2019 11:00:10 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Capturado os Agendamentos.
+30-01-2019 11:00:10 [WARN ] (LaefazWeb.Controllers.AgendamentoController - line 115) - Não foi possível detalhar um objeto.
+30-01-2019 11:00:10 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Retornando o valor de Ret: True
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Ambiente disponivel: True
+30-01-2019 11:00:10 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - O ambiente encontra-se disponivel para execucao...
+30-01-2019 11:00:10 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Foi verificado que a acão é um cadastro de um agendamento novo.
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Criando novo agendamento
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Qtd de TestData: 1
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - dtInicioAgen: 30/01/2019 21:00:00
+30-01-2019 11:00:10 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - IdTdTemp: 5698
+30-01-2019 11:00:11 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 50) - TestData: TestData_D6DE2DC1F2ED235617BAC29763778D6A37C5D7E85D32057AF8F3343919415816[{'Object':'Agendamento_TestData','Object':'DataPool','Object':'Encadeamento_TestData','Execucao':'NULL','Object':'ParametroValor','Object':'Script_CondicaoScript','Object':'Status','Object':'Usuario','Id':'5698','IdExecucao':'','IdDataPool':'2','IdStatus':'1','IdUsuario':'11','IdScript_CondicaoScript':'2','Descricao':'CRIAÇÃO DE CONTATO','GerarMigracao':'False','CasoTesteRelativo':'ROBOTICS','Observacao':'MASSA PRO ROBOTICS','GeradoPor':'bruci','DataGeracao':'','CaminhoEvidencia':'','TempoEstimadoExecucao':'01/01/2001 00:00:00','ClassificacaoMassa':'0',}]
+30-01-2019 11:00:12 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Tempo estimado: 2019-01-30T09:30:00
+30-01-2019 11:00:13 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 50) - Script_CondicaoScript: Script_CondicaoScrip_A4B6CC98A5A0869C9560FFA0B2D0A664DB913FBE4308BABAE0513FB72F00E4A5[{'Object':'CondicaoScript','Object':'DataPool','Object':'ParametroScript','Object':'Script','Object':'Script_CondicaoScript_Ambiente','Object':'TestData','Id':'2','IdScript':'1','IdCondicaoScript':'1','QueryTosca':'SELECT DIS...','ListaExecucaoTosca':'/Execution/ExecutionLists/SIEBEL_63/CONTATO_E_CONTA_PF_SEM_ENVIO_CDI','CaminhoArquivoTCS':'C:\Tosca_Projects\Tosca_Workspaces\TDM\remote_exec\contato-e-conta-pf-sem-envio-cdi.tcs','DiretorioRelatorio':'C:/Tosca_Projects/Tosca_Workspaces/TDM/remote_exec/Reports/report.txt','TempoEstimadoExecucao':'01/01/2001 09:30:00','NomeTecnicoScript':'CONTATO_E_CONTA_PF_SEM_ENVIO_CDI',}]
+30-01-2019 11:00:13 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - hora: 21
+30-01-2019 11:00:13 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - min: 0
+30-01-2019 11:00:13 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Tempo estimado: 2019-01-30T09:30:00
+30-01-2019 11:00:13 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Salvando Agendamento...
+30-01-2019 11:00:14 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Agendamneto criado com sucesso!
+30-01-2019 11:00:14 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Adicionado TestData na lista ID: 5698
+30-01-2019 11:00:14 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Salvando alteração do testdata...5698
+30-01-2019 11:00:15 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Testdata atualizado com sucesso! ID:5698
+30-01-2019 11:00:15 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 50) - Object: AgendamentoVO[{'IdAgendamento':'117','IdExecucao':'','IdUsuario':'','QtdTds':'1','LoginUsuario':'daniel','InicioAgendamento':'','TerminoAgendamento':'','TempoEstimadoExecucao':'','TempoEstimadoExecucaoCalculado':'2019-01-30T09:30:00','title':'daniel - VDI 220','start':'2019-01-30T21:00','end':'2019-01-31T06:30:00','testDatas':'System.Collections.Generic.List`1[System.Nullable`1[System.Int32]]','script':'CRIAÇÃO DE CONTATO E CONTA PF ','condicaoScript':'SEM ENVIO AO CDI','sistema':'SIEBEL 6.3','allDay':'False','idTdm':'1','idAmbienteVirtual':'3','DescricaoAmbienteExecucao':'TI8','DescricaoAmbienteVirtual':'VDI 220','idAmbienteExecucao':'1','idFase':'2','status':'Agendada','idDatapool':'','telegram':'False','color':'blue','textColor':'white','Output':'',}]
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Entrada no metodo de Criar Job no Jenkins.
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - argumentos: idAgendamento:117;idFaseTeste:2;idMaquinaVirtual:3;enviarTelegram:False;idAmbienteExecucao:1;idUsuario:6
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - comand_job: C:/TDM_Portal/Agendamento/Agendamento.exe idAgendamento:117;idFaseTeste:2;idMaquinaVirtual:3;enviarTelegram:False;idAmbienteExecucao:1;idUsuario:6
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - timer: 0 21 30 1 *
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - rotinaDiaria: False
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - agendamentoDesc: AGENDAMENTO
+30-01-2019 11:00:15 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Url: http://:/createItem?name=AGENDAMENTO-117
+30-01-2019 11:01:17 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Resultado Json: System.Web.Mvc.JsonResult
+30-01-2019 11:01:19 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Entrada na Condicao de objetos diferentes de Null.
+30-01-2019 11:01:19 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Parametros do ManterAgendamento: 
+30-01-2019 11:01:19 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAgendamento: 0
+30-01-2019 11:01:19 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - dtAgendamento: 2019-01-30T21:00
+30-01-2019 11:01:19 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idTestData: 5698
+30-01-2019 11:01:19 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idFaseTeste: 2
+30-01-2019 11:01:20 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idMaquinaVirtual: 3
+30-01-2019 11:01:20 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - opcaoTelegram: 0
+30-01-2019 11:01:20 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAmbienteExecucao: 1
+30-01-2019 11:01:20 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - rotinaDiaria: False
+30-01-2019 11:01:21 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Nova instancia do DbEntities criada com sucesso.
+30-01-2019 11:01:21 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Iniciando validação de disponibilidade...
+30-01-2019 11:01:21 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Entrada no metodo de Validar Disponibilidade de Ambiente.
+30-01-2019 11:01:21 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Ret: True
+30-01-2019 11:01:21 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAmbExec: 1
+30-01-2019 11:01:21 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAmbVirt: 3
+30-01-2019 11:01:21 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - idAgend: 0
+30-01-2019 11:01:21 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - date: 30/01/2019 21:00:00
+30-01-2019 11:01:22 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Capturado os Agendamentos.
+30-01-2019 11:01:22 [WARN ] (LaefazWeb.Controllers.AgendamentoController - line 115) - Não foi possível detalhar um objeto.
+30-01-2019 11:01:22 [INFO ] (LaefazWeb.Controllers.AgendamentoController - line 101) - Retornando o valor de Ret: False
+30-01-2019 11:01:23 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Ambiente disponivel: False
+30-01-2019 11:01:46 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - Inicio do delete job
+30-01-2019 11:01:46 [DEBUG] (LaefazWeb.Controllers.AgendamentoController - line 33) - url job:http://:/view/Agendamentos/job/AGENDAMENTO-117/doDelete

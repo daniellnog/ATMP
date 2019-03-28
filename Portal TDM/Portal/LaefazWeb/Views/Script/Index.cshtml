@@ -1,0 +1,180 @@
+﻿@model IEnumerable<LaefazWeb.Models.Script_CondicaoScript>
+
+@{
+    ViewBag.Titulo = "Script";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- /.box -->
+<div class="box box-info">
+    <button type="button" class="btn btn-primary" id="hiddenRemover" style="display: none;">Remover</button>
+    <div class="box-header">
+        <a href="@Url.Action("Adicionar", "Script")" class="btn btn-block btn-success pull-right" style="width: 100px;">Criar</a>
+        <input type="button" class="btn btn-block btn-info pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Editar" id="btnEditar" />
+        <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+    </div>
+    <div class="box-body">
+        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    @*<th>
+                        Script Pai
+                    </th>*@
+                    <th>
+                        Descrição Script
+                    </th>
+                    <th>
+                        Condição Script
+                    </th>
+                    <th>
+                        Aut
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.IdScriptPai)
+                        </td>*@
+                        <td>
+                            @Html.HiddenFor(modelItem => item.Id, new { @class = "idScript_CondicaoScript" })
+                            @Html.DisplayFor(modelItem => item.Script.Descricao)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CondicaoScript.Descricao)
+                        </td>
+                        <td>
+                            @Html.HiddenFor(modelItem => item.Script.IdAUT, new { @class = "hidden-id" })
+                            @Html.DisplayFor(modelItem => item.Script.AUT.Descricao)
+                            @*@Html.DisplayFor(modelItem => item.IdAUT)*@
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+@section scripts
+{
+    <script type="text/javascript" charset="utf-8">
+
+        function Remover(ids) {
+
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: '@Url.Action("Remover", "Script")',
+                data: JSON.stringify(ids),
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function (data) {
+
+                    $.MessageBoxOK({
+                        mensagem: data.Result,
+                        argFuncao: data.Status,
+                        funcaoBotaoOK: function (status) {
+                            if (status == 0)
+                                window.location = '@Url.Action("Index", "Script")';
+                        }
+                    });
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $(".ul li").removeClass("active");
+            $('#Script').addClass('active');
+
+            $("#btnEditar").click(function () {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.idScript_CondicaoScript').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Script selecionado." });
+                    return;
+                }
+
+                window.location = '@Url.Action("Editar/", "Script")' + id;
+            });
+
+            $('#btnExcluir').click(function () {
+                var ids = [];
+
+                var id = $('table.display:visible').find('tr.selected').find('input.idScript_CondicaoScript').map(function (idx, elem) {
+                    ids.push($(elem).val());
+                });
+
+                if (ids === "" || ids.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Script selecionado." });
+                    return;
+                }
+
+                $.MessageBoxSimNao({
+                    titulo: "Remover Script",
+                    mensagem: "Confirma remoção do Script?",
+                    height: "auto",
+                    width: "auto",
+                    funcaoBotaoSim: function () {
+                        Remover(ids);
+                    }
+                });
+            });
+
+            $('#grid').DataTable({
+                select: {
+                    style: 'os'
+                },
+                order: [[0, "asc"]],
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+            var table = $('#grid').DataTable();
+        });
+    </script>
+}

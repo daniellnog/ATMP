@@ -1,0 +1,936 @@
+﻿@using TDMWeb.Extensions
+@model IEnumerable<LaefazWeb.Models.DataPool>
+
+    @*@{
+            ViewBag.Titulo = "DataPool";
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            //string urlinit = System.Configuration.ConfigurationManager.AppSettings["UrlHome"];
+        }*@
+
+    <@Page validateRequest="false" %>
+        @section styles {
+            <style>
+                table.dataTable tbody tr {
+                    cursor: pointer;
+                }
+            </style>
+        }
+
+
+        <form id="form-processar-tdm">
+            <div class="box box-primary" id="panelCollapse">
+                <div class="box-header with-border">
+                    <h3 id="TDMProcessar" class="box-title">Projeto ATMP</h3>
+                </div>
+
+                <div class="box-body with-border">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.DropDownList("tdm_processar", new SelectList(ViewBag.ListaTDM, "Id", "Descricao", "TdmPublico"), "", new
+                   {
+                       @class = "form-control",
+                       @id = "tdm-processar",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @onchange = "ProcessarTDM()",
+                       @required = "required"
+                   })
+                        </div>
+                        @*@<div class="col-md-1" style="padding-left: 0px; padding-right: 0px;">
+                                <button type="submit" id="botaoProcessarTDM" class="btn btn-success" style="width: 100%">Processar</button>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <h3> DataPools</h3>
+
+        <div class="box box-info">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-10" style="width: 100%;">
+                        <!-- Custom Tabs (Pulled to the right) -->
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1-1">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" id="hiddenRemover" style="display: none;">Remover</button>
+
+                                        <div class="box-header">
+                                            <svg height="20" width="20" title="Geração de massa não iniciada ou finalizada" style="align-items"><circle cx="10" cy="10" r="5" stroke="gray" stroke-width="5" fill="gray" /></svg>
+                                            <svg height="20" width="20" title="Qtd. de massas (solicitadas + contingência) foi atendida"><circle cx="10" cy="10" r="5" stroke="#33cc00" stroke-width="5" fill="#33cc00" /></svg>
+                                            <svg height="20" width="20" title="Qtd. de massas solicitada foi atendida, mas a qtd. de massas de contingência não"><circle cx="10" cy="10" r="5" stroke="yellow" stroke-width="5" fill="yellow" /></svg>
+                                            <svg height="20" width="20" title="Qtd. de massas solicitada não foi atendida"><circle cx="10" cy="10" r="5" stroke="red" stroke-width="5" fill="red" /></svg>
+                                            <a href="@Url.Action("Adicionar", "DataPool")" class="btn btn-block btn-success pull-right" id="Criar" style="width: 100px;">Criar</a>
+                                            <input type="button" class="btn btn-block btn-info pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Editar" id="btnEditar" />
+                                            <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+                                            <br />
+                                            <font size="1px">Legenda dos faróis (passe o mouse acima)</font>
+                                            <br />
+                                            <br />
+                                        </div>
+                                        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        @Html.DisplayName("Projeto ATMP")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Demanda")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Sistema")
+                                                    </th>
+                                                    @*<th>
+                                                            @Html.DisplayName("Descrição DataPool")
+                                                        </th>*@
+                                                    <th>
+                                                        @Html.DisplayName("Tipo de massa de dados")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Qtd Solicitada")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Qtd Cadastrada")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Qtd Disponível")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Qtd Reservada")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Qtd Utilizada")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Farol")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Play")
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- nav-tabs-custom -->
+                    </div>
+                </div>
+                <!-- /input-group -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+        <div class="modal fade in" id="modal-play">
+            <div class="modal-dialog" style="margin-top:15%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Escolher Ambiente de Execução</h4>
+                    </div>
+                    <div class="modal-body">
+                        @*<h5>Ambiente</h5>
+                            <div id="divQtdMassa">
+                                @Html.TextBox("Ambiente", null, new { @class = "form-control", type = "number", min = "1", onkeypress = "return Onlynumbers(event)", pattern = "[0-9]+$" })
+                                <span id="spanAmbiente" class="help-block"></span>
+                            </div>*@
+                        <div class="row">
+                            <div class="col-xs-4 form-group">
+                                @Html.Label("escolher_ambiente", "Ambiente")
+                                @Html.DropDownList("escolher_ambiente", new SelectList(ViewBag.ListaAmbienteExec, "IdAmbienteExecucao", "DescricaoAmbienteExecucao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_ambiente",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                            </div>
+
+                            <div class="col-xs-4 form-group">
+                                @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
+                                @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirt, "IdAmbienteVirtual", "DescricaoAmbienteVirtual"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_maquina_virtual",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                            </div>
+                            <div class="col-xs-4 form-group">
+                                @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
+                                @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_tipo_fase_teste",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                            </div>
+                            <div class="col-xs-4 form-group">
+                                @Html.Label("deseja_receber_status_via_telegram", "Receber Notificação via Telegram?")
+                                <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
+                                    <option value='1'>Sim</option>
+                                    <option value='0'>Não</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="ConfirmarEscolhaAmbiente" onclick="play()">Executar</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+
+        @section scripts
+{
+            <style>
+                /*Adicionar uma cor mais escura para destacar mais a linha*/
+                table.display tr.odd {
+                    background-color: whitesmoke;
+                }
+            </style>
+
+            <script type="text/javascript" charset="utf-8">
+
+
+
+                $(document).ready(function () {
+
+                    var id = '@ViewBag.IdTdm';
+                    var DescDemanda = '@ViewBag.DescDemanda';
+
+                    if (id != null) {
+
+                        // get the OPTION we want selected
+                        var $option = $('#tdm-processar').children('option[value="' + id + '"]');
+                        // and now set the option we want selected
+                        $option.attr('selected', true);
+                    }
+
+
+                    var idTdm = $('#tdm-processar').val();
+
+                    if (idTdm != undefined && idTdm != "" && getTDMPublico(idTdm) == 1) {
+
+                        $("#btnExcluir").attr("disabled", "true");
+                        $("#Criar").attr("disabled", "true");
+                        $("#Criar").removeAttr("href");
+                        $("#btnEditar").attr("value", "Visualizar");
+                        $("#grid").DataTable().column("0").visible(false);
+
+                    }
+
+                    $('#colorselector').colorselector();
+
+                    $(".ul li").removeClass("active");
+                    $('#Produtos').addClass('active');
+
+                    style = "top: -1px;right: -1px;";
+
+                    $('#form-processar-tdm').validate();
+
+                    $('#form-processar-tdm').on('submit', function (e) {
+                        var isValid = $("#form-processar-tdm").valid();
+                        if (isValid) {
+                            e.preventDefault();
+
+                            $("#grid").DataTable().draw();
+                        }
+                    });
+
+                    var grid = $('#grid').DataTable({
+                        //select: {
+                        //    style: 'multi'
+                        //},
+                        "processing": true,
+                        "serverSide": true,
+                        ajax: {
+                            url: "@Url.Action("CarregarDataPool", "DataPool")",
+                            type: "POST",
+                            data: function (d) {
+                                return $.extend(d, {
+                                    idTDM: $("#tdm-processar").val()
+                                });
+                            }
+                        },
+                        order: [[7, "desc"]],
+                        //select: {
+                        //    style: 'os',
+                        //    selector: 'td:not(.column-play)'
+
+                        //},
+                        columns: [
+                            {
+                                data: "DescricaoTDM",
+                                name: "DescricaoTDM",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+
+                                        if (data !== null) {
+                                            return '<div class="text-desc" name="Descricao">' + data + '</div>';
+                                        } else {
+                                            return '';
+                                        }
+
+
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "DescricaoDemanda",
+                                name: "DescricaoDemanda",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+
+                                        if (data !== null) {
+                                            return '<div class="text-desc" name="Descricao">' + data + '</div>' + ' <input type="hidden" class="hidden-datapool-id" name="IdDataPool" value="' + row.Id + '" />';
+                                        } else {
+                                            return '<input type="hidden" class="hidden-datapool-id" name="IdDataPool" value="' + row.Id + '" />';
+                                        }
+
+
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "DescricaoSistema",
+                                name: "DescricaoSistema",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return '<div class="text-desc-unificada" name="DescricaoSistema">' + data + '</div>';
+                                    }
+
+                                    return data;
+                                }
+                            },
+
+                            {
+                                data: "DescricaoCondicaoScript",
+                                name: "DescricaoCondicaoScript",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return '<div class="text-desc-unificada" name="DescricaoCondicaoScript">' + data + '</div>';
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            //{
+                            //    data: "DescricaoDataPool",
+                            //    name: "DescricaoDataPool",
+                            //    render: function (data, type, row) {
+                            //        if (type === 'display') {
+                            //            return '<div class="text-desc-unificada" name="DescricaoDataPool">' + data + '</div>';
+                            //        }
+
+                            //        return data;
+                            //    }
+                            //},
+                            {
+                                data: "QtdSolicitada",
+                                name: "QtdSolicitada",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "QtdCadastrada",
+                                name: "QtdCadastrada",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "QtdDisponivel",
+                                name: "QtdDisponivel",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "QtdReservada",
+                                name: "QtdReservada",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                                    }
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "QtdUtilizada",
+                                name: "QtdUtilizada",
+                                render: function (data, type, row) {
+                                    if (type === 'display') {
+                                        return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                                    }
+
+                                    return data;
+                                }
+                            },
+                           {
+                               data: "Farol",
+                               name: "Farol",
+                               render: function (data, type, row) {
+                                   if (type === 'display') {
+
+                                       if (row.Farol == 0) {
+                                           return '<center><svg height="20" width="20"><circle cx="10" cy="10" r="5" stroke="gray" stroke-width="3" fill="gray" />...</svg></center>';
+                                       } else if (row.Farol == 1) {
+                                           return '<center><svg height="20" width="20"><circle cx="10" cy="10" r="5" stroke="#33cc00" stroke-width="3" fill="#33cc00" />...</svg></center>';
+                                       } else if (row.Farol == 2) {
+                                           return '<center><svg height="20" width="20"><circle cx="10" cy="10" r="5" stroke="yellow" stroke-width="3" fill="yellow" />...</svg></center>';
+                                       } else if (row.Farol == 3) {
+                                           return '<center><svg height="20" width="20"><circle cx="10" cy="10" r="5" stroke="red" stroke-width="3" fill="red" />...</svg></center>';
+                                       }
+
+                                       return '<div class="text-desc-unificada" name="DescricaoSistema">' + data + '</div>';
+                                   }
+                                   return data;
+                               }
+                           },
+                           {
+
+                               data: "Play",
+                               name: "Play",
+                               render: function (data, type, row) {
+                                   if (type === 'display') {
+
+                                       if (row.emCancelamento == true) {
+
+                                           if (row.emExecucao == true) {
+                                               return '<center><img src="@Url.Content("~/Assets/Images/media_stop.png")" height="20" id="btnPlay" value="' + row.Id + '" onclick="paraExecucaoDatapool(' + row.Id + ')"/></center>';
+
+                                           } else {
+                                               return '<center><img src="@Url.Content("~/Assets/Images/media_stop_2.png")" height="20" id="btnPlay" title="Cancelamento em andamento" value="' + row.Id + '" onclick=""/></center>';
+                                           }
+
+                                       } else {
+                                           return '<center><img src="@Url.Content("~/Assets/Images/media_play_green.png")" height="20" id="btnPlay" value="' + row.Id + '" onclick="ModalPlay(' + row.Id + ')"/></center>';
+                                       }
+
+                                   }
+
+                                   return "";
+                               }
+                           },
+                        ],
+                        "iDisplayLength": 50,
+                        "aLengthMenu": [5, 50, 500, 1000, 10000],
+                        columnDefs: [
+                            {
+                                targets: [0],
+                                sortable: true,
+                                width: '15%'
+                            },
+                            {
+                                targets: [1],
+                                sortable: true,
+                                width: '12%',
+                            },
+                            {
+                                targets: [2],
+                                sortable: true,
+                                width: '7%',
+                            },
+                            {
+                                targets: [3],
+                                sortable: true,
+                                width: '42%',
+                            },
+                            {
+                                targets: [4],
+                                sortable: true,
+                                width: '6%',
+                            },
+                            {
+                                targets: [5],
+                                sortable: true,
+                                width: '6%',
+                            },
+                            {
+                                targets: [6],
+                                sortable: true,
+                                width: '6%',
+                            },
+                            {
+                                targets: [7],
+                                sortable: true,
+                                width: '3%',
+                            },
+                            {
+                                targets: [8],
+                                sortable: false,
+                                width: '3%',
+                            },
+                        ],
+                        aoColumnDef: [
+                            null,
+                            { "sSortDataType": "dom-text", "sType": 'string' },
+                            null
+                        ],
+
+                        aoColumnDef: [
+                            null,
+                            { "sSortDataType": "dom-text", "sType": 'string' },
+                            null
+                        ],
+                        oLanguage: {
+                            //select: {
+                            //    rows: {
+                            //        _: "%d linhas selecionadas",
+                            //        1: "1 linha selecionada"
+                            //    }
+                            //},
+                            "sEmptyTable": "Nenhum registro encontrado",
+                            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                            "sInfoPostFix": "",
+                            "sInfoThousands": ".",
+                            "sLengthMenu": "_MENU_ resultados por página",
+                            "sLoadingRecords": "Carregando...",
+                            "sProcessing": $("#LoadingGrid").show(),
+                            "sZeroRecords": "Nenhum registro encontrado",
+                            "sSearch": "Pesquisar",
+                            "oPaginate": {
+                                "sNext": "Próximo",
+                                "sPrevious": "Anterior",
+                                "sFirst": "Primeiro",
+                                "sLast": "Último"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                                "sSortDescending": ": Ordenar colunas de forma descendente"
+                            }
+                        }
+                    });
+
+                    var table = $('#grid').DataTable();
+
+                    var desc = '@ViewBag.DescDemanda';
+                    if (desc != null) {
+                        table.search(desc).draw();
+                    }
+
+                    if (idTdm == "") {
+
+                        $("#grid").DataTable().column("0").visible(false);
+
+                    } else if (idTdm == 0) {
+
+                        $("#grid").DataTable().column("0").visible(true);
+
+                    } else if (idTdm > 0) {
+
+                        $("#grid").DataTable().column("0").visible(false);
+
+                    }
+
+                    $('#grid tbody').on('click', 'tr', function () {
+                        if ($(this).hasClass('selected')) {
+                            //$(this).removeClass('selected');
+                        }
+                        else {
+                            table.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+
+
+                    });
+
+                    $('#btnPlay').click(function () {
+                        table.row('.selected').remove().draw(false);
+                    });
+
+                    // Pegando o ID da linha selecionada para realziar a edição
+                    $("#btnEditar").click(function () {
+                        lerMapaCalor();
+
+                        var idDataPool = $('table.display:visible').find('tr.selected').find('input.hidden-datapool-id').map(function (idx, elem) {
+                            return $(elem).val();
+                        }).get();
+
+                        if (idDataPool === "" || idDataPool.length <= 0) {
+                            $.MessageBoxOK({ mensagem: "Nenhum DataPool selecionado." });
+                            return;
+                        } else if (idDataPool.length == 1) {
+                            window.location = '@Url.Action("Editar/", "Datapool")' + idDataPool;
+                        } else {
+                            $.MessageBoxOK({ mensagem: "Selecione apenas um Datapool para editar" });
+                            return;
+                        }
+                    });
+
+                    $("#tdm-processar").select2({
+                        placeholder: "Selecione o projeto TDM que deseja processar...",
+                        "language": {
+                            "noResults": function () {
+                                return "Nenhum resultado encontrado.";
+                            }
+                        },
+                        allowClear: true
+                    });
+
+                    $('#btnExcluir').click(function () {
+
+                        var ids = [];
+
+                        var id = $('table.display:visible').find('tr.selected').find('input.hidden-datapool-id').each(function (idx, elem) {
+                            ids.push($(elem).val());
+                        });
+
+                        if (ids.length == 0) {
+                            $.MessageBoxOK({ mensagem: "Nenhum Datapool selecionado." });
+                            return;
+                        }
+
+                        $.MessageBoxSimNao({
+                            titulo: "Remover Datapool?",
+                            mensagem: "Confirma remoção do Datapool?",
+                            height: "auto",
+                            width: "auto",
+                            funcaoBotaoSim: function () {
+                                Remover(ids);
+                            }
+                        });
+                    });
+
+                    var posX = "";
+                    var posY = "";
+                    var datas = "";
+                    var resolucao = "";
+                    // Pegando o evento do click do mouse e chamando a função PrintMousePos
+                    document.addEventListener('click', printMousePos, true);
+                    // Função responsável por armazenar as coordenadas X,Y que foram clicadas.
+                    function printMousePos(e) {
+                        var target = e.target || e.srcElement;
+                        var now = new Date().toLocaleString('pt-BR');
+
+                        posX += e.pageX + ",";
+                        posY += e.pageY + ",";
+                        datas += now + ",";
+
+                        resolucao = window.screen.width + "x" + window.screen.height;
+                    }
+
+                    // Função para pegar as coordenadas e passar via Ajax para o controlador.
+                    function lerMapaCalor() {
+                        //var dados = arrayClicks.toString();
+                        var dadosX = posX.substring(0, posX.length - 1);
+                        var dadosY = posY.substring(0, posY.length - 1);
+                        var datasXY = datas.substring(0, datas.length - 1);
+
+                        $.ajax({
+                            url: '@Url.Action("lerMapaCalor")',
+                            type: "POST",
+                            dataType: 'text',
+                            traditional: true,
+                            data: {
+                                strX: dadosX,
+                                strY: dadosY,
+                                data: datasXY,
+                                res: resolucao
+                            },
+                            success: function (data) {
+
+                            }
+                        });
+
+                    }
+
+
+                    function Remover(ids) {
+
+                        lerMapaCalor();
+
+                        $("#Loading").show();
+                        document.body.style.cursor = 'wait';
+                        $.ajax({
+                            url: '@Url.Action("Remover", "Datapool")',
+                            data: JSON.stringify(ids),
+                            contentType: 'application/json; charset=utf-8',
+                            type: "POST",
+                            async: true,
+                            cache: false,
+                            success: function (data) {
+
+                                $.MessageBoxOK({
+                                    mensagem: data.Result,
+                                    argFuncao: data.Status,
+                                    funcaoBotaoOK: function (status) {
+                                        if (status == 0)
+                                            window.location = '@Url.Action("Index","DataPool")';
+                                    }
+                                });
+
+                                document.body.style.cursor = 'default';
+                                $("#Loading").fadeOut();
+                            },
+                            error: function (data) {
+
+                                if (data.Result == undefined) {
+                                    //alert(data.responseText);
+                                } else {
+                                    //alert(data.Result);
+                                }
+
+                                document.body.style.cursor = 'default';
+                                $("#Loading").fadeOut();
+                            }
+                        });
+                    }
+
+                    $('#Criar').click(function () {
+                        lerMapaCalor();
+                    });
+
+                    //$('#btnExcluir').click(function () {
+
+                    //    $.MessageBoxSimNao({
+                    //        titulo: "Remover DataPool?",
+                    //        mensagem: "Deseja excluir o DataPool selecionado?",
+                    //        height: "auto",
+                    //        width: "auto",
+                    //        funcaoBotaoSim: function () {
+                    //            Remover(idDatapool);
+                    //        }
+                    //    });
+                    //});
+
+                });//fim function read
+
+
+                function ProcessarTDM() {
+
+                    $.ajax(
+               {
+                   url: '@Url.Action("Index", "DataPool")',
+                   type: 'POST',
+                   data: "",
+                   contentType: 'application/text; charset=utf-8',
+                   success: function () {
+
+                       var idTDM = $('#tdm-processar').val();
+                       if (idTDM != undefined && idTDM != "") {
+
+                           $("#TDMProcessar").html("Projeto TDM: " + $("#select2-tdm-processar-container").attr("title"));
+                           $("#grid").DataTable().draw();
+                           getTDMPublico(idTDM);
+
+                           // Mostrando e escondendo a coluna de Projeto TDM
+                           if (idTDM != "0")
+                               $("#grid").DataTable().column("0").visible(false);
+                           else
+                               $("#grid").DataTable().column("0").visible(true);
+
+
+
+
+                       }
+                   },
+                   error: function () {
+                       alert("error");
+                   }
+               });
+                }
+
+                function getTDMPublico(id) {
+
+
+                    $.ajax(
+            {
+                url: '@Url.Action("GetTDMPublico", "TDM")',
+                type: 'POST',
+                data: "{id:" + id + "}",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    console.log(data.tdmPublico);
+
+                    if (data.tdmPublico == 1) {
+                        $("#btnExcluir").attr("disabled", "true");
+                        $("#Criar").attr("disabled", "true");
+                        $("#Criar").removeAttr("href");
+                        $("#btnEditar").attr("value", "Visualizar");
+
+                    } else {
+
+                        $("#btnExcluir").removeAttr("disabled");
+                        $("#Criar").removeAttr("disabled");
+                        $("#Criar").attr("href", '@Url.Action("Adicionar", "DataPool")?id=' + data.Id);
+                        $("#btnEditar").attr("value", "Editar");
+                    }
+
+                },
+                error: function (erro) {
+                    alert(erro);
+                }
+            });
+
+                }
+
+                function ModalPlay(Id) {
+
+                    var idDataPool = Id;
+
+                    if (idDataPool === "" || idDataPool.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhum Datapool selecionado." });
+                        return;
+                    }
+
+                    $.ajax({
+                        url: '@Url.Action("GetDadosModalPlay", "DataPool")',
+                        type: 'POST',
+                        data: '{id:' + idDataPool + '}',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+
+                            $("#list_escolher_ambiente").empty();
+                            var obj = JSON.parse(data.ambexec);
+
+                            obj.forEach(function (o, index) {
+                                $("#list_escolher_ambiente").append('<option value="' + o.IdAmbienteExecucao + '">' + o.DescricaoAmbienteExecucao + '</option>');
+                            });
+
+                            $("#list_escolher_maquina_virtual").empty();
+                            var obj2 = JSON.parse(data.ambvirtu);
+
+                            obj2.forEach(function (o, index) {
+                                $("#list_escolher_maquina_virtual").append('<option value="' + o.IdAmbienteVirtual + '">' + o.DescricaoAmbienteVirtual + '</option>');
+                            });
+
+                            if (data.ambexec == "[]" || data.ambvirtu == "[]") {
+
+                                {
+                                    $.MessageBoxOK({ mensagem: "Não existe ambiente disponível para execução." });
+                                }
+
+                            } else {
+
+                                $('#modal-play').modal('show');
+                            }
+
+
+
+                        },
+                        error: function (erro) {
+                            $.MessageBoxOK({ mensagem: "Erro ao carregar os dados do Ambiente de Execução." });
+                        }
+                    });
+
+
+
+                }
+
+                function paraExecucaoDatapool(id) {
+
+                    $.MessageBoxSimNao({
+                        titulo: "Cancelar Execução",
+                        mensagem: "Confirma cancelamento da(s) execucão(ões)?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            $.ajax({
+                                url: '@Url.Action("PararExecucaoDataPool", "DataPool")',
+                                type: 'POST',
+                                data: "{id:" + id + "}",
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (data) {
+                                    if (data == true) {
+                                        $.MessageBoxOK({ mensagem: "O cancelamento foi solicitado com sucesso, favor aguardar!" });
+                                    } else {
+                                        $.MessageBoxOK({ mensagem: "Não foi possível realiza o cancelamento, pois existe mais de um fluxo executando. Favor cancelar via TestData." });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    console.log('jqXHR:');
+                                    console.log(jqXHR);
+                                    console.log('textStatus:');
+                                    console.log(textStatus);
+                                    console.log('errorThrown:');
+                                    console.log(errorThrown);
+
+                                    $.MessageBoxOK({ mensagem: "Não foi possível cancelar a execução. Devido ao erro: " + jqXHR.responseText + " | " + textStatus + " | " + errorThrown });
+                                }
+                            });
+                        }
+                    });
+
+
+
+                }
+
+
+                function play() {
+
+                    var idDataPool = $('table.display:visible').find('tr.selected').find('input.hidden-datapool-id').map(function (idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    var idFaseTeste = $('#list_escolher_tipo_fase_teste').val();
+
+                    var notificacaoTelegram = $('#opcaoNotificacaoTelegram').val() == 1 ? true : false;
+
+                    var idMaquinaVirtual = $('#list_escolher_maquina_virtual').val();
+
+                    var idAmbienteExecucao = $('#list_escolher_ambiente').val();
+
+                    if (idDataPool === "" || idDataPool.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhum Datapool selecionado." });
+                        return;
+                    }
+
+                    $.ajax({
+                        url: '@Url.Action("Play", "DataPool")',
+                        type: 'POST',
+                        data: "{id:" + idDataPool + ", idFaseTeste:" + idFaseTeste + ", idMaquinaVirtual:" + idMaquinaVirtual + ", opcaoTelegram:" + notificacaoTelegram + ", idAmbienteExecucao:" + idAmbienteExecucao + "}",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            console.log(data);
+                            $('#modal-play').modal('toggle');
+                            $.MessageBoxOK({ mensagem: data.Data });
+                        },
+                        error: function (erro) {
+                            $.MessageBoxOK({ mensagem: "Não foi possível iniciar a execução." });
+                        }
+                    });
+                }
+            </script>
+        }

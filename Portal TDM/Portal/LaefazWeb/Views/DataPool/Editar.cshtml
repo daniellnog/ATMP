@@ -1,0 +1,2318 @@
+﻿@using TDMWeb.Extensions
+@model LaefazWeb.Models.VOs.DataPoolVO
+
+@{
+    ViewBag.Titulo = "DataPool";
+}
+
+<@Page Async="true" validateRequest="false" %>
+
+    @section styles {
+        <style type="text/css">
+            .form-control[readonly] {
+                background-color: white;
+            }
+
+            .required:after {
+                content: " *";
+                color: #ff0000;
+            }
+
+            .form-inline .form-control {
+                width: 100%;
+            }
+
+            .form-inline .input-group .input-group-addon {
+                width: 1%;
+            }
+
+            .visibility {
+                visibility: hidden;
+            }
+
+            #imgAnexo:hover {
+                cursor: pointer;
+            }
+
+            #evidencia {
+                text-align: center;
+            }
+        </style>
+    }
+
+    @using (Html.BeginForm("SalvarEdicao", "DataPool", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data", @id = "FormSalvarEdicaoDataPool", }))
+    {
+        <div class="box box-primary collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Editar DataPool</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    @*<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    @*Primeira Linha*@
+                    <div class="col-xs-3 form-group">
+
+                        @Html.HiddenFor(m => m.Id, new { Id = "IdDataPool" })
+
+                        @Html.Label("projeto_TDM", "Projeto ATMP")
+                        @Html.HiddenFor(m => m.IdTDM, new { Id = "idTdm" })
+
+                        @Html.DropDownList("projetoTDM", new SelectList(ViewBag.ListaTDM, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list-projeto-tdm",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                       @disabled = "true",
+                   }
+         )
+
+                        @Html.HiddenFor(m => m.IdTDM, new { Id = "IdTDM" })
+
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("sistema_datapool", "Sistema")
+                        @Html.HiddenFor(m => m.IdAut, new { Id = "idAut" })
+                        @Html.DropDownList("sistemaDatapool", new SelectList(ViewBag.ListaAUT, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list-sistema-datapool",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                       @disabled = "true",
+                   }
+         )
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("descricao", "Descrição")
+                        @Html.TextBoxFor(m => m.DescricaoDataPool, new { @class = "form-control", @required = "required", @id = "DescricaoDataPool" })
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("demanda", "Demanda")
+                        @Html.HiddenFor(m => m.IdDemanda, new { Id = "idDemanda" })
+                        @Html.DropDownList("demandaDatapool", new SelectList(ViewBag.ListaDemanda, "Id", "Descricao"), "", new
+                   {
+                       @class = "form-control",
+                       @id = "list-demanda-datapool",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+         )
+                        @*@Html.TextBoxFor(m => m.Demanda.Descricao, new { @class = "form-control", required = "required" })*@
+                    </div>
+                </div>
+                <div class="row">
+                    @*Segunda Linha*@
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("dt_geracao_solicitada", "Início Geração Massas")
+                        <div id="cmp_data_geracao_solicitada" class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.TextBoxFor(m => m.DataSolicitacao, "{0:dd/MM/yy}", new { @class = "form-control pull-right", required = "required", @id = "dt_geracao_solicitada" })
+                            <span id="spanDataGeracaoSolicitada" class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("dt_termino", "Término Geração Massas")
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            @Html.TextBoxFor(m => m.DataTermino, "{0:dd/MM/yy}", new { @class = "form-control pull-right", required = "required", @id = "dt_termino" })
+                        </div>
+                    </div>
+
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("qtd_necessaria", "Qtd. Necessária de Massas")
+                        @Html.TextBoxFor(m => m.QtdSolicitada, new { @class = "form-control", required = "required", pattern = "[0-9]+$", onkeypress = "return Onlynumbers(event);", @type = "number", min = "1" })
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("rotina_diaria", "Considerar Rotina Diária?")
+                        @Html.HiddenFor(m => m.ConsiderarRotinaDiaria, new { Id = "rotinaDiaria" })
+                        <select name="considerarRotinaDiaria" class="form-control" required="required" id="selectRotinaDiaria">
+                            <option value=''></option>
+                            <option value='1'>Sim</option>
+                            <option value='0'>Não</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @*campo script*@
+                    <div class="col-xs-6 form-group">
+                        @Html.Label("script", "Script")
+                        @Html.DropDownList("listScript", new SelectList(ViewBag.Script, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list-script",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @onchange = "SelectedIndexChanged()",
+                       @required = "required",
+                       @disabled = "true",
+
+                   }
+             )
+                    </div>
+
+                    @*campo condicao script*@
+                    <div class="col-xs-6 form-group">
+                        @Html.Label("script", "Condição")
+                        @Html.DropDownList("listCondicaoScript", new SelectList(ViewBag.CondicaoScript, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list-script-condicao",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @disabled = "true",
+                   }
+             )
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    @*Terceira Linha*@
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("qtd_disponivel", "Qtd. Disponível")
+                        @Html.TextBox("qtd_disponivel_valor", (int)ViewBag.qtdDisponivel, new { @class = "form-control", required = "required", disabled = "true" })
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("qtd_reservada", "Qtd. Reservada")
+                        @Html.TextBox("qtd_reservada_valor", (int)ViewBag.qtdReservada, new { @class = "form-control", required = "required", disabled = "true" })
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("qtd_utilizada", "Qtd. Utilizada")
+                        @Html.TextBox("qtd_utilizada_valor", (int)ViewBag.qtdUtilizada, new { @class = "form-control", required = "required", disabled = "true" })
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("farol", "Farol")
+                        @switch ((int)ViewBag.Farol)
+                        {
+                            case 0: <br /><svg height="40" width="40"><circle cx="20" cy="20" r="10" stroke="gray" stroke-width="3" fill="gray" />...</svg>
+                                break;
+                            case 1: <center><svg height="40" width="40"><circle cx="20" cy="20" r="10" stroke="#33cc00" stroke-width="3" fill="#33cc00" />...</svg></center>
+                                break;
+                            case 2: <center><svg height="40" width="40"><circle cx="20" cy="20" r="10" stroke="yellow" stroke-width="3" fill="yellow" />...</svg></center>
+                                break;
+                            case 3: <center><svg height="40" width="40"><circle cx="20" cy="20" r="10" stroke="red" stroke-width="3" fill="red" />...</svg></center>
+                                break;
+                        }
+                        @Html.Hidden("flag_farol", (int)ViewBag.Farol, new { Id = "farol" })
+                        <span class="dot" id="spanColorida"></span>
+                        @*@Html.TextBox("flag_farol", (int)ViewBag.Farol, new { @class = "form-control", required = "required", disabled = "true", id="farol" })*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        @Html.Label("campo_observacao", "Observação")
+                        @Html.TextAreaFor(m => m.Observacao, new { @class = "form-control", @id = "observacao", @style = "resize: none", @rows = "5" })
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer" align="right">
+                <a href="@Url.Action("IndexDataPool/" + Model.IdTDM, "DataPool")" class="btn btn-danger" id="cancelar">Cancelar</a>
+                <button type="submit" class="btn btn-primary" id="btnSalvar">Salvar</button>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data", @id = "FormTestData", }))
+    {
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Massas de Testes</h3>
+                <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+                <input type="button" class="btn btn-block btn-warning pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Multiplicar" id="btnMultiplicar" data-toggle="modal" />
+                <input type="button" class="btn btn-block btn-primary pull-right" style="width: 150px; margin-top: 0px; margin-right: 10px;" title="Disponibilizar Massa Para ATMP Público" value="Disponibilizar Massa" id="btnDisponibilizar" />
+                <input type="button" class="btn btn-block btn-primary pull-right" style="width: 150px; margin-top: 0px; margin-right: 10px;" title="Disponibilizar Massa Para ATMP específico" value="Disponibilizar Massa" id="btnDisponibilizarTDMEspecifico" />
+                <input type="button" class="btn btn-block btn-info pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Editar" id="btnEditar" />
+                <input type="button" class="btn btn-block btn-success pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Criar" id="btnCriar" />
+                <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Importar" id="btnImportar" href="#" data-toggle="modal" data-target="#modalImportarArquivo" />
+                <input type="button" class="btn bg-purple margin pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Play" id="btnPlay" href="#" data-toggle="modal" onclick="ModalPlay()" />
+                <a href="@Url.Action("IndexDataPool/" + Model.IdTDM, "DataPool")" class="btn btn-block btn-danger pull-right" id="voltar" style="width: 100px;">Voltar</a>
+                @*<a href="@Url.Action("Adicionar/"+Model.Id, "TestData")" class="btn btn-block btn-success pull-right" style="width: 100px;">Criar</a>*@
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-10 form-group" style="width: 100%;">
+                        <!-- Custom Tabs (Pulled to the right) -->
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1-1">
+                                    <div class="form-group">
+                                        <table id="datatable-testData" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Evidência")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Projeto")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Sistema")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Nº Caso de Teste")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Massa de dados")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Gerada Por")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Data de geração")
+                                                    </th>
+                                                    <th>
+                                                        @Html.DisplayName("Status")
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @*@{int cont = 1;}*@
+                                                @foreach (var item in Model.ListaMassa)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Id)
+                                                        </td>
+
+                                                        <td>
+                                                            @Html.HiddenFor(modelItem => item.Id, new { @class = "hidden-id", @id = "idTestData" })
+                                                        </td>
+                                                        <td>
+                                                            @if (item.CaminhoEvidencia == null || item.CaminhoEvidencia == "")
+                                                        {
+                                                            @*<a href="#" id="evidenciaNaoExiste">
+
+                                                                </a>*@
+                                                        }
+                                                        else
+                                                        {
+                                                            <div id="evidencia">
+                                                                <img id="imgAnexo" src="~/Assets/Images/Attachment.png" width="23" height="23" border="0">
+                                                            </div>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DataPool.Demanda.Descricao)
+
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DataPool.AUT.Descricao)
+                                                        @Html.HiddenFor(modelItem => item.DataPool.AUT.Id, new { @class = "hidden-aut" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CasoTesteRelativo)
+                                                    </td>
+                                                    <td>
+                                                        @if (@item.Script_CondicaoScript.IdCondicaoScript != null)
+                                                        {
+                                                            @item.Script_CondicaoScript.Script.Descricao @item.Script_CondicaoScript.CondicaoScript.Descricao
+                                                        }
+                                                        else
+                                                        {
+                                                            @item.Script_CondicaoScript.Script.Descricao
+                                                        }
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.GeradoPor)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DataGeracao)
+                                                    </td>
+
+                                                    <td class="status">
+                                                        @Html.DisplayFor(modelItem => item.Status.Descricao)
+                                                        @Html.HiddenFor(modelItem => item.IdStatus, new { @class = "hidden-status" })
+                                                    </td>
+                                                </tr>
+                                                    //cont++;
+                                                }
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- nav-tabs-custom -->
+                    </div>
+                </div>
+                <!-- /input-group -->
+            </div>
+            <!-- /.box-body -->
+        </div>
+    <!-- /.box -->
+
+    }
+
+
+
+    @using (Html.BeginForm("MultiplicarTestData/", "TestData", new { id = 10 }, FormMethod.Post, new { @class = "formLoading", @id = "FormModal", enctype = "multipart/form-data" }))
+    {
+
+        @Html.Hidden("TestDataId", null)
+       <!-- /.modal -->
+        <div class="modal fade in" id="modal-warning">
+            <div class="modal-dialog" style="margin-top:15%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Multiplicar Massa de Teste</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Quantidade de Massas</h5>
+                        <div id="divQtdMassa">
+                            @Html.TextBox("QtdMassa", 1, new { @class = "form-control", type = "number", min = "1", onkeypress = "return Onlynumbers(event)", pattern = "[0-9]+$" })
+                            <span id="spanQtdMassa" class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="CancelarMultiplica" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="MultiplicarMassaTeste">Salvar</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    }
+
+    <div class="modal fade in" id="modal-disponibilizar">
+        <div class="modal-dialog" style="margin-top:15%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Escolher ATMP para transferir as massas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-5 form-group">
+                            @Html.Label("escolher_tdm", "ATMP")
+                            @Html.DropDownList("escolher_tdm", new SelectList("", "Id", "Descricao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_tdm",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                            )
+                        </div>
+                        <div class="col-xs-5 form-group">
+                            @Html.Label("escolher_datapool", "Datapool")
+                            @Html.DropDownList("escolher_datapool", new SelectList("", "Id", "Descricao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_datapool",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                            )
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="cancelarEscolhaDisponibilizacao" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarDisponibilizacao">Confirmar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalImportarArquivo" tabindex="-1" role="dialog" aria-labelledby="modalImportarArquivo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Selecione o Arquivo</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("ImportarArquivo", "DataPool", FormMethod.Post, new { @id = "frmArquivoProduto", @class = "formLoading", enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            @Html.InputFile("fileArquivoProduto", "Arquivo com Massa de Teste")
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <!--<a href="C:/EvidenciasTDM/TemplateEvidencia/Template_Planilha_TDM.xlsb" class="pull-left">Baixar Template</a>-->
+                    @*<a href="http://10.43.6.160:8081/PortalTDM/Evidencias/TemplateEvidencia/Template_Planilha_TDM.xlsb" class="pull-left">Baixar Template</a>*@
+                    <a href="@System.Configuration.ConfigurationManager.AppSettings["DiretorioPlanilhaTemplate"]" class="pull-left">Baixar Template</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnEnviarArquivoProduto">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade in" id="modal-play">
+        <div class="modal-dialog" style="margin-top:15%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Escolher Ambiente de Execução</h4>
+                </div>
+                <div class="modal-body">
+                    @*<h5>Ambiente</h5>
+                        <div id="divQtdMassa">
+                            @Html.TextBox("Ambiente", null, new { @class = "form-control", type = "number", min = "1", onkeypress = "return Onlynumbers(event)", pattern = "[0-9]+$" })
+                            <span id="spanAmbiente" class="help-block"></span>
+                        </div>*@
+                    <div class="row">
+                        <input type="hidden" id="IdMassas" value="" />
+                        <div class="col-xs-12 form-group">
+                            @Html.Label("escolher_ambiente", "Ambiente")
+                            @Html.DropDownList("escolher_ambiente", new SelectList(ViewBag.ListaAmbienteExec, "IdAmbienteExecucao", "DescricaoAmbienteExecucao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_ambiente",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 form-group">
+                            @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
+                            @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirt, "IdAmbienteVirtual", "DescricaoAmbienteVirtual"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_maquina_virtual",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
+                            @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
+                       {
+                           @class = "form-control",
+                           @id = "list_escolher_tipo_fase_teste",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @required = "required",
+                       }
+                    )
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            @Html.Label("deseja_receber_status_via_telegram", "Notificação via Telegram?")
+                            <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
+                                <option value='1'>Sim</option>
+                                <option value='0'>Não</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="ConfirmarEscolhaAmbiente" onclick="play()">Executar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+
+
+    @section scripts
+{
+        <script type="text/javascript">
+
+            var editor;
+            var rowNumber = 0;
+
+            function Onlynumbers(e) {
+
+                if(e.keyCode<48||e.keyCode>57){
+                    return false;
+                }
+            }
+
+            var posX = "";
+            var posY = "";
+            var datas = "";
+            // Pegando o evento do click do mouse e chamando a função PrintMousePos
+            document.addEventListener('click', printMousePos, true);
+            // Função responsável por armazenar as coordenadas X,Y que foram clicadas.
+            function printMousePos(e) {
+                var target = e.target || e.srcElement;
+                var now = new Date().toLocaleString('pt-BR');
+
+                posX += e.pageX + ",";
+                posY += e.pageY + ",";
+                datas += now + ",";
+                resolucao = window.screen.width + "x" + window.screen.height;
+            }
+
+            // Função para pegar as coordenadas e passar via Ajax para o controlador.
+            function lerMapaCalorTestData() {
+                //var dados = arrayClicks.toString();
+                var dadosX = posX.substring(0, posX.length - 1);
+                var dadosY = posY.substring(0, posY.length - 1);
+                var datasXY = datas.substring(0, datas.length - 1);
+
+                $.ajax({
+                    url: '@Url.Action("lerMapaCalorTestData")',
+                    type: "POST",
+                    dataType: 'text',
+                    traditional: true,
+                    data: {
+                        strX: dadosX,
+                        strY: dadosY,
+                        data: datasXY,
+                        res:  resolucao
+                    },
+                    success: function (data) {
+
+                    }
+                });
+            }
+
+            $(function () {
+                //Date picker
+                $('#dt_termino').daterangepicker({
+                    "opens": "right",
+                    "singleDatePicker": true,
+                    "locale": {
+                        "format": "DD/MM/YYYY",
+                        "separator": " - ",
+                        "applyLabel": "Confirmar",
+                        "cancelLabel": "Cancelar",
+                        "fromLabel": "De",
+                        "toLabel": "Para",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "W",
+                        "daysOfWeek": [
+                            "Dom",
+                            "Seg",
+                            "Ter",
+                            "Qua",
+                            "Qui",
+                            "Sex",
+                            "Sab"
+                        ],
+                        "monthNames": [
+                            "Janeiro",
+                            "Fevereiro",
+                            "Março",
+                            "Abril",
+                            "Maio",
+                            "Junho",
+                            "Julho",
+                            "Agosto",
+                            "Setembro",
+                            "Outubro",
+                            "Novembro",
+                            "Dezembro"
+                        ],
+                        "firstDay": 1
+                    }
+                }).on("change", function() {
+                    var strDataTermino = $("#dt_termino").val();
+                    var strDataGeracao = $("#dt_geracao_solicitada").val();
+                    var strDataAtual = moment().format('L');
+                    var partesDataAtual = strDataAtual.split("/");
+                    var partesDataTermino = strDataTermino.split("/");
+                    var partesDataGeracao = strDataGeracao.split("/");
+                    var dataAtual = new Date(partesDataAtual[2], partesDataAtual[0]-1,partesDataAtual[1]);
+                    var dataGeracao = new Date(partesDataGeracao[2], partesDataGeracao[1] - 1, partesDataGeracao[0]);
+                    var dataTermino = new Date(partesDataTermino[2], partesDataTermino[1] - 1, partesDataTermino[0]);
+
+                    if (dataTermino < dataGeracao) {
+                        $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Término menor do que a data de geração das massas!" });
+                        $("#Loading").remove();
+                        event.preventDefault();
+                    }
+                    if (dataTermino < dataAtual){
+                        $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Término menor do que a data atual!" });
+                        $("#Loading").remove();
+                        event.preventDefault();
+                    }
+                });
+
+            });
+
+            $(function () {
+                //Date picker
+                $('#dt_geracao_solicitada').daterangepicker({
+                    "opens": "right",
+                    "singleDatePicker": true,
+                    "locale": {
+                        "format": "DD/MM/YYYY",
+                        "separator": " - ",
+                        "applyLabel": "Confirmar",
+                        "cancelLabel": "Cancelar",
+                        "fromLabel": "De",
+                        "toLabel": "Para",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "W",
+                        "daysOfWeek": [
+                            "Dom",
+                            "Seg",
+                            "Ter",
+                            "Qua",
+                            "Qui",
+                            "Sex",
+                            "Sab"
+                        ],
+                        "monthNames": [
+                            "Janeiro",
+                            "Fevereiro",
+                            "Março",
+                            "Abril",
+                            "Maio",
+                            "Junho",
+                            "Julho",
+                            "Agosto",
+                            "Setembro",
+                            "Outubro",
+                            "Novembro",
+                            "Dezembro"
+                        ],
+                        "firstDay": 1
+                    }
+                }).on("change", function() {
+
+                    var strDataTermino = $("#dt_termino").val();
+                    var strDataGeracao = $("#dt_geracao_solicitada").val();
+                    var strDataAtual = moment().format('L');
+                    var partesDataAtual = strDataAtual.split("/");
+                    var partesDataTermino = strDataTermino.split("/");
+                    var partesDataGeracao = strDataGeracao.split("/");
+                    var dataAtual = new Date(partesDataAtual[2], partesDataAtual[0]-1,partesDataAtual[1]);
+                    var dataGeracao = new Date(partesDataGeracao[2], partesDataGeracao[1] - 1, partesDataGeracao[0]);
+                    var dataTermino = new Date(partesDataTermino[2], partesDataTermino[1] - 1, partesDataTermino[0]);
+
+                    if(dataGeracao < dataAtual){
+                        $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Geração solicitada menor do que a data atual!" });
+                        $("#Loading").remove();
+                        event.preventDefault();
+                    }
+                    if (dataTermino < dataGeracao) {
+                        $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Término menor do que a data de geração das massas!" });
+                        $("#Loading").remove();
+                        event.preventDefault();
+                    }
+                    if (dataTermino < dataAtual){
+                        $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Término menor do que a data atual!" });
+                        $("#Loading").remove();
+                        event.preventDefault();
+                    }
+                });
+            });
+
+
+
+            function format(d) {
+
+                var div = $('<div id="parametros' + d[0] + '"' + '><div/>')
+                      .addClass('loading')
+                      .text('Loading...');
+
+                var linhas = "";
+
+                $.ajax({
+                    url: '@Url.Action("CarregarParametroValor", "TestData")',
+                    type:"POST",
+                    data: "{\"idScriptCondicaoScript\":\"" + @Model.IdScriptCondicaoScript + "\", \"idTestData\":\"" +d[0] +"\"}",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (json) {
+
+                        var $divProdutos = $('#parametros' + d[0]);
+                        var obj = JSON.parse(json);
+
+                        //console.log(obj);
+
+                        var input = "";
+                        var linhaSaida = "";
+                        var linhaEntrada = "";
+                        var contSaida = 1;
+                        var contEntrada = 1;
+                        var total = obj.length;
+                        var totalEntrada = 0;
+                        var totalSaida = 0;
+                        var contParametroEntrada = false;
+                        var contParametroSaida = false;
+
+
+                        obj.forEach(function (o, index) {
+                            if (o.Tipo == 1) {
+                                totalEntrada++;
+                                contParametroEntrada = true;
+
+                            }
+                        });
+
+                        var camposEntrada = [];
+
+                        var readOnly = "";
+                        var disabled = "";
+                        var asteristico = "";
+
+                        obj.forEach(function (o, index) {
+
+                            if(o.IdStatusTestData != 1 || o.IdParametro == 14){
+                                disabled = "disabled";
+                            }else{
+                                disabled = "";
+                            }
+
+                            if(o.Obrigatorio == true){
+                                asteristico= "required";
+                            }else{
+                                asteristico="";
+                            }
+
+                            switch (o.Tipo) {
+                                case "NUMBER":
+                                    input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico + ">" + o.Descricao + "</label><input " + disabled +"  idtestdata=\""+d[0]+"\" idparametro=\""+o.IdParametro+"\" idparametrovalor=\""+o.Id+"\" idparametroscript=" + o.IdParametroScript + " tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" onkeypress=\"if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;\" value=\"" + o.Valor + "\" class=\"form-control\" id=\"parametro_"+rowNumber+"\" onchange=\"saveRow(parametro_"+rowNumber+")\"/></div>";
+                                    break;
+                                case "DATE":
+                                    input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico +">" + o.Descricao + "</label><div class=\"input-group date\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div><input  "+disabled+ "  idtestdata=\""+d[0]+"\"  idparametro=\""+o.IdParametro+"\"  idparametrovalor=\""+o.Id+"\" idparametroscript=" + o.IdParametroScript + " tipo=\"data-parametro\" name=\"" + o.Descricao + "\" class=\"form-control pull-right\" data-val=\"true\" data-val-date=\"The field DataSolicitacao must be a date.\" data-val-required=\"The DataSolicitacao field is required.\" name=\"DataSolicitacao\" type=\"text\" data-mask=\"00/00/0000\" id=\"parametro_"+rowNumber+"\" onchange=\"saveRow(parametro_"+rowNumber+")\" value=\"" + o.Valor + "\" aria-required=\"true\"  aria-invalid=\"false\"></div></div>";
+                                    break;
+                                default:
+                                    if (o.IdParametro == 178) {
+                                        input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico + ">" + o.Descricao + "</label><select " + disabled + " idparametro=\""+o.IdParametro+"\" idparametrovalor=\""+o.Id+"\" idtestdata=\""+d[0]+"\" tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" value=\"" + o.ValorParametroDefault + "\" class=\"form-control\" id=\"parametro_"+rowNumber+"\" " + (o.IdTipoParametro == 1 ? "" : "readonly") + " IdParametroScript=" + o.IdParametroScript +  " onchange=\"saveRow(parametro_"+rowNumber+")\">";
+
+                                        if(o.Valor == '1P'){
+                                            input += "<option value=''></option><option value='1P' selected>1 P</option><option value='2P'>2 P</option><option value='3P'>3 P</option><option value='4P'>4 P</option></select></div>"
+                                            break;
+                                        }else if(o.Valor == '2P'){
+                                            input += "<option value=''></option><option value='1P'>1 P</option><option value='2P' selected>2 P</option><option value='3P'>3 P</option><option value='4P'>4 P</option></select></div>"
+                                            break;
+                                        }else if(o.Valor == '3P'){
+                                            input += "<option value=''></option><option value='1P'>1 P</option><option value='2P'>2 P</option><option value='3P' selected>3 P</option><option value='4P'>4 P</option></select></div>"
+                                            break;
+                                        } else if (o.Valor == '4P') {
+                                            input += "<option value=''></option><option value='1P'>1 P</option><option value='2P'>2 P</option><option value='3P'>3 P</option><option value='4P' selected>4 P</option></select></div>"
+                                            break;
+                                        }else{
+                                            input += "<option value=''></option><option value='1P'>1 P</option><option value='2P'>2 P</option><option value='3P'>3 P</option><option value='4P'>4 P</option></select></div>"
+                                        }
+                                    } else {
+                                        input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico +">" + o.Descricao + "</label><input  "+disabled+ " idtestdata=\""+d[0]+"\"  idparametro=\""+o.IdParametro+"\"  idparametrovalor=\""+o.Id+"\" idparametroscript=" + o.IdParametroScript + " tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" value=\"" + o.Valor + "\" class=\"form-control \" id=\"parametro_"+rowNumber+"\" onchange=\"saveRow(parametro_"+rowNumber+")\" /></div>";
+                                        break;
+                                    }
+                                    //input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico +">" + o.Descricao + "</label><input  "+disabled+ " idtestdata=\""+d[0]+"\"  idparametro=\""+o.IdParametro+"\"  idparametrovalor=\""+o.Id+"\" idparametroscript=" + o.IdParametroScript + " tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" value=\"" + o.Valor + "\" class=\"form-control \" id=\"parametro_"+rowNumber+"\" onchange=\"saveRow(parametro_"+rowNumber+")\" /></div>";
+                                    //break;
+                            }
+                            rowNumber++;
+
+                            if (o.IdTipoParametro == 1) {
+                                camposEntrada.push(input);
+                            }
+                        });
+
+                        //adicionando parâmetros de entrada
+                        if (camposEntrada.length > 0) {
+
+                            var ultimaPosicao = 0;
+                            var qtdLinhaExtra = camposEntrada.length < 3 ? 0 : Math.round(camposEntrada.length % 3);
+                            var qtdLinha = camposEntrada.length < 3 ? 1 : Math.round(camposEntrada.length / 3);
+
+
+                            for (var i = 0; i < qtdLinha; i++) {
+                                var campos = [];
+                                for (var j = 0; j < 3; j++) {
+                                    if (camposEntrada[ultimaPosicao] != undefined) {
+                                        campos[j] = camposEntrada[ultimaPosicao];
+                                        ultimaPosicao++;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                                var linha = addLinha(campos);
+                                //$divProdutos.html(linha);
+                                linhas += linha;
+                            }
+
+                            if (camposEntrada.length > 3) {
+                                for (var i = 0; i < qtdLinhaExtra; i++) {
+                                    var campos = [];
+                                    for (var j = 0; j < 3; j++) {
+                                        if (camposEntrada[ultimaPosicao] != undefined) {
+                                            campos[j] = camposEntrada[ultimaPosicao];
+                                            ultimaPosicao++;
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    var linha = addLinha(campos);
+                                    //$divProdutos.html(linha);
+                                    linhas += linha;
+                                }
+                            }
+
+
+                        }
+
+
+                        $divProdutos.removeClass('loading');
+                        $divProdutos.html(linhas);
+
+
+                    }
+                });
+
+                return div;
+            }
+
+
+            function addLinha(campos) {
+                var iniLinha = "<div class=\"row\">";
+                var linha = "";
+                var fimLinha = "</div>";
+                for (var i = 0; i < campos.length; i++) {
+                    linha += campos[i];
+                }
+
+                return iniLinha + linha + fimLinha;
+            }
+
+            $(document).ready(function () {
+
+
+                // get the OPTION we want selected
+                var $option = $('#list-projeto-tdm').children('option[value="' + idTdm + '"]');
+                // and now set the option we want selected
+                $option.attr('selected', true);
+
+                if($('#rotinaDiaria').val() == "False"){
+                    $('#selectRotinaDiaria').children('option[value=0]').attr('selected', true);
+                }else{
+                    $('#selectRotinaDiaria').children('option[value=1]').attr('selected', true);
+                }
+
+                // get the OPTION we want selected
+                var $optionAUT = $('#list-sistema-datapool').children('option[value="' + idAut + '"]');
+                // and now set the option we want selected
+                $optionAUT.attr('selected', true);
+
+                var idDemanda = $('#idDemanda').val();
+                // get the OPTION we want selected
+                //var $option = $('#list-demanda-datapool').children('option[value="' + idDemanda + '"]');
+                $('#list-demanda-datapool').val(idDemanda).attr("selected", "selected");
+                // and now set the option we want selected
+                var idFarol = $('#farol').attr("value");
+
+                // Pegando o valor do IdDatapool
+                var IdDataPool = $('#IdDataPool').attr("value");
+
+                // Retira a opção de Disponibilizar Massa de Teste no caso de o DataPool que já é Público
+                var tdmPublico = '@(ViewBag.TdmPublico)';
+                if(tdmPublico == 'True'){
+                    $("#btnDisponibilizar").hide();
+                    $("#btnMultiplicar").hide();
+                    $("#btnImportar").hide();
+                    $("#btnCriar").attr("disabled","true");
+                    $("#btnSalvar").attr("disabled","true");
+                    $("#btnExcluir").attr("disabled","true");
+
+                    $("#DescricaoDataPool").attr("disabled","true");
+                    $("#list-demanda-datapool").attr("disabled","true");
+                    $("#dt_geracao_solicitada").attr("disabled","true");
+                    $("#data_criacao").attr("disabled","true");
+                    $("#QtdSolicitada").attr("disabled","true");
+                    $("#dt_termino").attr("disabled","true");
+                    $("#btnEditar").attr("value","Visualizar");
+
+
+                }else{
+
+                    $("#btnDisponibilizar").show();
+                    $("#btnMultiplicar").show();
+                    $("#btnImportar").show();
+                    $("#btnCriar").removeClass("disabled");
+                    $("#btnDisponibilizarTDMEspecifico").hide();
+
+                }
+
+                var MAX_FILE_SIZE = 314572800;
+                var fileRules = { filesize: MAX_FILE_SIZE };
+                var fileMessage = "Você deve selecionar um arquivo excel com no máximo " + (MAX_FILE_SIZE / 1024 / 1024) + " MB.";
+
+                $('form').validate({
+                    rules: { fileArquivoProduto: fileRules },
+                    messages: { fileArquivoProduto: fileMessage }
+                });
+
+                $('.custom-file-upload').each(function () {
+                    var formGroup = this;
+
+                    var fileElem = $(formGroup).find('input[type="file"]');
+
+                    $(formGroup).find('.input-file-filename, .btn-selecionar-arquivo').click(function () {
+                        fileElem.click();
+                    });
+
+                    $(formGroup).find('.btn-limpar-arquivo').click(function () {
+                        fileElem.val('').change();
+                    });
+
+                    fileElem.change(function () {
+                        var input = document.getElementById(this.id);
+                        var filename = "";
+
+                        for (var i = 0; i < input.files.length; i++) {
+                            var filename = filename + "'" + input.files[i].name + "' ";
+                        }
+
+                        $(formGroup).find('.input-file-filename').val(filename);
+                        $(formGroup).find('.btn-limpar-arquivo').prop('disabled', filename.length == 0);
+                    });
+                });
+
+                $("#btnEnviarArquivoProduto").click(function () {
+
+                    var data = new FormData();
+
+                    var files = $("input[name=fileArquivoProduto").get(0).files;
+
+                    if (files.length <= 0) {
+                        $('#modalImportarArquivo').modal('hide');
+                        $.MessageBoxOK({ mensagem: "Nenhum arquivo selecionado. O processamento não foi realizado." });
+                        return;
+                    }
+                    data.append("UploadedImage", files[0]);
+                    data.append("IdDataPool", $('#IdDataPool').attr("value"));
+
+                    $("#Loading").show();
+                    document.body.style.cursor = 'wait';
+                    $.ajax({
+                        url: '@Url.Action("ImportarArquivo", "DataPool")',
+                        type: "POST",
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (data) {
+                            $('#modalImportarArquivo').modal('hide');
+
+                            $.MessageBoxOK({
+                                mensagem: data.Result,
+                                argFuncao: data.Status,
+                                funcaoBotaoOK: function (status) {
+                                    if (status == 0) {
+                                        $('#form-processar-analise').submit();
+                                        window.location ='@Url.Action("Editar/","DataPool") @Model.Id';
+                                    }
+                                }
+                            });
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        },
+                        error: function (data) {
+
+                            if (data.Result == undefined) {
+                                $.MessageBoxOK({ mensagem: data.responseText });
+                            } else {
+                                $.MessageBoxOK({ mensagem: data.Result });
+                            }
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        }
+                    });
+
+                });
+
+                $('#modalImportarArquivo').on('hidden.bs.modal', function (e) {
+                    $(this)
+                        .find("input,textarea,select")
+                        .val('')
+                        .end()
+                        .find("input[type=checkbox], input[type=radio]")
+                        .prop("checked", "")
+                        .end();
+                });
+
+                //Habilitando os campos do formulário ao submete-lo
+                $( "#FormSalvarEdicaoDataPool" ).submit(function(event) {
+                    var strDataTermino = $("#dt_termino").val();
+                    var strDataGeracao = $("#dt_geracao_solicitada").val();
+                    var strDataAtual = moment().format('L');
+                    var partesDataAtual = strDataAtual.split("/");
+                    var partesDataTermino = strDataTermino.split("/");
+                    var partesDataGeracao = strDataGeracao.split("/");
+                    var dataAtual = new Date(partesDataAtual[2], partesDataAtual[0]-1,partesDataAtual[1]);
+                    var dataGeracao = new Date(partesDataGeracao[2], partesDataGeracao[1] - 1, partesDataGeracao[0]);
+                    var dataTermino = new Date(partesDataTermino[2], partesDataTermino[1] - 1, partesDataTermino[0]);
+
+                    //if (dataTermino < dataGeracao) {
+                    //    $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Término menor do que a data de geração das massas!" });
+                    //    $("#Loading").remove();
+                    //    event.preventDefault();
+                    //}
+                    //if (dataTermino < dataAtual){
+                    //    $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Término menor do que a data atual!" });
+                    //    $("#Loading").remove();
+                    //    event.preventDefault();
+                    //}
+
+
+                    //Verific se o formulário está válido
+                    if($( "#FormSalvarEdicaoDataPool" ).valid()){
+
+                        $('#list-projeto-tdm').removeAttr("disabled");
+                        $('#list-sistema-datapool').removeAttr("disabled");
+                        $('#DescricaoDataPool').removeAttr("disabled");
+                        $('#list-demanda-datapool').removeAttr("disabled");
+                        $('#dt_geracao_solicitada').removeAttr("disabled");
+                        $('#QtdSolicitada').removeAttr("disabled");
+                        $('#list-script').removeAttr("disabled");
+                        $('#list-script-condicao').removeAttr("disabled");
+                    }
+                });
+
+
+
+
+
+                function desabilitaCampo() {
+                    document.getElementById("a").disabled = true; //Desabilitando
+                }
+
+                function Onlynumbers(e) {
+                    var tecla = new Number();
+                    if (window.event) {
+                        tecla = e.keyCode;
+                    }
+                    else if (e.which) {
+                        tecla = e.which;
+                    }
+                    else {
+                        return true;
+                    }
+                    if ((tecla >= "97") && (tecla <= "122")) {
+                        return false;
+                    }
+                }
+
+                function allowOnlyNumber(evt)
+                {
+                    var charCode = (evt.which) ? evt.which : event.keyCode
+                    if (charCode > 31 && (charCode < 48 || charCode > 57))
+                        return false;
+                    return true;
+                }
+
+
+
+                $("#btnCriar").click(function () {
+                    lerMapaCalorTestData();
+                    window.location = '@Url.Action("Adicionar/", "TestData")' +@Model.Id;
+                });
+
+                $("#btnEditar").click(function () {
+                    lerMapaCalorTestData();
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhum registro selecionado." });
+                        return;
+                    }
+
+                    if(id.length == 1){
+                        window.location = '@Url.Action("Editar/", "TestData")' + id;
+                    }else{
+                        $.MessageBoxOK({ mensagem: "Selecione apenas um TestData para editar" });
+                    }
+                });
+
+                $('#btnExcluir').click(function () {
+                    lerMapaCalorTestData();
+
+                    var ids = [];
+
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                        ids.push($(elem).val());
+                    });
+
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                        return;
+                    }
+
+                    $.MessageBoxSimNao({
+                        titulo: "Remover Massa",
+                        mensagem: "Confirma exclusão da(s) Massa(s)?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            Remover(ids);
+                        }
+                    });
+                });
+
+                $('#btnDisponibilizarTDMEspecifico').click(function () {
+                    lerMapaCalorTestData();
+
+                    var ids = [];
+
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                        ids.push($(elem).val());
+                    });
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                        return;
+                    }
+                    $.ajax({
+                        url: '@Url.Action("GetTDMsByUser", "DataPool")',
+                        type: 'POST',
+                        data: ids[0],
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            //preenchendo os valores dos TDM's do usuario
+
+                            $("#list_escolher_tdm").empty();
+                            $("#list_escolher_tdm").append('<option value=""></option>');
+                            obj.tdm.forEach(function (o, index) {
+                                $("#list_escolher_tdm").append('<option value="' + o.Id + '">' + o.Descricao + '</option>');
+                            });
+                            //abrindo modal
+                            $('#modal-disponibilizar').modal('show');
+                            $("#list_escolher_datapool").empty();
+                        },
+                        error: function (erro) {
+                            $.MessageBoxOK({ mensagem: "Erro ao carregar os ATMP's" });
+                        }
+                    });
+                });
+
+                $('#list_escolher_tdm').on('change', function(){
+
+                    var ids = [];
+
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                        ids.push($(elem).val());
+                    });
+
+                    var idTDM = $('#list_escolher_tdm').val();
+                    var IdTestData = ids[0];
+
+                    $.ajax({
+                        url: '@Url.Action("GetDatapools", "DataPool")',
+                        type: 'POST',
+                        data: "{'idTDM':'" + idTDM + "', 'IdTestData':'" + IdTestData + "'}",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            //preenchendo os datapools de acordo com o TDM selecionado
+                            $("#list_escolher_datapool").empty();
+                            $("#list_escolher_datapool").append('<option value=""></option>');
+                            obj.datapools.forEach(function (o, index) {
+                                $("#list_escolher_datapool").append('<option value="' + o.Id + '">' + o.Descricao + '</option>');
+                            });
+
+                        },
+                        error: function (erro) {
+                            $.MessageBoxOK({ mensagem: "Erro ao carregar os Datapools" });
+                        }
+                    });
+                });
+
+                $('#confirmarDisponibilizacao').on('click', function(){
+                    var idTDM = $('#list_escolher_tdm').val();
+                    var idDatapool = $('#list_escolher_datapool').val();
+
+                    var ids = [];
+
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                        ids.push($(elem).val());
+                    });
+
+                    if(idDatapool == null || idTDM == "" || idTDM == null || idDatapool == ""){
+                        $('#modal-disponibilizar').modal('hide');
+                        $.MessageBoxOK({ mensagem: "É necessário escolher um ATMP e um Datapool." });
+                    }else{
+                        var arrIds = [];
+
+                        for(i = 0; i < ids.length; i++){
+                            var item = {
+                                idTestData : ids[i],
+                                idDatapool : idDatapool
+                            }
+                            arrIds.push(item);
+                        }
+
+                        $.ajax({
+                            url: '@Url.Action("TransferirTestDatas", "DataPool")',
+                            type: 'POST',
+                            data: JSON.stringify(arrIds),
+                            dataType: "json",
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                var obj = JSON.parse(data);
+                                if(obj.datapools == "Datapool excluído com sucesso"){
+                                    $('#modal-disponibilizar').modal('hide');
+                                    $.MessageBoxOK({ mensagem: "Massa disponibilizada com sucesso. O Datapool foi excluído.",
+                                        funcaoBotaoOK: function() {
+                                            window.location.href = '@Url.Action("Index", "Datapool")';
+                                        }});
+                                }else{
+                                    $('#modal-disponibilizar').modal('hide');
+                                    $.MessageBoxOK({ mensagem: "Massa disponibilizada com sucesso.",
+                                        funcaoBotaoOK: function() {
+                                            window.location.reload();
+                                        }});
+                                }
+                            },
+                            error: function (erro) {
+                                $.MessageBoxOK({ mensagem: "Erro ao carregar os Datapools" });
+                            }
+                        });
+                    }
+                });
+
+
+                $('#btnDisponibilizar').click(function () {
+                    lerMapaCalorTestData();
+
+                    var ids = [];
+
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                        ids.push($(elem).val());
+                    });
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                        return;
+                    }
+
+                    //if (status!=3 && status!=5) {
+                    //    $.MessageBoxOK({ mensagem: "Não é possível disponibilizar massas com status diferente de Disponível e Reservada." });
+                    //    return;
+                    //}
+
+                    $.MessageBoxSimNao({
+                        titulo: "Disponibilizar Massa",
+                        mensagem: "Confirma envio das Massas para o ATMP público?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            DisponibilizarMassaDataPoolPublico(ids);
+                        }
+                    });
+                });
+
+                var idLinhaTestData;
+
+                $('#btnMultiplicar').click(function () {
+                    lerMapaCalorTestData();
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                        return;
+                    }
+
+                    if(id.length == 1){
+                        $('#modal-warning').modal('show');
+                    }else{
+                        $.MessageBoxOK({ mensagem: "Selecione apenas um TestData para Multiplicar" });
+                    }
+
+                });
+
+                $('#MultiplicarMassaTeste').click(function () {
+                    lerMapaCalorTestData();
+                    var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                        return $(elem).val();
+                    }).get();
+
+                    $("#TestDataId").val(id);
+
+                    if (id === "" || id.length <= 0) {
+                        $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                        return;
+                    }
+
+                    if($("#QtdMassa").val() == undefined || $("#QtdMassa").val() == "" || $("#QtdMassa").val() == "0"){
+
+                        $("#divQtdMassa").attr("class","form-group has-error");
+                        $("#spanQtdMassa").text("Campo obrigatório.");
+                        return false;
+                    }
+
+                });
+                // funcao para baixar a evidencia e alterar o status do testData
+                function alterarStatusTestData(evidencia, idTD, idStatus, status) {
+                    var idDatapool = $('#IdDataPool').val();
+
+                    $.MessageBoxSimNao({
+                        titulo: "Baixar evidência?",
+                        mensagem: "Deseja fazer download da evidência?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            $.ajax({
+                                url: '@Url.Action("AlterarStatusTestData")',
+                                data: { IdTestData: idTD.toString(), IdStatus : idStatus.toString() },
+                                type: "POST",
+                                async: true,
+                                cache: false,
+                                success: function (data) {
+                                    var obj = JSON.parse(data);
+
+                                    if(obj.Data == null || obj.Data == "" || obj.Data == 'undefined'){
+                                        $.MessageBoxOK({ mensagem: "Ocorreu um erro e a evidência não foi gerada." });
+                                    }else {
+                                        evidencia.append('<a id="link_evidencia"></a>').attr('href',obj.Data);
+                                        window.open(obj.Data);
+
+                                        atualizarQtdsMassasDatapool(idDatapool);
+                                        if(idStatus == 3){
+                                            var html = "UTILIZADA<input class=\"hidden-status\" data-val=\"true\" data-val-number=\"The field IdStatus must be a number.\" data-val-required=\"O campo IdStatus é obrigatório.\"id=\"item_IdStatus\"name=\"item.IdStatus\" type=\"hidden\" value=\"4\">";
+                                            $(status).html(html);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                // método para atualizar os campos de Qtd Disponivel, Qtd Reservada, Qtd Utilizada
+                function atualizarQtdsMassasDatapool(idDataPool){
+                    $('#IdDataPool')
+                    $.ajax({
+                        url: '@Url.Action("AtualizarQtdsMassasDatapool")',
+                        data: { IdDatapool: idDataPool.toString() },
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            $('#qtd_disponivel_valor').val(obj.qtdDisponivel);
+                            $('#qtd_reservada_valor').val(obj.qtdReservada);
+                            $('#qtd_utilizada_valor').val(obj.qtdUtilizada);
+                        }
+                    });
+                }
+
+                //Ao clicar no icone de anexo
+                $('#datatable-testData tbody').on('click', 'tr td.class-evidencia', function () {
+                    var idTestData = $(this).parent().find('input[name="item.Id"]').val();
+                    var idStatus = $(this).parent().find('input[name="item.IdStatus"]').val();
+                    var status = $(this).parent().find('.status')[0];
+                    var evidencia = $(this).parent().find('#evidencia');
+
+                    //Só é permitido baixar evidência quando o status do testData for disponível, erro ou utilizada.
+                    if((idStatus == 3 || idStatus == 4 || idStatus == 6) && (evidencia.length > 0)){
+                        var time = setTimeout(function(){alterarStatusTestData(evidencia, idTestData, idStatus, status)}, 200);
+                    }
+                });
+
+
+
+                $("#CancelarMultiplica").click(function(){
+                    $("#QtdMassa").val("");
+                    $("#divQtdMassa").removeAttr("class","form-group has-error");
+                    $("#divQtdMassa").show;
+                    $("#spanQtdMassa").text("");
+                });
+
+                $("#QtdMassa").bind("change paste keyup", function() {
+                    $("#divQtdMassa").removeAttr("class","form-group has-error");
+                    $("#divQtdMassa").show;
+                    $("#spanQtdMassa").text("");
+                });
+
+
+                $(document).ready(function () {
+                    //var strDataGeracaoBD = $("#dt_geracao_solicitada").val();
+                    //var strDataAtual = moment().format('L');
+
+                    //var partesDataAtual = strDataAtual.split("/");
+                    //var partesDataGeracaoBD = strDataGeracaoBD.split("/");
+
+                    //var dataAtual = new Date(partesDataAtual[2], partesDataAtual[0]-1,partesDataAtual[1]);
+                    //var DataGeracaoBD = new Date(partesDataGeracaoBD[2], partesDataGeracaoBD[1] - 1, partesDataGeracaoBD[0]);
+
+                    //if(DataGeracaoBD < dataAtual){
+                    //    $("#dt_geracao_solicitada").attr("disabled", true);
+                    //}
+
+                    $('#dt_parametro').datepicker({
+                        dateFormat: 'dd/mm/yy',
+                        autoclose: true
+                    });
+
+                    var id = $('#IdTDM').attr("value");
+                    // get the OPTION we want selected
+                    var $option = $('#list-projeto-tdm').children('option[value="' + id + '"]');
+                    // and now set the option we want selected
+                    $option.attr('selected', true);
+
+                    var idAut = $('#idAut').attr("value");
+                    // get the OPTION we want selected
+                    var $optionAUT = $('#list-sistema-datapool').children('option[value="' + idAut + '"]');
+                    // and now set the option we want selected
+                    $optionAUT.attr('selected', true);
+
+                });
+
+                function DisponibilizarMassaDataPoolPublico(ids) {
+
+                    $("#Loading").show();
+                    document.body.style.cursor = 'wait';
+                    $.ajax({
+                        url: '@Url.Action("DisponibilizarMassaDataPoolPublico", "TestData")',
+                        data: JSON.stringify(ids),
+                        contentType: 'application/json; charset=utf-8',
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+
+                            $.MessageBoxOK({
+                                mensagem: data.Result,
+                                argFuncao: data.Status,
+                                funcaoBotaoOK: function (status) {
+                                    if (status == 0)
+                                        window.location = '@Url.Action("Editar/", "DataPool")'+@Model.Id;
+                                }
+                            });
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        },
+                        error: function (data) {
+
+                            if (data.Result == undefined) {
+                                alert(data.responseText);
+                            } else {
+                                alert(data.Result);
+                            }
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        }
+                    });
+                }
+
+                function Remover(ids) {
+
+                    $("#Loading").show();
+                    document.body.style.cursor = 'wait';
+
+                    $.ajax({
+                        url: '@Url.Action("Remover", "TestData")',
+                        data: JSON.stringify(ids),
+                        contentType: 'application/json; charset=utf-8',
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+
+                            $.MessageBoxOK({
+                                mensagem: data.Result,
+                                argFuncao: data.Status,
+                                funcaoBotaoOK: function (status) {
+                                    if (status == 0)
+                                        window.location = '@Url.Action("Editar/", "DataPool")'+@Model.Id;
+                                }
+                            });
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        },
+                        error: function (data) {
+
+                            if (data.Result == undefined) {
+                                alert(data.responseText);
+                            } else {
+                                alert(data.Result);
+                            }
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        }
+                    });
+                }
+
+
+                initTable();
+
+                $('#datatable-testData tbody').on( 'click', 'tr', function () {
+
+                    var oTable = $('#datatable-testData').DataTable();
+                    var status = '';
+                    var cancelar = false;
+                    var emGeracao = false;
+
+
+
+                    oTable.rows({selected:true}).eq(0).each(function (i,elem){
+
+                        var statusColValue = oTable.cell($(this).eq(elem), 9).data()
+
+                        if(status==''){
+                            if(statusColValue.includes('EM GERAÇÃO') ){
+                                status = 'EM GERAÇÃO'
+                            }else if(statusColValue.includes('CADASTRADA') ){
+                                status = 'CADASTRADA'
+                            }else{
+                                status = 'OUTRO';
+                                return false;
+                            }
+                        }else{
+                            if(!statusColValue.includes(status)){
+
+                                var tempStatus = '';
+
+                                if(statusColValue.includes('EM GERAÇÃO') ){
+
+                                    tempStatus = 'EM GERAÇÃO';
+
+                                }else if(statusColValue.includes('CADASTRADA') ){
+                                    tempStatus = 'CADASTRADA';
+                                }else{
+                                    tempStatus = 'OUTRO';
+                                }
+
+                                if(status!=tempStatus){
+                                    status = 'OUTRO';
+                                }
+
+
+
+                            }
+                        }
+
+
+                    });
+
+                    switch(status){
+                        case 'EM GERAÇÃO':
+                            $("#btnPlay").attr("value","Parar");
+                            $("#btnPlay").removeAttr("disabled");
+                            //  $("#btnPlay").attr('class', 'btn bg-red margin pull-right');
+
+                            break;
+
+                        case 'CADASTRADA':
+                            $("#btnPlay").removeAttr("disabled");
+                            $("#btnPlay").attr("value","Play");
+                            // $("#btnPlay").attr('class', 'btn bg-purple margin pull-right');
+                            break;
+
+                        default:
+                            //$("#btnPlay").attr('class', 'btn bg-purple margin pull-right');
+                            $("#btnPlay").attr("disabled","true");
+                            $("#btnPlay").attr("value","Play");
+
+
+                    }
+
+
+
+
+                    //$('table.display').find('tr.selected').children().each(function (idx, elem) {
+
+                    //    var colName = $(this).find('td.status').context.className;
+
+                    //if(colName=='status'){
+
+                    //    var colValue = $(this).find('td.status').context.innerText;
+
+                    //    switch(colValue){
+                    //        case 'EM GERAÇÃO':
+                    //            $("#btnPlay").attr("value","Cancelar");
+                    //            $("#btnPlay").removeAttr("disabled");
+                    //            break;
+
+                    //        case 'CADASTRADA':
+                    //            $("#btnPlay").removeAttr("disabled");
+                    //            $("#btnPlay").attr("value","Play");
+                    //            break;
+
+                    //        default:
+                    //            $("#btnPlay").attr("disabled","true");
+                    //            $("#btnPlay").attr("value","Play");
+
+
+                    //    }
+
+                    //}
+                    //var colName = $(this).find('td.status').context.className;
+                    //if(colName=='status'){
+
+                    //    var colValue = $(this).find('td.status').context.innerText;
+
+                    //    if(colValue!='CADASTRADA'){
+                    //        $("#btnPlay").attr("disabled","true");
+
+                    //        return false;
+                    //    } else
+                    //        $("#btnPlay").prop("disabled", false)
+                    //}
+                    //  });
+
+                });
+
+
+
+                //datepicker();
+
+
+                //fim document ready
+            });
+
+
+            function key(event, field) {
+
+                var er = /[^0-9]/;
+                er.lastIndex = 0;
+                var campo = num;
+                if (er.test(campo.value)) {
+                    campo.value = "";
+                }
+
+            }
+
+            //function datepicker() {
+            //    //Date picker
+            //    $('#dt_geracao_solicitada').datepicker({
+            //        dateFormat: 'dd/mm/yy',
+            //        autoclose: true
+            //    });
+            //}
+
+            function initTable(){
+                var dt= $('#datatable-testData').DataTable({
+                    //dom: "Bfrtip",
+                    //data: rows,
+                    //columns: columns,
+                    select: {
+                        style: 'os'
+                    },
+                    order: [[1,"asc"]],
+                    iDisplayLength: 15,
+                    aLengthMenu: [5, 10, 15, 100],
+                    columnDefs: [
+                        {targets: [0], orderable: false, defaultContent: ""},
+                        {targets: [1], orderable: false, defaultContent: "",class: "details-control"},
+                        {targets: [2], sortable: false, orderable: false, defaultContent: "",class: "class-evidencia", width: "5%"},
+                        {targets: [3], sortable: true, orderable: true, defaultContent: "", width: "20%"},
+                        {targets: [4], sortable: true, orderable: true, defaultContent: "", width: "10%"},
+                        {targets: [5], sortable: true, orderable: true, defaultContent: "", width: "20%"},
+                        {targets: [6], sortable: true, orderable: true, defaultContent: "", width: "20%"},
+                        {targets: [7], sortable: true, orderable: true, defaultContent: "", width: "10%"},
+                        {targets: [8], sortable: true, orderable: true, defaultContent: "", width: "10%"},
+                        {targets: [9], sortable: true, orderable: true, defaultContent: "", width: "5%"}],
+                    scrollX: true,
+                    oLanguage: {
+                        sEmptyTable: "Nenhum registro encontrado",
+                        sInfo: "Exibindo de _START_ até _END_ de _TOTAL_ registros",
+                        sInfoEmpty: "Exibindo 0 até 0 de 0 registros",
+                        sInfoFiltered: "(Filtrados de _MAX_ registros)",
+                        sInfoPostFix: "",
+                        sInfoThousands: ".",
+                        sLengthMenu: "_MENU_ resultados por página",
+                        sLoadingRecords: "Carregando...",
+                        sProcessing: "Processando...",
+                        sZeroRecords: "Nenhum registro encontrado",
+                        sSearch: "Pesquisar",
+                        oPaginate: {
+                            sNext: "Próximo",
+                            sPrevious: "Anterior",
+                            sFirst: "Primeiro",
+                            sLast: "Último"
+                        },
+                        oAria: {
+                            sSortAscending: ": Ordenar colunas de forma ascendente",
+                            sSortDescending: ": Ordenar colunas de forma descendente"
+                        }
+                    }
+                });
+
+
+                var detailRows = [];
+
+                $('#datatable-testData tbody').on('click', 'tr td.details-control', function () {
+                    var tr = $(this).closest('tr');
+                    var row = dt.row(tr);
+                    var idx = $.inArray(tr.attr('id'), detailRows);
+
+                    var data = [];
+                    data.push($(this).find('input[name="item.Id"]').val());
+
+                    if (row.child.isShown()) {
+                        tr.removeClass('details');
+                        //tr.addClass('selected');
+                        row.child.hide();
+
+                        // Remove from the 'open' array
+                        detailRows.splice(idx, 1);
+                    }
+                    else {
+                        tr.addClass('details');
+                        tr.addClass('selected');
+                        row.child(format(data)).show();
+
+                        // Add to the 'open' array
+                        if (idx === -1) {
+                            detailRows.push(tr.attr('id'));
+                        }
+                    }
+
+
+                });
+
+
+                var oTable = $('#datatable-testData').DataTable();
+
+                $('#datatable-testData tbody').on( 'click', 'tr', function () {
+
+
+
+                    //var pos = oTable.row(this).index();
+                    //if(pos!=undefined){
+                    //    if (!$(this).hasClass('selected')) {
+                    //        //$(this).removeClass('selected');
+
+                    //        //oTable.$('tr.selected').removeClass('selected');
+
+                    //        ////$(this).addClass('selected');
+
+                    //        //$(this).toggleClass('selected');
+                    //    }
+                    //}
+
+                    //var row = oTable.row(pos).data();
+                    //console.log(row);
+                } );
+
+                //$('#datatable-testData tbody').on('click', 'tr td.select-checkbox', function () {
+                //    var tr = $(this).closest('tr');
+                //    var row = dt.row(tr);
+                //    var idx = $.inArray(tr.attr('id'), detailRows);
+
+                //    var table = $('#datatable-testData').DataTable();
+
+                //    if (table.$('tr.selected').hasClass('selected')) {
+                //        table.$('tr.selected').removeClass('selected');
+                //    }
+                //    else {
+                //        table.$('tr.selected').addClass('selected');
+                //        //$(this).addClass('selected');
+                //    }
+                //});
+            }
+
+
+            function loadTable() {
+
+                $.ajax({
+                    url: '@Url.Action("CarregarParametros", "DataPool")',
+                    type: 'POST',
+                    data: "{idScriptCondicaoScript:" + @Model.IdScriptCondicaoScript + ", idDataPool:"+@Model.Id+"}",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+
+                        var obj = JSON.parse(result); //convertendo result para json
+                        var columns = []; // declarando o array de colunas
+                        var idsParametros = []; // declarando o array de IdParametros
+                        var rows = []; // declarando o array de linhas da tabela onde o mesmo vai ter outro array em casa posição
+                        var length = obj[0].parametros.length; // recebe o tamanho do ar
+                        var tipoParametro = []; //recebe os tipos de parametros
+                        var datePicker = [];
+                        //loop para capturar os nomes das colunas, os idparametros e tipos
+                        obj[0].parametros.forEach(function (o, index)
+                        {
+                            columns.push({ "title": o.Descricao });
+                            idsParametros.push(o.IdParametro);
+                            tipoParametro.push(o.Tipo);
+                        });
+
+
+                        //loop que cria a linhas da tabela e cria os campos dinamicamente
+                        obj[0].testData.forEach(function (o, index)
+                        {
+                            var row = [];
+                            var read = "";
+                            if(o.IdStatus !=1 ){
+                                read = "disabled";
+                            }
+
+                            for(var i = 0; i < length; i++) {
+                                switch(tipoParametro[i]) {
+                                    case "NUMBER":
+                                        if(o.valores[i].Id!=0){
+                                            row.push("<input type=\"text\" width=\"100%\" id=row_"+(index)+"_col_"+(i)+" onkeypress=\"if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;\" onChange=\"saveRow("+(index)+","+(i)+","+o.valores[i].Id+","+o.IdTestData+")\" value=\""+o.valores[i].Valor+"\" class= \"form-control\" "+read+">"
+                                              + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.valores[i].IdParametroScript+"\" class= \"hidden-IdParametroScript\">"
+                                              + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                              + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                              + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden>"+o.valores[i].Valor+"<\label>");
+                                        }else{
+                                            row.push("<input type=\"text\" "+read+" width=\"100%\" id=row_"+(index)+"_col_"+(i)+" onkeypress=\"if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;\" onChange=\"saveRow("+(index)+","+(i)+","+0+","+o.IdTestData+")\" placeholder=\"(sem valor)\" value=\"\" class= \"form-control\" "+read+">"
+                                             + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+0+"\" class= \"hidden-IdParametroScript\">"
+                                             + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                             + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                             + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden><\label>");
+                                        }
+                                        break;
+                                    case "DATE":
+                                        datePicker.push("row_"+(index)+"_col_"+(i));
+                                        if(o.valores[i].Id!=0){
+                                            row.push("<div class=\"input-group date\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div><input id=\"row_"+(index)+"_col_"+(i)+"\" onChange=\"saveRow("+(index)+","+(i)+","+o.valores[i].Id+","+o.IdTestData+")\" class=\"form-control pull-right\" data-val=\"true\" data-val-date=\"The field DataSolicitacao must be a date.\" data-val-required=\"The DataSolicitacao field is required.\" name=\"DataSolicitacao\" required=\"required\" type=\"text\" data-mask=\"00/00/0000\" value="+o.valores[i].Valor+""+" aria-required=\"true\" aria-invalid=\"false\"></div>"
+                                              + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.valores[i].IdParametroScript+"\" class= \"hidden-IdParametroScript\">"
+                                              + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                              + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                              + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden>"+o.valores[i].Valor+"<\label>");
+                                        }else{
+                                            row.push("<div class=\"input-group date\"><div class=\"input-group-addon\"><i class=\"fa fa-calendar\"></i></div><input id=\"row_"+(index)+"_col_"+(i)+"\" onChange=\"saveRow("+(index)+","+(i)+","+o.valores[i].Id+","+o.IdTestData+")\" class=\"form-control pull-right\" data-val=\"true\" data-val-date=\"The field DataSolicitacao must be a date.\" data-val-required=\"The DataSolicitacao field is required.\" name=\"DataSolicitacao\" required=\"required\" type=\"text\" data-mask=\"00/00/0000\" value=\"\" aria-required=\"true\" aria-invalid=\"false\"></div>"
+                                             + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+0+"\" class= \"hidden-IdParametroScript\">"
+                                             + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                             + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                             + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden><\label>");
+                                        }
+                                        break;
+                                    case "BOOLEAN":
+                                        if(o.valores[i].Id!=0){
+
+                                            var nao = "";
+                                            var sim = "";
+                                            if(o.valores[i].Valor == "Não"){
+                                                nao = "selected";
+                                            }else{
+                                                sim = "selected";
+                                            }
+                                            row.push("<select onChange=\"saveRow("+(index)+","+(i)+","+o.valores[i].Id+","+o.IdTestData+")\" id=row_"+(index)+"_col_"+(i)+" class=\"form-control\"  name=\"nao-sim\" style=\"width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;\" selected=\"selected\" aria-invalid=\"false\"><option value=\"\"></option><option "+nao+" value=\"Não\">Não</option><option "+sim+" value=\"Sim\">Sim</option></select>"
+                                              + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.valores[i].IdParametroScript+"\" class= \"hidden-IdParametroScript\">"
+                                              + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                              + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                              + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden>"+o.valores[i].Valor+"<\label>");
+                                        }else{
+                                            row.push("<select onChange=\"saveRow("+(index)+","+(i)+","+o.valores[i].Id+","+o.IdTestData+")\" id=row_"+(index)+"_col_"+(i)+" class=\"form-control\" name=\"nao-sim\" style=\"width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;\" selected=\"selected\" aria-invalid=\"false\"><option value=\"\"></option><option value=\"Não\">Não</option><option value=\"Sim\">Sim</option></select>"
+                                             + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+0+"\" class= \"hidden-IdParametroScript\">"
+                                             + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                             + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                             + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden><\label>");
+                                        }
+                                        break;
+                                    default:
+                                        if(o.valores[i].Id!=0){
+                                            row.push("<input type=\"text\"  id=row_"+(index)+"_col_"+(i)+" onkeydown=\"key(event,this,"+index+","+i+")\" onChange=\"saveRow("+(index)+","+(i)+","+o.valores[i].Id+","+o.IdTestData+")\" value=\""+o.valores[i].Valor+"\" class= \"form-control\" "+read+" width=\"100%\">"
+                                              + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.valores[i].IdParametroScript+"\" class= \"hidden-IdParametroScript\">"
+                                              + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                              + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                              + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden>"+o.valores[i].Valor+"<\label>");
+                                        }else{
+                                            row.push("<input type=\"text\" "+read+" width=\"100%\" id=row_"+(index)+"_col_"+(i)+" onkeydown=\"key(event,this)\" onChange=\"saveRow("+(index)+","+(i)+","+0+","+o.IdTestData+")\" placeholder=\"(sem valor)\" value=\"\" class= \"form-control\" "+read+">"
+                                             + "<input type=\"hidden\" id=IdParametroScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+0+"\" class= \"hidden-IdParametroScript\">"
+                                             + "<input type=\"hidden\" id=IdScriptCondicaoScript_"+(index)+"_"+(i)+" name=\""+"item"+index+"\" value=\""+o.IdScriptCondicaoScript+"\" class= \"hidden-IdScriptCondicaoScript\">"
+                                             + "<input type=\"hidden\" id=IdParametro_"+(index)+"_"+(i)+" name=\""+"IdParametro"+index+"\" value=\""+idsParametros[i]+"\" class= \"hidden-IdParametro\">"
+                                             + "<label id=label_"+(index)+"_"+(i)+" visibility: hidden><\label>");
+
+                                        }
+                                }
+
+
+
+                            }
+                            //row.splice(0, 0, "<input type=\"checkbox\" id=checkbox_row name=\""+index+"\" value=\"\" class= \"checkbox\">");
+                            row.splice(0, 0, "");
+                            row.splice(1, 0, o.Status
+                                + "<input type=\"hidden\" id=IdTestData name=\""+"item"+index+"\" value=\""+o.IdTestData+"\" class= \"hidden-id\">"
+                                + "<input type=\"hidden\" id=DescricaoTestData name=\""+"item"+index+"\" value=\""+o.Descricao+"\" class= \"hidden-descricao\">"
+                                + "<input type=\"hidden\" id=GeradoPorTestData name=\""+"item"+index+"\" value=\""+o.GeradoPor+"\" class= \"hidden-gerado-por\">"
+                                + "<input type=\"hidden\" id=DataGeracaoTestData name=\""+"item"+index+"\" value=\""+o.DataGeracao+"\" class= \"hidden-data-geracao\">"
+                                + "<input type=\"hidden\" id=IdStatus name=\""+"item"+index+"\" value=\""+o.IdStatus+"\" class= \"hidden-status\">");
+                            rows.push(row);
+                        });
+
+                        // columns.splice(0,0,{ "title": ""};//"<input type='checkbox' id='checkbox_master' onclick='checkAll()'  value='' class= 'select-checkbox'>" });
+                        columns.splice(0,0,{ "title": "" });
+                        columns.splice(1,0,{ "title": "STATUS"});
+
+
+                        var dt= $('#datatable-testData').DataTable({
+                            //dom: "Bfrtip",
+                            data: rows,
+                            columns: columns,
+                            order: [[1,"asc"]],
+                            aLengthMenu: [5, 10, 15, 100],
+                            columnDefs: [ { targets: [0], orderable: false, defaultContent: "",class: "details-control", width: "20px" }, { targets: [1], orderable: true, defaultContent: "", width: "30px" } ],
+                            scrollX: true,
+                            keys: true,
+                            oLanguage: {
+                                sEmptyTable: "Nenhum registro encontrado",
+                                sInfo: "Exibindo de _START_ até _END_ de _TOTAL_ registros",
+                                sInfoEmpty: "Exibindo 0 até 0 de 0 registros",
+                                sInfoFiltered: "(Filtrados de _MAX_ registros)",
+                                sInfoPostFix: "",
+                                sInfoThousands: ".",
+                                sLengthMenu: "_MENU_ resultados por página",
+                                sLoadingRecords: "Carregando...",
+                                sProcessing: "Processando...",
+                                sZeroRecords: "Nenhum registro encontrado",
+                                sSearch: "Pesquisar",
+                                oPaginate: {
+                                    sNext: "Próximo",
+                                    sPrevious: "Anterior",
+                                    sFirst: "Primeiro",
+                                    sLast: "Último"
+                                },
+                                oAria: {
+                                    sSortAscending: ": Ordenar colunas de forma ascendente",
+                                    sSortDescending: ": Ordenar colunas de forma descendente"
+                                }
+                            }
+                        });
+
+                        var oTable = $('#datatable-testData').DataTable();
+
+                        $('#datatable-testData tbody').on( 'click', 'tr', function () {
+
+                            var pos = oTable.row(this).index();
+                            if(pos!=undefined){
+                                if (!$(this).hasClass('selected')) {
+                                    //$(this).removeClass('selected');
+
+                                    //oTable.$('tr.selected').removeClass('selected');
+
+                                    //$(this).addClass('selected');
+
+                                    //$(this).toggleClass('selected');
+                                }
+                            }
+
+                            //var row = oTable.row(pos).data();
+                            //console.log(row);
+                        } );
+
+                        for (var i = 0; i < datePicker.length; i++) {
+
+                            $("#"+datePicker[i]).datepicker({
+                                dateFormat: 'dd/mm/yy',
+                                autoclose: true
+                            });
+                        }
+
+
+
+                        var detailRows = [];
+
+                        $('#datatable-testData tbody').on('click', 'tr td.details-control', function () {
+                            var tr = $(this).closest('tr');
+                            var row = dt.row(tr);
+                            var idx = $.inArray(tr.attr('id'), detailRows);
+
+                            var data = [];
+                            data.push($(this).parent().find('#IdTestData').first().attr("value"));
+                            data.push($(this).parent().find('#DescricaoTestData').first().attr("value"));
+                            data.push($(this).parent().find('#GeradoPorTestData').first().attr("value"));
+                            data.push($(this).parent().find('#DataGeracaoTestData').first().attr("value"));
+
+                            if (row.child.isShown()) {
+                                tr.removeClass('details');
+                                row.child.hide();
+
+                                // Remove from the 'open' array
+                                detailRows.splice(idx, 1);
+                            }
+                            else {
+                                tr.addClass('details');
+                                row.child(format(data)).show();
+
+                                // Add to the 'open' array
+                                if (idx === -1) {
+                                    detailRows.push(tr.attr('id'));
+                                }
+                            }
+
+                            //var table = $('#datatable-testData').DataTable();
+                            //table.$('tr.selected').removeClass('selected');
+
+                        });
+
+                        $('#datatable-testData tbody').on('click', 'tr td.select-checkbox', function () {
+                            var tr = $(this).closest('tr');
+                            var row = dt.row(tr);
+                            var idx = $.inArray(tr.attr('id'), detailRows);
+
+                            //var table = $('#datatable-testData').DataTable();
+
+                            //if (table.$('tr.selected').hasClass('selected')) {
+                            //    table.$('tr.selected').removeClass('selected');
+                            //}
+                            //else {
+                            //    table.$('tr.selected').addClass('selected');
+                            //    //$(this).addClass('selected');
+                            //}
+                        });
+
+
+
+                        /*
+
+                        targets: 0,
+                                class: "details-control",
+                                orderable: false,
+                                data: null,
+                                defaultContent: ""
+                            }
+
+                         */
+
+
+                    },
+                    error: function (erro) {
+                        alert(erro);
+                    }
+                });
+            }
+
+            function saveRow(field){
+                //var form = $("#form_"+row+"_"+col);
+
+                //var idField = "#row_"+row+"_col_"+col;
+
+                var valor = field.value+"";
+                var idParametroScript = field.attributes.idparametroscript.value;
+                var idScriptCondicaoScript = (@Model.IdScriptCondicaoScript);
+                var idParametro = field.attributes.idparametro.value;
+                var idParametroValor = field.attributes.idparametrovalor.value;
+                var idTestData = field.attributes.idtestdata.value;
+                //id, valor,  idParametroScript
+                $.ajax({
+                    url: '@Url.Action("atualizaParametroValor", "DataPool")',
+                    type: 'POST',
+                    data: "{id:" + idParametroValor + ", valor:'"+valor+"', idParametroScript:"+idParametroScript+", idTestData:"+idTestData+", idScriptCondicaoScript:"+idScriptCondicaoScript+", idParametro:"+idParametro+"}",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        var table = $("#datatable-testData").DataTable();
+                        var obj = JSON.parse(result);
+
+                        field.value = obj.Valor;
+                        field.attributes.idparametroscript.value = obj.IdParametroScript;
+
+                        table = $('#datatable-testData').DataTable();
+
+                        //highlight
+                        $("#"+field.attributes.id.value).effect("highlight", {color: '#DFF2BF'}, 3000);
+
+                    }
+
+
+                });
+            }
+
+            function checkAll(){
+
+                var checado = $('#checkbox_master').is(':checked')
+                if(checado == true){
+
+                    $(".checkbox").each(function (index){
+                        var input = $(this);
+                        if(input.attr('type') == 'checkbox'){
+                            input.prop('checked', true);
+                        }
+                        //console.log(input.attr('name'));
+                    });
+                }else{
+                    $(".checkbox").each(function (index){
+                        var input = $(this);
+                        if(input.attr('type') == 'checkbox'){
+                            input.prop('checked', false);
+                        }
+                    });
+                }
+            }
+
+            function ModalPlay() {
+
+                var table = $('#datatable-testData').DataTable();
+
+                var ids = [];
+
+                table.rows({selected:true}).eq(0).each(function (i,elem){
+                    ids.push(table.cell($(this).eq(elem), 0).data());
+                });
+
+
+
+
+                //var id = $('table.display').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                //    ids.push($(elem).val());
+                //});
+
+
+
+                //if (id === "" || id.length <= 0) {
+                //    $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                //    return;
+                //}
+
+                if (ids.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                    return;
+                }
+
+
+
+                //verrica qual ação será executada cancelar ou executar
+                if($('#btnPlay').val() == 'Play'){
+
+                    $.ajax({
+                        url: '@Url.Action("GetDadosModalPlayTestData", "DataPool")',
+                        type: 'POST',
+                        data: '{id:' + ids[0] + '}',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+
+                            $("#list_escolher_ambiente").empty();
+                            var obj = JSON.parse(data.ambexec);
+
+                            obj.forEach(function (o, index) {
+                                $("#list_escolher_ambiente").append('<option value="' + o.IdAmbienteExecucao + '">' + o.DescricaoAmbienteExecucao + '</option>');
+                            });
+
+                            $("#list_escolher_maquina_virtual").empty();
+                            var obj2 = JSON.parse(data.ambvirtu);
+
+                            obj2.forEach(function (o, index) {
+                                $("#list_escolher_maquina_virtual").append('<option value="' + o.IdAmbienteVirtual + '">' + o.DescricaoAmbienteVirtual + '</option>');
+                            });
+
+                            if (data.ambexec == "[]" || data.ambvirtu == "[]") {
+
+                                {
+                                    $.MessageBoxOK({ mensagem: "Não existe ambiente disponível para execução." });
+                                }
+
+                            } else {
+
+                                $('#modal-play').modal('show');
+                            }
+
+
+
+                        },
+                        error: function (erro) {
+                            $.MessageBoxOK({ mensagem: "Erro ao carregar os dados do Ambiente de Execução." });
+                        }
+                    });
+
+                }else{
+                    $.MessageBoxSimNao({
+                        titulo: "Cancelar",
+                        mensagem: "Confirma o cancelamento dos TestDatas?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            $("#Loading").show();
+                            $.ajax({
+                                url: '@Url.Action("CancelaExecuca", "DataPool")',
+                                type: 'POST',
+                                data: JSON.stringify(ids),
+                                contentType: 'application/json; charset=utf-8',
+                                success: function (data) {
+
+                                    $("#Loading").remove();
+                                    $.MessageBoxOK({ mensagem: "Cancelamento realizado com sucesso!" });
+                                    window.location ='@Url.Action("Editar/","DataPool") @Model.Id';
+
+
+                                },
+                                error: function (erro) {
+                                    $("#Loading").remove();
+                                    $.MessageBoxOK({ mensagem: "Erro ao cancelar a(s) Execução(ões)." });
+                                }
+                            });
+                        }
+                    });
+                }
+
+
+
+                //Coloca os Ids das massas a serem executadas no hidden do modal de escolha de ambiente
+                //$('#IdMassas').attr('value',ids);
+
+
+
+
+
+            }
+
+
+            function play() {
+
+                var ids = [];
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').each(function (idx, elem) {
+                    ids.push($(elem).val());
+                });
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma Massa selecionada." });
+                    return;
+                }
+
+                var idFaseTeste = $('#list_escolher_tipo_fase_teste').val();
+                var notificacaoTelegram = $('#opcaoNotificacaoTelegram').val();
+                var idMaquinaVirtual = $('#list_escolher_maquina_virtual').val();
+                var idAmbienteExecucao = $('#list_escolher_ambiente').val();
+
+                $.ajax({
+                    url: '@Url.Action("Play", "DataPool")',
+                    type: 'POST',
+                    data: "{id:\"" +  ids.join([separador = ',']) + "\", idFaseTeste:" + idFaseTeste + ", idMaquinaVirtual:" + idMaquinaVirtual + ", opcaoTelegram:" + notificacaoTelegram + ", idAmbienteExecucao:" + idAmbienteExecucao + ", PlayTestData:" + true + "}",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#modal-play').modal('toggle');
+                        $.MessageBoxOK({ mensagem: data.Data });
+                    },
+                    error: function (erro) {
+                        $.MessageBoxOK({ mensagem: "Não foi possível iniciar a execução." });
+                    }
+                });
+            }
+
+        </script>
+    }

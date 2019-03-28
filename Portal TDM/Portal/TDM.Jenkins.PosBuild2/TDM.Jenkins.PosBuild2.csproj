@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F2DD18C7-7E26-49F2-AB34-9EDBBBC27249}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TDM.Jenkins.PosBuild2</RootNamespace>
+    <AssemblyName>TDM.Jenkins.PosBuild2</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.2.0-beta1\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="TDM.Jenkins.PosBuild2.exe.config" />
+    <None Include="TDM.Jenkins.PosBuild2.vshost.exe.config" />
+    <None Include="TDM.Jenkins.PosBuild2.vshost.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LaefazWeb\TDM.Web.csproj">
+      <Project>{b76d5e5d-a2c6-4b99-b32c-a492badf63c2}</Project>
+      <Name>TDM.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDM.Jenkins.PosBuild\TDM.Jenkins.PosBuild.csproj">
+      <Project>{9B11C0C0-A966-4DEF-B4A7-C1C35D916204}</Project>
+      <Name>TDM.Jenkins.PosBuild</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Antlr3.Runtime.dll" />
+    <Content Include="EntityFramework.dll" />
+    <Content Include="EntityFramework.SqlServer.dll" />
+    <Content Include="EntityFramework.SqlServer.xml" />
+    <Content Include="EntityFramework.SqlServerCompact.dll" />
+    <Content Include="EntityFramework.SqlServerCompact.xml" />
+    <Content Include="EntityFramework.xml" />
+    <Content Include="LaefazWeb.dll" />
+    <Content Include="LaefazWeb.pdb" />
+    <Content Include="Microsoft.Web.Infrastructure.dll" />
+    <Content Include="Newtonsoft.Json.dll" />
+    <Content Include="Newtonsoft.Json.xml" />
+    <Content Include="System.Data.SqlServerCe.dll" />
+    <Content Include="System.Net.Http.Formatting.dll" />
+    <Content Include="System.Web.Http.dll" />
+    <Content Include="System.Web.Http.WebHost.dll" />
+    <Content Include="System.Web.Http.WebHost.xml" />
+    <Content Include="System.Web.Http.xml" />
+    <Content Include="System.Web.Mvc.dll" />
+    <Content Include="System.Web.Mvc.xml" />
+    <Content Include="System.Web.Optimization.dll" />
+    <Content Include="System.Web.Razor.dll" />
+    <Content Include="System.Web.Razor.xml" />
+    <Content Include="System.Web.WebPages.Deployment.dll" />
+    <Content Include="System.Web.WebPages.Deployment.xml" />
+    <Content Include="System.Web.WebPages.dll" />
+    <Content Include="System.Web.WebPages.Razor.dll" />
+    <Content Include="System.Web.WebPages.Razor.xml" />
+    <Content Include="System.Web.WebPages.xml" />
+    <Content Include="TDM.Jenkins.PosBuild.exe" />
+    <Content Include="TDM.Jenkins.PosBuild.pdb" />
+    <Content Include="TDM.Jenkins.PosBuild2.exe" />
+    <Content Include="TDM.Jenkins.PosBuild2.pdb" />
+    <Content Include="TDM.Jenkins.PosBuild2.vshost.exe" />
+    <Content Include="Telegram.Bot.dll" />
+    <Content Include="WebGrease.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="amd64\" />
+    <Folder Include="x86\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

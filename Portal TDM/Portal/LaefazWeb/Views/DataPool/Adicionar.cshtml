@@ -1,0 +1,399 @@
+﻿@using TDMWeb.Extensions
+@model LaefazWeb.Models.DataPool
+
+@{
+    ViewBag.Title = "Adicionar";
+}
+
+@section styles {
+    <style type="text/css">
+        .form-control[readonly] {
+            background-color: white;
+        }
+
+        .required:after {
+                content:" *"; 
+                color: #ff0000;
+            }
+    </style>
+}
+
+@using (Html.BeginForm("Salvar", "DataPool", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data", @id = "formDataPool" }))
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Adicionar DataPool</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                @*Primeira Linha*@
+                <div class="col-xs-4 form-group">
+
+                    @Html.Label("projeto_TDM", "Projeto TDM")
+                    @Html.Hidden("tdmId", "")
+                    @Html.DropDownList("projetoTDM", new SelectList(ViewBag.ListaTDM, "Id", "Descricao"), null, new
+               {
+                   @class = "form-control",
+                   @id = "list-projeto-tdm",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                    )
+                    @*@Html.TextBoxFor(m => m.IdTDM, new { @class = "form-control", required = "required"})*@
+
+                </div>
+
+                <div class="col-xs-4 form-group">
+                    @Html.Label("descricao", "Descrição")
+                    @Html.TextBoxFor(m => m.Descricao, new { @class = "form-control", required = "required" })
+                </div>
+                <div class="col-xs-4 form-group">
+                    @Html.Label("demanda", "Demanda")
+                    @Html.HiddenFor(m => m.IdDemanda, new { Id = "idDemanda" })
+                    @Html.DropDownList("demandaDatapool", new SelectList(ViewBag.ListaDemanda, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control",
+                   @id = "list-demanda-datapool",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                    )
+
+                </div>
+            </div>
+
+            @*Segunda Linha*@
+            <div class="row">
+
+                <div class="col-xs-4 form-group">
+                    @Html.Label("sistema_datapool", "Sistema")
+
+                    @Html.DropDownList("sistemaDatapool", new SelectList(ViewBag.ListaAUT, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control",
+                   @id = "list-sistema-datapool",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+                   @onchange = "loadListScripts()",
+               }
+                    )
+                </div>
+
+                @*campo script*@
+                <div class="col-xs-4 form-group">
+                    @Html.Label("script", "Script")
+                    @Html.DropDownList("listScript", new SelectList(ViewBag.listScript, "Id", "Descricao"), null, new
+               {
+                   @class = "form-control",
+                   @id = "list-script",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @onchange = "loadListCondicaoScripts()",
+                   @required = "required",
+
+               }
+                        )
+                </div>
+
+                @*campo condicao script*@
+                <div class="col-xs-4 form-group">
+                    @Html.Label("script", "Condição")
+                    @Html.DropDownList("listCondicaoScript", new SelectList(ViewBag.listCondicaoScript, "Id", "Descricao"), null, new
+               {
+                   @class = "form-control",
+                   @id = "list-script-condicao",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                        )
+                </div>
+
+            </div>
+
+            @*Terceira Linha*@
+            <div class="row">
+                <div class="col-xs-4 form-group">
+                    @Html.Label("dt_geracao_solicitada", "Data de Geração Solicitada")
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(m => m.DataSolicitacao, "{0:dd/MM/yyyy}", new { @class = "form-control pull-right", required = "required", @id = "dt_geracao_solicitada" })
+                    </div>
+                </div>
+
+                <div class="col-xs-4 form-group">
+                    @Html.Label("dt_termino_label", "Data Término")
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(m => m.DataTermino, "{0:dd/MM/yyyy}", new { @class = "form-control pull-right", required = "required", @id = "dt_termino" })
+                    </div>
+                </div>
+
+                <div class="col-xs-4 form-group">
+                    @Html.Label("qtd_necessaria", "Qtd. Necessária")
+                    @Html.TextBoxFor(m => m.QtdSolicitada, new { @class = "form-control", required = "required", pattern = "[0-9]+$", onkeypress = "return Onlynumbers(event)", type="number", min="1" })
+                </div>
+
+                <div class="col-xs-4 form-group">
+                    @Html.Label("rot-diaria", "Considerar Execução Diária")
+                    <select name="considerarRotinaDiaria" class="form-control" required="required" id="selectRotinaDiaria">
+                        <option value=""></option>
+                        <option value='1'>Sim</option>
+                        <option value='0'>Não</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    @Html.Label("campo_observacao", "Observação")
+                    @Html.TextAreaFor(m=>m.Observacao, new { @class = "form-control", @id = "observacao", @style = "resize: none", @rows = "5" })
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-footer" align="right">
+            @*<a href="@Url.Action("index", "DataPool")" class="btn btn-danger" id="cancelar">Cancelar</a>*@
+            <input type="button" class="btn btn-danger" id="btnCancelar" value="Cancelar"/>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript">
+
+        function Onlynumbers(e) {
+
+            if (e.keyCode < 48 || e.keyCode > 57) {
+                return false;
+            }
+        }
+
+        
+        $(function () {
+            $('#dt_termino').daterangepicker({
+                "opens": "right",
+                "singleDatePicker": true,
+                "locale": {
+                    "opens": "right",
+                    "format": "DD/MM/YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Confirmar",
+                    "cancelLabel": "Cancelar",
+                    "fromLabel": "De",
+                    "toLabel": "Para",
+                    "customRangeLabel": "Custom",
+                    "weekLabel": "W",
+                    "daysOfWeek": [
+                        "Dom",
+                        "Seg",
+                        "Ter",
+                        "Qua",
+                        "Qui",
+                        "Sex",
+                        "Sab"
+                    ],
+                    "monthNames": [
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
+                        "Julho",
+                        "Agosto",
+                        "Setembro",
+                        "Outubro",
+                        "Novembro",
+                        "Dezembro"
+                    ],
+                    "firstDay": 1
+                }
+            });
+        })
+
+        $(function () {
+            $('#dt_geracao_solicitada').daterangepicker({
+                "opens": "right",
+                "singleDatePicker": true,
+                "locale": {
+                    "opens": "right",
+                    "format": "DD/MM/YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Confirmar",
+                    "cancelLabel": "Cancelar",
+                    "fromLabel": "De",
+                    "toLabel": "Para",
+                    "customRangeLabel": "Custom",
+                    "weekLabel": "W",
+                    "daysOfWeek": [
+                        "Dom",
+                        "Seg",
+                        "Ter",
+                        "Qua",
+                        "Qui",
+                        "Sex",
+                        "Sab"
+                    ],
+                    "monthNames": [
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
+                        "Julho",
+                        "Agosto",
+                        "Setembro",
+                        "Outubro",
+                        "Novembro",
+                        "Dezembro"
+                    ],
+                    "firstDay": 1
+                }
+            });
+        })
+
+        function loadListScripts() {
+
+            if ($("#list-sistema-datapool").val() != null && $("#list-sistema-datapool").val() != "") {
+
+                $.ajax(
+       {
+           url: '@Url.Action("getListScriptsBySystem", "DataPool")',
+           type: 'POST',
+           data: "{id:" + $("#list-sistema-datapool").val() + "}",
+           contentType: 'application/json; charset=utf-8',
+           success: function (result) {
+               var json = $.parseJSON(result);
+               $("#list-script").empty();
+               if (JSON.stringify(json) === '{}') {
+                   //$("#list-script").attr("disabled", true);
+                   $("#list-script").empty();
+
+                   $("#list-script-condicao").attr("disabled", true);
+                   $("#list-script-condicao").empty();
+               } else {
+                   $.each(json, function (id, descricao) {
+                       $("#list-script").append
+                       ($('<option></option>').val(id).html(descricao))
+                   })
+                   $("#list-script").removeAttr("disabled");
+                   loadListCondicaoScripts();
+               }
+               console.log(result);
+
+               $("#list-script-condicao").empty();
+           },
+           error: function (erro) {
+               alert(erro);
+           }
+       });
+
+
+
+
+            } else {
+                //$("#list-script").attr("disabled", true);
+                $("#list-script").empty();
+                //$("#list-script-condicao").attr("disabled", true);
+                $("#list-script-condicao").empty();
+            }
+
+
+        }
+
+        function loadListCondicaoScripts() {
+            $.ajax(
+       {
+           url: '@Url.Action("getListCondicaoScriptByScript", "DataPool")',
+           type: 'POST',
+           data: "{id:" + $("#list-script").val() + "}",
+           contentType: 'application/json; charset=utf-8',
+           success: function (result) {
+               var json = $.parseJSON(result);
+               $("#list-script-condicao").empty();
+               if (JSON.stringify(json) === '{}') {
+                   $("#list-script-condicao").attr("disabled", true);
+                   $("#list-script-condicao").empty();
+               } else {
+                   $.each(json, function (id, descricao) {
+                       $("#list-script-condicao").append
+                       ($('<option></option>').val(id).html(descricao))
+                   })
+                   $("#list-script-condicao").removeAttr("disabled");
+               }
+               console.log(result);
+           },
+           error: function (erro) {
+               alert(erro);
+           }
+       });
+        }
+
+        $(document).ready(function () {
+
+            //Get value Viewbag IdCurrentTDM if exists
+            var Id = '@ViewBag.IdCurrentTDM';
+            if (Id != null) {
+
+                // get the OPTION we want selected
+                var $option = $('#list-projeto-tdm').children('option[value="' + Id + '"]');
+                // and now set the option we want selected
+                $option.attr('selected', true);
+
+            }
+
+            //Get element hidden tdmId
+            var $tdmId = $('#tdmId');
+            //Set value hidden field tdmId if is Empty
+            if ($tdmId.val() == "") {
+                $tdmId.val($('#list-projeto-tdm').val());
+            }
+
+            //Action click button Cancelar
+            $('#btnCancelar').click(function () {
+                //Get element hidden tdmId
+                var tdmId = $('#tdmId');
+                //Redirect location passing value field tdmId
+                window.location = '@Url.Action("IndexDataPool/", "DataPool")' + tdmId.val();
+            });
+
+            $("#formDataPool").submit(function (event) {
+                var dataAtual = $.datepicker.formatDate('dd/mm/yy', new Date());
+
+                if ($("#dt_geracao_solicitada").val() < dataAtual) {
+                    $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data de Geração Solicitada menor do que a data atual!" });
+                    $("#Loading").remove();
+                    event.preventDefault();
+                }
+
+                var d1 = getDateFormat($("#dt_termino").val());
+                var d2 = getDateFormat($("#dt_geracao_solicitada").val());
+
+             
+                // if ($("#dt_termino").val() < $("#dt_geracao_solicitada").val()) {
+                if(d1<d2){
+                    $.MessageBoxOK({ mensagem: "Não é possível selecionar uma Data Término menor do que a Data de Geração Solicitada!" });
+                    $("#Loading").remove();
+                    event.preventDefault();
+                }
+            });
+        });
+
+        function getDateFormat(date) {
+
+            var dateParts = date.split("/");
+
+            // month is 0-based, that's why we need dataParts[1] - 1
+            var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+            return dateObject;
+        }
+
+
+    </script>
+}

@@ -1,0 +1,128 @@
+18-02-2019 10:08:54 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - resultado setado como false
+18-02-2019 10:08:54 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrada no try 
+18-02-2019 10:08:54 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - Count Motivo execucao: 8
+18-02-2019 10:08:54 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - Carregou os parametros
+18-02-2019 10:08:54 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - verificou se o plano de teste está null ou diferente de  vazio
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - Executou a proc
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - criou lista temporaria
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:15 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - populou todos os CT's
+18-02-2019 10:09:16 [INFO ] (LaefazWeb.Controllers.ExecucaoDeTesteController - line 101) - retornou com sucesso.
+18-02-2019 14:08:11 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+18-02-2019 14:08:11 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1755
+18-02-2019 14:19:12 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+18-02-2019 14:19:12 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1755
+18-02-2019 14:36:52 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+18-02-2019 14:36:52 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1755
+18-02-2019 14:37:14 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+18-02-2019 14:37:14 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1755
+18-02-2019 14:39:23 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) - Ocorreu um erro ao tentar associar o script ao CT.
+18-02-2019 14:39:23 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 62) -    at System.Data.Entity.Internal.InternalContext.SaveChanges()
+   at System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   at System.Data.Entity.DbContext.SaveChanges()
+   at LaefazWeb.Controllers.ScriptController.AssociarCT(Int32 IdScript_CondicaoScript, Int32 IdCT) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ScriptController.cs:line 1755
+18-02-2019 15:18:56 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Criado objeto Script_CondicaoScript_CT: LaefazWeb.Models.Script_CondicaoScript_CT
+18-02-2019 15:18:56 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Salvo as informações no banco.
+18-02-2019 15:18:56 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando o objeto CT: LaefazWeb.Models.CT
+18-02-2019 15:18:57 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando o objeto Script_CondicaoScript: System.Data.Entity.DynamicProxies.Script_CondicaoScrip_C9C379813DCC62DA30D4F6528D19304CE6925B0ABE01E96B7D560286EDBB682D
+18-02-2019 15:18:57 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando a descricao da plataforma: TOSCA
+18-02-2019 15:18:57 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando o objeto Script_CondicaoScript_CT_VO: LaefazWeb.Models.VOs.Script_CondicaoScript_CT_VO
+18-02-2019 15:19:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Criado objeto Script_CondicaoScript_CT: LaefazWeb.Models.Script_CondicaoScript_CT
+18-02-2019 15:19:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Salvo as informações no banco.
+18-02-2019 15:19:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando o objeto CT: LaefazWeb.Models.CT
+18-02-2019 15:19:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando o objeto Script_CondicaoScript: System.Data.Entity.DynamicProxies.Script_CondicaoScrip_C9C379813DCC62DA30D4F6528D19304CE6925B0ABE01E96B7D560286EDBB682D
+18-02-2019 15:19:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando a descricao da plataforma: TOSCA
+18-02-2019 15:19:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Recuperando o objeto Script_CondicaoScript_CT_VO: LaefazWeb.Models.VOs.Script_CondicaoScript_CT_VO

@@ -1,0 +1,241 @@
+﻿@model IEnumerable<TDMWeb.Models.VOs.PlanilhaEstoqueFinalVO>
+
+@{
+    ViewBag.Titulo = "Planilha de Estoque Final";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <style>
+        table.dataTable tbody tr {
+            cursor: pointer;
+        }
+    </style>
+}
+<form id="form-processar-analise">
+    <div class="box box-primary" id="panelCollapse">
+        <div class="box-header with-border">
+            <h3 id="AnaliseProcessar" class="box-title">An&aacute;lise</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" id="botaoCollapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body with-border">
+            <div class="form-group">
+                <div class="col-md-11">
+                    @Html.DropDownList("analise_processar", new SelectList(ViewBag.ListaAnalises, "Id", "Descricao"), "", new
+                                                                                           {
+                                                                                               @class = "form-control",
+                                                                                               @id = "analise-processar",
+                                                                                               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                                                                               required = "required"
+                                                                                           })
+                </div>
+                <div class="col-md-1" style=" padding-left: 0px; padding-right: 0px;">
+                    <button type="submit" id="botaoProcessarAnalise" class="btn btn-success" style="width: 100%">Processar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.box -->
+</form>
+
+<div class="box box-info">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-10" style="width: 100%;">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li id="espaco" style="width: 10px"></li>
+                        <li class="dropdown" style="right: 200px;">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li id="botaoExportar" role="presentation"><a role="menuitem" tabindex="-1" href="#">Exportar</a></li>
+                            </ul>
+                        </li>
+                        <li class="pull-left header"><i class="fa fa-table"></i>Planilha de Estoque Final</li>
+                    </ul>
+                    <div class="tab-content">
+                        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProdutoDescricao)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ProdutoUnificado)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Quantidade)
+                                    </th>
+                                    <th align="center">
+                                        @Html.DisplayNameFor(model => model.UnidadeDescricao)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ValorUnitario)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ValorTotal)
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+        <!-- /input-group -->
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+@section scripts
+{
+    <style type="text/css">
+        .AlinharDireita {
+            text-align: right;
+        }
+
+        .AlinharCentro {
+            text-align: center;
+        }
+    </style>
+
+
+    <script type="text/javascript" charset="utf-8">
+
+        $(document).ready(function () {
+            $(".ul li").removeClass("active");
+            $('#Planilha').addClass('active');
+            $('#RelatorioEstoqueFinal').addClass('active');
+
+            $('#form-processar-analise').validate();
+
+            $('#form-processar-analise').on('submit', function (e) {
+                var isValid = $("#form-processar-analise").valid();
+                if (isValid) {
+                    e.preventDefault();
+
+                    $("#grid").DataTable().draw();
+                }
+            });
+
+            $("#botaoExportar").click(function () {
+                if ($('#analise-processar').val() == "") {
+                    $.MessageBoxOK({ mensagem: "Nenhuma análise selecionada." });
+                    return;
+                }
+
+                //Chamar o controler
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: "/Planilhas/ExportarPlanilhaEstoqueFinal",
+                    data: { ativo: true, idAnalise: $('#analise-processar').val() },
+                    type: "GET",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.Status != 0) {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        } else {
+                            window.location = '/Planilhas/DownloadPlanilhaEstoqueFinal';
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            alert(data.responseText);
+                        } else {
+                            alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            });
+
+            var pageScrollPos = 0;
+
+            $('#grid').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                ajax: {
+                    url: "@Url.Action("CarregarPlanilhaEstoqueFinal", "Planilhas")",
+                    type: "POST",
+                    data: function (d) {
+                        return $.extend(d, {
+                            idAnalise: $("#analise-processar").val()
+                        });
+                    }
+                },
+                columns: [
+                    { data: "ProdutoDescricao", name: "Descricao" },
+                    { data: "ProdutoUnificado", name: "DescricaoUnificada" },
+                    { data: "Quantidade", name: "Quantidade", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharDireita" },
+                    { data: "UnidadeDescricao", name: "DescricaoUnidade", sClass: "AlinharCentro" },
+                    { data: "ValorUnitario", name: "ValorUnitario", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharDireita" },
+                    { data: "ValorTotal", name: "ValorTotal", render: $.fn.dataTable.render.number('.', ',', 2, ''), sClass: "AlinharDireita" }
+                ],
+                "iDisplayLength": 50,
+                "aLengthMenu": [5, 50, 500, 1000, 10000],
+                "preDrawCallback": function (settings) {
+                    pageScrollPos = $('body').scrollTop();
+                },
+                "drawCallback": function (settings) {
+                    $('body').scrollTop(pageScrollPos);
+                },
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": $("#LoadingGrid").show(),
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+
+            $("#analise-processar").select2({
+                placeholder: "Selecione a análise que deseja processar...",
+                allowClear: true
+            });
+
+            // Collapse Panel
+            $("#botaoProcessarAnalise").click(function () {
+                var idAnalise = $('#analise-processar').val();
+                if (idAnalise != undefined && idAnalise != "") {
+                    $("#botaoCollapse").click();
+                    $("#AnaliseProcessar").html("Análise: " + $("#select2-analise-processar-container").attr("title"));
+                }
+            });
+        });
+    </script>
+}

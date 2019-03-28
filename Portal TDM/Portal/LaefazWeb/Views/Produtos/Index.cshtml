@@ -1,0 +1,898 @@
+﻿@using TDMWeb.Extensions
+@model IEnumerable<TDMWeb.Models.Produto>
+
+@{
+    ViewBag.Titulo = "Unificar Produtos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<button id="btnUnificaScroll" type="button" class="btn btn-block btn-primary btn-sm" style="width:70px; position: fixed; bottom:50px; right:0; z-index:2; display: none; cursor: pointer;" data-toggle="modal" data-target="#modalUnificar">Unificar</button>
+
+@section styles {
+    <style>
+        table.dataTable tbody tr {
+            cursor: pointer;
+        }
+    </style>
+}
+<form id="form-processar-analise">
+    <div class="box box-primary" id="panelCollapse">
+        <div class="box-header with-border">
+            <h3 id="AnaliseProcessar" class="box-title">An&aacute;lise</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" id="botaoCollapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body with-border">
+            <div class="form-group">
+                <div class="col-md-11">
+                    @Html.DropDownList("analise_processar", new SelectList(ViewBag.ListaAnalises, "Id", "Descricao"), "", new
+                    {
+                        @class = "form-control",
+                        @id = "analise-processar",
+                        @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                        required = "required"
+                    })
+                </div>
+                <div class="col-md-1" style="padding-left: 0px; padding-right: 0px;">
+                    <button type="submit" id="botaoProcessarAnalise" class="btn btn-success" style="width: 100%">Processar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="chkSelecionado" value="0" />
+
+    <!-- /.box -->
+</form>
+<div class="box box-info">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-10" style="width: 100%;">
+                <!-- Custom Tabs (Pulled to the right) -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li id="TabInativo" class=""><a href="#tab_1-1" data-toggle="tab" aria-expanded="false">Desativados</a></li>
+                        <li id="TabAtivo" class="active"><a href="#tab_2-2" id="AbaAtivo" data-toggle="tab" aria-expanded="true">Ativados</a></li>
+                        <li id="botaoUnificar"><button type="button" class="btn btn-block btn-primary btn-sm" style="width:70px; margin-right: 30px;" data-toggle="modal" data-target="#modalUnificar" id="Unificar">Unificar</button></li>
+                        <li id="espaco" style="width:10px"></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                Opções<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li id="botaoAtivar" role="presentation"><a role="menuitem" tabindex="-1" href="#">Ativar</a></li>
+                                <li id="botaoDesativar" role="presentation"><a role="menuitem" tabindex="-1" href="#">Desativar</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li id="botaoExportar" role="presentation"><a role="menuitem" tabindex="-1" href="#">Exportar</a></li>
+                                <li id="botaoImportar" role="presentation"><a role="menuitem" tabindex="-1" href="#" data-toggle="modal" data-target="#modalImportarArquivo">Importar</a></li>
+                            </ul>
+                        </li>
+                        <li class="pull-left header"><i class="fa fa-bookmark-o"></i> Unificar Produtos</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="tab_1-1">
+                            <div class="form-group">
+
+                                <div id="qtdSelInativos">0 linhas selecionadas</div>
+
+                                <table id="gridInativos" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Descricao)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.DescricaoUnificada)
+                                            </th>
+                                            <th align="center">
+                                                @Html.DisplayNameFor(model => model.Unidade)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane active" id="tab_2-2">
+                            <div id="FiltroPorCor" style="height: 24px; width: 24px; position: absolute; right: 229px; top: 84px; z-index: 1;">
+                                <select id="colorselector" style="display: inline;">
+                                    <option value="0" data-color="gray">Todos</option>
+                                    <option value="1" data-color="red">Não Unificado</option>
+                                    <option value="2" data-color="black">Unificado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                
+                                <div id="qtdSelAtivos">0 linhas selecionadas</div>
+
+                                <table id="gridAtivos" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Descricao)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.DescricaoUnificada)
+                                        </th>
+                                        <th align="center">
+                                            @Html.DisplayNameFor(model => model.Unidade)
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- nav-tabs-custom -->
+            </div>
+        </div>
+        <!-- /input-group -->
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+<!-- Modal -->
+<div class="modal fade" id="modalUnificar" tabindex="-1" role="dialog" aria-labelledby="myModalUnificar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Unificar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.Label("Descrição")
+                    @Html.TextBox("descricao_unificada", null, new { @id = "descricao-unificar", @class = "form-control", @style = "text-transform: uppercase;" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="enviarUnificar()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalImportarArquivo" tabindex="-1" role="dialog" aria-labelledby="modalImportarArquivo">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Selecione o Arquivo</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ImportarProdutos", "Produtos", FormMethod.Post, new { @id = "frmArquivoProduto", @class = "formLoading", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        @Html.InputSingleFile("fileArquivoProduto", "Arquivo Produto")
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviarAquivoProduto">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <style>
+        /*Adicionar uma cor mais escura para destacar mais a linha*/
+        table.display tr.odd {
+            background-color: whitesmoke;
+        }
+    </style>
+
+    <script type="text/javascript" charset="utf-8">
+
+        var TabAtivo = true;
+        var currentPage = 0;
+
+        function enviarUnificar() {
+            pageScrollPos = $('body').scrollTop();
+
+            var descUnificada = $('#descricao-unificar').val();
+
+            var idAnalise = $('#analise-processar').val();
+
+            var idsProdutos = $('table.display:visible').find('tr.selected').find('input.hidden-produto-id').map(function (idx, elem) {
+                return $(elem).val();
+            }).get();
+
+            var idUnidade = $('table.display:visible').find('tr.selected').find('input.hidden-unidade-id:first').val();
+
+            if (idsProdutos.length == 0) {
+                $('#modalUnificar').modal('hide');
+                $.MessageBoxOK({ mensagem: "Nenhum produto foi selecionado para unificar." });
+                return;
+            }
+
+            var requestData = {
+                idsProdutos: idsProdutos.join(','),
+                idUnidade: idUnidade,
+                descUnificada: descUnificada,
+                idAnalise: idAnalise
+            };
+
+            //Chamar o controler
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: "/Produtos/Unificar",
+                data: requestData,
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function (data) {
+                    $('table.display').DataTable().rows().deselect();
+                    $('#modalUnificar').modal('hide');
+
+                    if (data.Status != 0) {
+                        $.MessageBoxOK({ mensagem: data.Result });
+                    } else {
+                        $('table.display:visible').find('tr.selected').find('.text-desc-unificada').html(descUnificada);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                    //$('table.display').DataTable().draw();
+                    $('table.display').DataTable().draw('page');
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+
+            $("html,body").animate({ scrollTop: pageScrollPos }, "slow");
+            //$('body').scrollTop(pageScrollPos);
+        }
+
+        function AtivarDesativarProdutos(idsProdutos, idAnalise) {
+
+            //Chamar o controler
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: "/Produtos/AtivarDesativarProduto",
+                data: { idAnalise: idAnalise, idsProdutos: idsProdutos, status: !TabAtivo },
+                type: "GET",
+                async: true,
+                cache: false,
+                success: function (data) {
+
+                    $.MessageBoxOK({
+                        mensagem: data.Result,
+                        argFuncao: data.Status,
+                        funcaoBotaoOK: function (status) {
+                            if (status == 0) {
+                                //$('#form-processar-analise').submit();
+                                var table = $('#gridAtivos').DataTable();
+                                table.page(currentPage).draw('page');
+                                currentPage = 0;
+                            }
+                        }
+                    });
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        $.MessageBoxOK({ mensagem: data.responseText });
+                    } else {
+                        $.MessageBoxOK({ mensagem: data.Result });
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            $(".ul li").removeClass("active");
+            $('#Produtos').addClass('active');
+
+            $('#colorselector').colorselector();
+
+            $(".dropdown-menu").click(function () {
+
+                if ($('#analise-processar').val() == "") {
+                    $.MessageBoxOK({ mensagem: "Nenhuma análise selecionada." });
+                    return;
+                }
+
+                $("#chkSelecionado").val($(this).find("li").find(".selected").attr("data-value"));
+                $('#form-processar-analise').submit();
+            });
+
+            style = "top: -1px;right: -1px;";
+
+            $('#form-processar-analise').validate();
+
+            $('#form-processar-analise').on('submit', function (e) {
+                var isValid = $("#form-processar-analise").valid();
+                if (isValid) {
+                    e.preventDefault();
+
+                    $("#gridAtivos").DataTable().draw();
+                    $("#gridInativos").DataTable().draw();
+                    $("html,body").animate({ scrollTop: pageScrollPos }, "slow");
+                    //$('body').scrollTop(pageScrollPos);
+                }
+            });
+
+            var isVisibleBotaoUnificar = false;
+
+            $(window).scroll(function () {
+                var shouldBeVisibleBotaoUnificar = $(window).scrollTop() > 150;
+
+                if (shouldBeVisibleBotaoUnificar && !isVisibleBotaoUnificar) {
+                    isVisibleBotaoUnificar = true;
+                    $('#btnUnificaScroll').show();
+                } else if (isVisibleBotaoUnificar && !shouldBeVisibleBotaoUnificar) {
+                    isVisibleBotaoUnificar = false;
+                    $('#btnUnificaScroll').hide();
+                }
+            });
+
+            $('#modalUnificar').keypress(function (e) {
+                if (e.which == 13) {
+                    enviarUnificar();
+                }
+            });
+
+            $(document).bind('keydown', function (e) {
+                if (e.keyCode == 68 && e.ctrlKey) {
+                    e.preventDefault();
+                    $("#Unificar").click();
+                }
+            });
+
+            $("#descricao-unificar").blur(function (event) {
+                $(this).val($(this).val().toUpperCase());
+            });
+
+            $("#Unificar, #btnUnificaScroll").click(function () {
+                var primeiraDescricaoSel = $('table.display:visible').find('tr.selected').find('.text-desc-unificada');
+
+                if (primeiraDescricaoSel.length > 0) {
+                    $("#descricao-unificar").val(primeiraDescricaoSel[0].innerText);
+                }
+            });
+
+            $("#botaoExportar").click(function () {
+
+                if ($('#analise-processar').val() == "") {
+                    $('#modalImportarArquivo').modal('hide');
+                    $.MessageBoxOK({ mensagem: "Nenhuma análise selecionada." });
+                    return;
+                }
+
+                //Chamar o controler
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: "/Produtos/ExportarProdutos",
+                    data: { ativo: TabAtivo, idAnalise: $('#analise-processar').val() },
+                    type: "GET",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+
+                        if (data.Status != 0) {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        } else {
+                            window.location = '/Produtos/DownloadProdutos';
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            alert(data.responseText);
+                        } else {
+                            alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            });
+
+            $("#btnEnviarAquivoProduto").click(function () {
+
+                if ($('#analise-processar').val() == "") {
+                    $('#modalImportarArquivo').modal('hide');
+                    $.MessageBoxOK({ mensagem: "Nenhuma analise selecionada." });
+                    return;
+                }
+
+                var data = new FormData();
+
+                var files = $("input[name=fileArquivoProduto").get(0).files;
+
+                if (files.length <= 0) {
+                    $('#modalImportarArquivo').modal('hide');
+                    $.MessageBoxOK({ mensagem: "Nenhuma arquivo selecionado" });
+                    return;
+                }
+                data.append("UploadedImage", files[0]);
+                data.append("idAnalise", $('#analise-processar').val());
+
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: "/Produtos/ImportarProdutos",
+                    type: "POST",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (data) {
+                        $('#modalImportarArquivo').modal('hide');
+
+                        $.MessageBoxOK({
+                            mensagem: data.Result,
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function (status) {
+                                if (status == 0) {
+                                    $('#form-processar-analise').submit();
+                                }
+                            }
+                        });
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            $.MessageBoxOK({ mensagem: data.responseText });
+                        } else {
+                            $.MessageBoxOK({ mensagem: data.Result });
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+
+            });
+
+            $('#modalImportarArquivo').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            });
+
+            $('#modalUnificar').on('shown.bs.modal', function () {
+                $("#descricao-unificar").focus();
+            });
+
+            $("#botaoAtivar").click(function () {
+                $("#botaoDesativar").click();
+            });
+
+            var pageScrollPos = 0;
+
+            var gridAtivo = $('#gridAtivos').DataTable({
+                //dom: 'Bfrtip',
+                "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                "processing": true,
+                "serverSide": true,
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    if (aData.Unificado) {
+                        $('td', nRow).css('color', 'Black');
+                    } else {
+                        $('td', nRow).css('color', 'Red');
+                        $('td', nRow).css('font-weight', 'bold');
+                    }
+                },
+                "preDrawCallback": function (settings) {
+                    pageScrollPos = $('body').scrollTop();
+                },
+                "drawCallback": function (settings) {
+                    $('body').scrollTop(pageScrollPos);
+                },
+                ajax: {
+                    url: "@Url.Action("CarregarProdutos", "Produtos")",
+                    type: "POST",
+                    data: function (d) {
+                        return $.extend(d, {
+                            idAnalise: $("#analise-processar").val(),
+                            chkSelecionado: $("#chkSelecionado").val(),
+                            StatusAtivo: 1
+                        });
+                    }
+                },
+                "initComplete": function (settings, json) {
+                    $('#AbaAtivo').click();
+                    $("#botaoAtivar").hide();
+                },
+                select: {
+                    style: 'os',
+                    selector: 'td:not(.column-desc-produto)'
+                },
+                columns: [
+                    {
+                        data: "DescricaoOriginal",
+                        name: "DescricaoOriginal",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<div class="text-desc" name="Descricao">' + data + '</div>' +
+                                    ' <input type="hidden" class="hidden-produto-id" name="Id" value="' + row.Id + '" />';
+                            }
+
+                            return data;
+                        }
+                    },
+                    {
+                        data: "DescricaoUnificada",
+                        name: "DescricaoUnificada",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<div class="text-desc-unificada" name="DescricaoUnificada">' + data + '</div>';
+                            }
+
+                            return data;
+                        }
+                    },
+                    {
+                        data: "DescricaoUnidade",
+                        name: "DescricaoUnidade",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                            }
+
+                            return data;
+                        }
+                    }
+                ],
+                "iDisplayLength": 50,
+                "aLengthMenu": [5, 50, 500, 1000, 10000],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        sortable: true,
+                        width: '49%'
+                    },
+                    {
+                        targets: [1],
+                        sortable: true,
+                        width: '49%',
+                    },
+                    {
+                        targets: [2],
+                        sortable: true,
+                        width: '2%',
+                    }
+                ],
+                aoColumnDef: [
+                    null,
+                    { "sSortDataType": "dom-text", "sType": 'string' },
+                    null
+                ],
+                oLanguage: {
+                    select: {
+                        rows: {
+                            _: "%d linhas selecionadas",
+                            1: "1 linha selecionada"
+                        }
+                    },
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": $("#LoadingGrid").show(),
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+            var gridInativo = $('#gridInativos').DataTable({
+                //dom: 'Bfrtip',
+                "processing": true,
+                "serverSide": true,
+                "dom": '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    if (aData.Unificado) {
+                        $('td', nRow).css('color', 'Black');
+                    } else {
+                        $('td', nRow).css('color', 'Red');
+                        $('td', nRow).css('font-weight', 'bold');
+                    }
+                },
+                "preDrawCallback": function (settings) {
+                    pageScrollPos = $('body').scrollTop();
+                },
+                "drawCallback": function (settings) {
+                    $('body').scrollTop(pageScrollPos);
+                },
+                ajax: {
+                    url: "@Url.Action("CarregarProdutos", "Produtos")",
+                    type: "POST",
+                    data: function (d) {
+                        return $.extend(d, {
+                            idAnalise: $("#analise-processar").val(),
+                            chkSelecionado: 0,
+                            StatusAtivo: 0
+                        });
+                    }
+                },
+                "initComplete": function (settings, json) {
+                    $('#AbaAtivo').click();
+                    $("#botaoAtivar").hide();
+                },
+                select: {
+                    style: 'os',
+                    selector: 'td:not(.column-desc-produto)'
+                },
+                columns: [
+                    {
+                        data: "DescricaoOriginal",
+                        name: "DescricaoOriginal",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<div class="text-desc" name="Descricao">' + data + '</div>' +
+                                    ' <input type="hidden" class="hidden-produto-id" name="Id" value="' + row.Id + '" />';
+                            }
+
+                            return data;
+                        }
+                    },
+                    {
+                        data: "DescricaoUnificada",
+                        name: "DescricaoUnificada",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return '<div class="text-desc-unificada" name="DescricaoUnificada">' + data + '</div>';
+                            }
+
+                            return data;
+                        }
+                    },
+                    {
+                        data: "DescricaoUnidade",
+                        name: "DescricaoUnidade",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                return data + ' <input type="hidden" class="hidden-unidade-id" name="IdUnidade" value="' + row.IdUnidade + '" />';
+                            }
+
+                            return data;
+                        }
+                    }
+                ],
+                "iDisplayLength": 50,
+                "aLengthMenu": [5, 50, 500, 1000, 10000],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        sortable: true,
+                        width: '49%'
+                    },
+                    {
+                        targets: [1],
+                        sortable: true,
+                        width: '49%',
+                    },
+                    {
+                        targets: [2],
+                        sortable: true,
+                        width: '2%',
+                    }
+                ],
+                aoColumnDef: [
+                    null,
+                    { "sSortDataType": "dom-text", "sType": 'string' },
+                    null
+                ],
+                oLanguage: {
+                    select: {
+                        rows: {
+                            _: "%d linhas selecionadas",
+                            1: "1 linha selecionada"
+                        }
+                    },
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": $("#LoadingGrid").show(),
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+
+            $("#analise-processar").select2({
+                placeholder: "Selecione a análise que deseja processar...",
+                "language": {
+                    "noResults": function () {
+                        return "Nenhum resultado encontrado.";
+                    }
+                },
+                allowClear: true
+            });
+
+            $("#botaoDesativar").click(function () {
+
+                currentPage = gridAtivo.page();
+
+                var idAnalise = $('#analise-processar').val();
+                var idsProdutos = $('table.display:visible').find('tr.selected').find('input.hidden-produto-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (idAnalise == "") {
+                    $.MessageBoxOK({ mensagem: "Selecione uma análise" });
+                } else if (idsProdutos == null || idsProdutos.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum produto foi selecionado." });
+                } else {
+                    var msg = "";
+                    if (TabAtivo == true) {
+                        msg = "Confirma a desativação dos produtos selecionados?";
+                    } else {
+                        msg = "Confirma a ativação dos produtos selecionados?";
+                    }
+                    $.MessageBoxSimNao({
+                        titulo: "Desativar Produtos?",
+                        mensagem: msg,
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            AtivarDesativarProdutos(idsProdutos.join(","), idAnalise);
+                        }
+                    });
+                }
+            });
+
+            $('#modalUnificar').on('hidden.bs.modal', function (e) {
+                $(this)
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+                gridAtivo.$('tr.selected').removeClass('selected');
+                //$('body').scrollTop(pageScrollPos);
+                $("html,body").animate({ scrollTop: pageScrollPos }, "slow");
+            });
+
+            $("#gridAtivos").on("click", "tr", function () {
+                var data = gridAtivo.rows('.selected').data().length;
+                $("#qtdSelAtivos").html(data + ' linhas selecionadas');
+            });
+
+            $("#gridInativos").on("click", "tr", function () {
+                var data = gridInativo.rows('.selected').data().length;
+                $("#qtdSelInativos").html(data + ' linhas selecionadas');
+            });
+
+            $("#gridAtivos").on("dblclick", "tr", function () {
+                $(this).addClass('selected');
+                $("#Unificar").click();
+            });
+
+            $("#TabAtivo").click(function () {
+                $("#botaoAtivar").hide();
+                $("#botaoDesativar").show();
+                $("#botaoImportar").show();
+                $("#botaoExportar").show();
+                $("#botaoUnificar").show();
+                TabAtivo = true;
+            });
+
+            $("#TabInativo").click(function () {
+                $("#botaoAtivar").show();
+                $("#botaoDesativar").hide();
+                $("#botaoImportar").hide();
+                $("#botaoExportar").show();
+                $("#botaoUnificar").hide();
+                TabAtivo = false;
+            });
+
+            //File Upalod
+            $('.custom-file-upload').each(function () {
+                var formGroup = this;
+
+                var fileElem = $(formGroup).find('input[type="file"]');
+
+                $(formGroup).find('.input-file-filename, .btn-selecionar-arquivo').click(function () {
+                    fileElem.click();
+                });
+
+                $(formGroup).find('.btn-limpar-arquivo').click(function () {
+                    fileElem.val('').change();
+                });
+
+                fileElem.change(function () {
+                    var filename = $(this).val();
+                    var lastIndex = filename.lastIndexOf("\\");
+                    if (lastIndex >= 0) {
+                        filename = filename.substring(lastIndex + 1);
+                    }
+
+                    $(formGroup).find('.input-file-filename').val(filename);
+                    $(formGroup).find('.btn-limpar-arquivo').prop('disabled', filename.length == 0);
+                });
+            });
+
+            var MAX_FILE_SIZE = 314572800;
+            var fileRules = { filesize: MAX_FILE_SIZE };
+            var fileMessage = "Você deve selecionar um arquivo excel com no máximo " + (MAX_FILE_SIZE / 1024 / 1024) + " MB.";
+
+            $('form').validate({
+                rules: { fileArquivoProduto: fileRules },
+                messages: { fileArquivoProduto: fileMessage }
+            });
+
+            // Collapse Panel
+            $("#botaoProcessarAnalise").click(function () {
+                var idAnalise = $('#analise-processar').val();
+                if (idAnalise != undefined && idAnalise != "") {
+                    $("#botaoCollapse").click();
+                    $("#AnaliseProcessar").html("Análise: " + $("#select2-analise-processar-container").attr("title"));
+
+                    $("#chkSelecionado").val("0");
+                    $(document).find(".btn-colorselector").css("background-color", "gray");
+                }
+            });
+        });
+    </script>
+}

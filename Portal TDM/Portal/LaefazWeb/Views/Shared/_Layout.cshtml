@@ -1,0 +1,516 @@
+﻿@using TDMWeb.Extensions
+@{ LaefazWeb.Models.Usuario usuarioLogado = (LaefazWeb.Models.Usuario)Session["ObjUsuario"]; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>ATMP | @ViewBag.Titulo</title>
+    @Styles.Render("~/Asset/Vendor/bootstrap/css")
+    <!-- Font Awesome -->
+    @Styles.Render("~/Asset/Vendor/FontAwesome/css")
+    <!-- Ionicons -->
+    @Styles.Render("~/Asset/Vendor/Ionicons/css")
+    @Scripts.Render("~/Asset/Vendor/modernizr")
+
+    @Styles.Render("~/Asset/Vendor/Datatables/css")
+    @Styles.Render("~/Asset/Vendor/Select2/css")
+    @Styles.Render("~/Asset/Vendor/ColorSelect/css")
+    @Styles.Render("~/Asset/Vendor/multi-select/css")
+    @Styles.Render("~/Asset/Vendor/bootstrap-daterangepicker")
+
+    @Styles.Render("~/Assets/Vendor/timepicker/stylesheets/wickedpicker.css")
+
+
+    @Styles.Render("~/Assets/Vendor/timepicker/jquery.timepicker.min.css")
+
+
+    @Styles.Render("~/Asset/Styles/css")
+
+    @Styles.Render("~/Asset/Vendor/AdminLTE/css")
+
+    @*@Styles.Render("~/Asset/Vendor/Wizard/css")*@
+
+    <link href="@Url.Content("~/Content/themes/base/all.css")" rel="Stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/loading.css")" rel="Stylesheet" type="text/css" />
+
+    @RenderSection("styles", required: false)
+
+    <style>
+        /*Adicionar uma cor mais escura para destacar mais a linha*/
+        table.display tr.odd {
+            background-color: whitesmoke;
+        }
+
+        td.details-control {
+            background: url("../../Assets/Images/collapse.png") no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.details td.details-control {
+            background: url("../../Assets/Images/uncollapse.png") no-repeat center center;
+        }
+
+        
+        td.details-plus{
+            background: url("Assets/Images/collapse.png") no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.details td.details-plus {
+            background: url("Assets/Images/uncollapse.png") no-repeat center center;
+        }
+    </style>
+</head>
+
+<body id="body" class="skin-green sidebar-mini sidebar-collapse">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="@Url.Action("Index", "DataPool")" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><img src="@Url.Content("~/Assets/Images/logo_tdm.png")" height="25" /></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg">
+                    <img src="@Url.Content("~/Assets/Images/logo_tdm.png")" height="50" />
+                    <b>&nbsp;ATMP</b>
+                </span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" id="btn-menu" class="sidebar-toggle" data-toggle="offcanvas" role="button" onclick="cliqueMenu()">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        @*<li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="label label-warning">10</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="header">Você possui 10 notifica&ccedil;&otilde;es</li>
+                                    <li>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-warning text-yellow"></i> Notifica&ccedil;&atilde;o aqui
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>*@
+                        <li class="user user-menu">
+                            <div style="color: #fff; padding: 15px 15px;">
+                                <i class="fa fa-user"></i>
+                                <span class="hidden-xs" title="@usuarioLogado.Login"> &nbsp; Olá @usuarioLogado.Login! </span>
+                            </div>
+                        </li>
+                        <li class="user user-menu">
+                            <a href="@Url.Action("Logout", "Autenticacao")" title="Sair">
+                                Sair
+                                <i class="fa fa-sign-out"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- =============================================== -->
+        <!-- Left side column. contains the sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" id="menu-list">
+                    <li class="header">MENU PRINCIPAL</li>
+
+
+                    @*
+                        <li id="PaginaInicial">
+                            <a href="@Url.Action("Index", "Index")"><i class="fa fa-tachometer"></i> <span>P&aacute;gina Inicial</span></a>
+                        </li>
+                        <li id="Analises">
+                            <a href="@Url.Action("Index", "Analises")">
+                                <i class="fa fa-th"></i> <span>An&aacute;lises</span>
+                            </a>
+                        </li> *@
+                    @*<li id="TDM">
+                            <a href="@Url.Action("Index", "TDM")">
+                                <i class="fa fa-cubes"></i> <span>Projetos TDM</span>
+                            </a>
+                        </li>*@
+                    @*<li id="DataPool">
+                            <a href="@Url.Action("Index", "DataPool")">
+                                <i class="fa fa-cube"></i> <span>DataPool</span>
+                            </a>
+                        </li>*@
+
+                    @*<li id="Ambiente">
+                            <a href="@Url.Action("Index", "Ambiente")">
+                                <i class="fa fa-television"></i> <span>Ambientes</span>
+                            </a>
+                        </li>*@
+                    @*<li id="listaMenuExecucao" class="treeview">
+                            <a href="#">
+                                <i class="fa fa-forward"></i> <span>Gerenciamento de Execuções</span> <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="AUT"><a href="@Url.Action("Index", "Execucao")"><i class="fa fa-play"></i>Execuções</a></li>
+                            </ul>
+
+                        </li>*@
+
+                    @if (usuarioLogado.Id == 1)
+                    {
+
+                        <li id="listaMenuAdmininistrativo" class="treeview">
+
+                            <a href="#">
+                                <i class="fa fa-gears"></i> <span>Administrativo</span> <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="AUT"><a href="@Url.Action("Index", "AUT")"><i class="fa fa-cog"></i>Sistemas</a></li>
+                                <li id="tipoFaseTeste"><a href="@Url.Action("Index", "TipoFaseTeste")"><i class="fa fa-map-signs"></i>Fases</a></li>
+
+                                @*<li id="TipoAmbiente"><a href="@Url.Action("Index", "TipoAmbiente")"><i class="fa fa-desktop"></i>Tipos de Ambiente</a></li>*@
+                                <li id="Status"><a href="@Url.Action("Index", "Status")"><i class="fa fa-bomb"></i>Tipos de Status</a></li>
+                                <li id="Parametro"><a href="@Url.Action("Index", "Parametro")"><i class="fa fa-rub"></i>Parametros</a></li>
+                                <li id="TipoParametro"><a href="@Url.Action("Index", "TipoParametro")"><i class="fa fa-file-powerpoint-o"></i>Tipos de Parâmetros</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li id="listaEncadeamento" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-list-ol"></i> <span>Encadeamento</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="idEncadeamentoAdicionar"><a href="@Url.Action("Adicionar", "Encadeamento")">Adicionar</a></li>
+                            <li id="idEncadeamentoExecutar"><a href="javascript:showModal()">Executar</a></li>
+                        </ul>
+                    </li>
+
+                    <li id="listaAgendamento" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-calendar"></i> <span>Agendamento</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="idAgendamentoPlanejar"><a href="@Url.Action("Index", "Agendamento")">Planejar</a></li>
+                        </ul>
+                    </li>
+
+                    <li id="listaMapaCalor" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-map"></i> <span>Mapa de Calor</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li id="idMapaCalorDataPool"><a href="#">DataPool</a></li>
+                            <li id="idMapaCalorTestData"><a href="#">TestData</a></li>
+                        </ul>
+                    </li>
+
+                    <li id="listaExecucaoTeste" class="treeview">
+                        <a href="@Url.Action("Index", "ExecucaoDeTeste")">
+                            <i class="fa fa-asterisk"></i><span>Execução de Teste</span>
+                        </a>
+                        @*<ul class="treeview">
+                                <li id="idExecucaoTeste"><a href="@Url.Action("Index", "ExecucaoDeTeste")"><i class="fa fa-asterisk"></i> Execução de Teste</a></li>
+                            </ul>*@
+                    </li>
+
+                    <li id="listaScripts" class="treeview">
+                        <a href="@Url.Action("Index", "Script")">
+                            <i class="fa fa-repeat"></i><span>Script</span>
+                        </a>
+                        @*<ul class="treeview">
+                                <li id="idExecucaoTeste"><a href="@Url.Action("Index", "ExecucaoDeTeste")"><i class="fa fa-asterisk"></i> Execução de Teste</a></li>
+                            </ul>*@
+                    </li>
+
+                    @*<ul class="treeview-menu">
+                            <li id="MapaCalor"><a href="@Url.Action("Index", "MapaCalorTestData")"><i class="fa fa-map"></i>Mapa de Calor TestData</a></li>
+                        </ul>*@
+
+
+
+
+                    @*<li id="Produtos">
+                            <a href="@Url.Action("Index", "Produtos")"><i class="fa fa-bookmark-o"></i> <span>Unificar Produtos</span></a>
+                        </li>*@
+                    @*<li id="Relatorio" class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i> <span>Relat&oacute;rios</span> <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="RelatorioLevantamento"><a href="@Url.Action("", "Relatorios")"><i class="fa fa-circle-o"></i> A..</a></li>
+                                <li id="RelatorioMovimentacao"><a href="@Url.Action("", "Relatorios")"><i class="fa fa-circle-o"></i> B..</a></li>
+                                <li id="RelatorioVendas"><a href="@Url.Action("", "Relatorios")"><i class="fa fa-circle-o"></i> C..</a></li>
+                                <li id="RelatorioPrecoUnitario"><a href="@Url.Action("", "Relatorios")"><i class="fa fa-circle-o"></i> D..</a></li>
+                            </ul>
+                        </li>*@
+                    @*<li id="encademaneto" class="treeview">
+                            <a href="javascript:showModal()"><i class="fa fa-list-ol"></i> <span>Encadeamento</span></a>
+                            <ul class="treeview-menu">
+                                    <li id="RelatorioEstoqueInicial"><a href="@Url.Action("", "Planilhas")"><i class="fa fa-circle-o"></i> SIEBEL TI</a></li>
+                                    <li id="RelatorioEstoqueFinal"><a href="@Url.Action("", "Planilhas")"><i class="fa fa-circle-o"></i> STC TI</a></li>
+                                    <li id="RelatorioMovimentacaoEntrada"><a href="@Url.Action("", "Planilhas")"><i class="fa fa-circle-o"></i> SAC TI</a></li>
+                                    <li id="RelatorioMovimentacaoSaida"><a href="@Url.Action("", "Planilhas")"><i class="fa fa-circle-o"></i> Sa&iacute;das</a></li>
+                                    <li id="RelatorioProduto"><a href="@Url.Action("", "Planilhas")"><i class="fa fa-circle-o"></i> Produtos</a></li>
+                                </ul>
+                        </li>*@
+
+                    <li id="listaMenuMinhasDemandas" class="treeview">
+                        <a href="#">
+                            <i class="fa fa-share"></i> <span>Minhas Demandas</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+
+                        <ul class="treeview-menu">
+
+                            @Html.DropDownList("listDemanda", new SelectList(((List<LaefazWeb.Models.Demanda>)Session["minhasDemandas"]), "Id", "Descricao"), "", new
+                       {
+                           @class = "form-control",
+                           @id = "list-minhas-demandas",
+                           @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                           @onchange = "SelectedIndexChanged()",
+                           @required = "required"
+                       })
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- =============================================== -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    @ViewBag.Titulo
+                    @*@Scripts.Render("~/bundles/jquery_3_3_1")*@
+                    @*@Scripts.Render("~/bundles/jquery_2_2_3")*@
+                    @if (@ViewBag.Titulo != "Agendamento" || @ViewBag.Titulo == null)
+                    {
+                        @Scripts.Render("~/bundles/jquery_2_2_3")
+                    }
+                    else
+                    {
+                        @Scripts.Render("~/bundles/jquery_3_3_1")
+                    }
+                    <small>@ViewBag.SubTitulo</small>
+                </h1>
+                @*<ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-tachometer"></i> P&aacute;gina Inicial</a></li>
+                    </ol>*@
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="alert hidden" id="flash-message">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <span class="icon"></span>
+                    <span class="mensagem"></span>
+                </div>
+                @RenderBody()
+            </section>
+        </div><!-- /.content-wrapper -->
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Vers&atilde;o</b> 1.0.0
+            </div>
+            <strong>&copy; @DateTime.Now.Year Accenture All rights reserved.</strong>
+        </footer>
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+
+        <div id="Loading">
+            <img id="imgLoading" alt="Carregando" src="@Url.Content("~/Content/images/loading.gif")" />
+        </div>
+
+        <div id="LoadingGrid">
+            <img id="imgLoadingGrid" alt="Carregando" src="@Url.Content("~/Content/images/loading.gif")" />
+        </div>
+
+        @* inicio modal encadeado*@
+
+        <div class="modal fade in" id="modal-encadeado">
+            <div class="modal-dialog" style="margin-top:15%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Execução Encadeada</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <input type="hidden" id="IdMassas" value="" />
+
+                            <div class="col-xs-4 form-group">
+                                <button type="button" class="btn btn-primary" id="ExecutaEncadeamento1" onclick="playEncadeado(1)">Executar Encadeamento 1</button>
+                            </div>
+                            <div class="col-xs-3 form-group">
+
+                            </div>
+                            <div class="col-xs-4 form-group">
+                                <button type="button" class="btn btn-primary" id="ExecutaEncadeamento12" onclick="playEncadeado(2)">Executar Encadeamento 1 e 2</button>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        @*fim modal encadeado*@
+
+    </div><!-- ./wrapper -->
+    @Scripts.Render("~/Asset/Vendor/js")
+    @Scripts.Render("~/Asset/Vendor/bootstrap/js")
+    @Scripts.Render("~/Asset/Vendor/AdminLTE/js")
+
+    @Scripts.Render("~/Asset/Vendor/Datatables/js")
+    @Scripts.Render("~/Assets/Vendor/Datatables/js/dataTables.select.js")
+    @Scripts.Render("~/Asset/Vendor/DatatablesEditor/js")
+    @Scripts.Render("~/Asset/Vendor/Select2/js")
+    @Scripts.Render("~/Asset/Vendor/multi-select/js")
+    @Scripts.Render("~/Asset/Vendor/ColorSelect/js")
+
+    @Scripts.Render("~/Assets/Vendor/bootstrap-daterangepicker/moment.min.js")
+
+    @Scripts.Render("~/Assets/Vendor/datepicker/js/bootstrap-datepicker.min.js")
+    @Scripts.Render("~/Assets/Vendor/timepicker/src/wickedpicker.js")
+    @Scripts.Render("~/Assets/Scripts/heatmap.js")
+
+    @Scripts.Render("~/Asset/Scripts/js")
+
+    @Scripts.Render("~/Script/Jquery")
+
+    @Scripts.Render("~/Asset/Vendor/Wizard/js")
+
+    @*<script src="@Url.Content("~/Scripts/jquery-ui-1.11.4.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery-ui-1.11.4.min.js")" type="text/javascript"></script>*@
+    <script src="@Url.Content("~/Assets/Scripts/messageBox.js")" type="text/javascript"></script>
+
+
+    @Html.Raw(Html.Flash())
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#list-minhas-demandas").select2({
+                placeholder: "Selecione a demanda...",
+                "language": {
+                    "noResults": function () {
+                        return "Nenhum resultado encontrado.";
+                    }
+                },
+                //allowClear: true
+            });
+            document.getElementById("listaMenuMinhasDemandas").className = "treeview active";
+            //chamada do mapa de calor para Datapool
+            $('#idMapaCalorDataPool').click(function () {
+                var widthRelative = window.screen.width;
+                var heightRelative = window.screen.height;
+
+
+                location.href = '@Url.Action("Index","MapaCalor")?wid=' + widthRelative + "&hei=" + heightRelative;
+            });
+
+            $('#idMapaCalorTestData').click(function () {
+                var widthRelative = window.screen.width;
+                var heightRelative = window.screen.height;
+
+
+                location.href = '@Url.Action("TestData","MapaCalor")?wid=' + widthRelative + "&hei=" + heightRelative;
+            });
+
+        });
+
+
+        function showModal() {
+            $('#modal-encadeado').modal('show');
+        }
+
+        function playEncadeado(qtd) {
+            var ids = $("#ids_testData").val();
+            var idFaseTeste = 1;
+            var notificacaoTelegram = 0;
+            var idMaquinaVirtual = 1;
+            var idAmbienteExecucao = 1;
+
+            $.ajax({
+                url: '@Url.Action("ExecutaEncadeamento", "Encadeamento")',
+                type: 'POST',
+                data: "{qtd:'" + qtd + "'}",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log(data);
+                    $('#modal-encadeado').modal('toggle');
+                    $.MessageBoxOK({ mensagem: data.Data });
+                },
+                error: function (erro) {
+                    $.MessageBoxOK({ mensagem: "Não foi possível iniciar a execução." });
+                }
+            });
+        }
+
+        function SelectedIndexChanged() {
+
+            var id = $("#list-minhas-demandas").val();
+
+            var url = '@Url.Action("CarregaDataPoolDemanda/0", "DataPool")' + "?IdDemamnda=" + id;
+            window.location.href = url;
+
+        }
+
+        function cliqueMenu() {
+            if ($("#body").attr('class') == "skin-green sidebar-mini") {
+                $("#list-minhas-demandas").select2('destroy');
+
+            } else {
+                $("#list-minhas-demandas").select2({
+                    placeholder: "Selecione a demanda...",
+                    "language": {
+                        "noResults": function () {
+                            return "Nenhum resultado encontrado.";
+                        }
+                    },
+                    //allowClear: true
+                });
+
+            }
+
+        }
+
+    </script>
+
+
+    @RenderSection("scripts", required: false)
+
+
+
+</body>
+</html>

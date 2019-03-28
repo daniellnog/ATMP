@@ -1,0 +1,66 @@
+﻿@using TDMWeb.Extensions
+@model LaefazWeb.Models.Ambiente
+
+@{
+    ViewBag.Title = "Ambientes";
+}
+
+@section styles {
+    <style type="text/css">
+        .form-control[readonly] {
+            background-color: white;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("SalvarEdicao", "Ambiente", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Editar Ambiente</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+
+                @Html.Label("descricao", "Descrição")
+                @Html.TextBox("descricao", null, new { @class = "form-control", required = "required" })
+
+                @Html.Label("tipoAmbiente", "Tipo de Ambiente")
+                @Html.DropDownList("listAmbientes", new SelectList(ViewBag.ambientes, "Id", "Descricao"), null, new
+           {
+               @class = "form-control",
+               @id = "list-tipo-ambiente",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required"
+           }
+               )
+
+                @Html.Label("ip", "IP")
+                @Html.TextBox("ip", null, new { @class = "form-control", required = "required" })
+
+                @Html.HiddenFor(m => m.Id, new { Id = "id" })
+                @Html.HiddenFor(m => m.TipoAmbiente.Id, new { Id = "idTipoAmbiente" })
+
+            </div>
+        </div>
+        <div class="box-footer" align="right">
+            <a href="@Url.Action("Index", "Ambiente")" class="btn btn-danger" id="cancelar">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var id = $('#idTipoAmbiente').attr("value");
+            // get the OPTION we want selected
+            var $option = $('#list-tipo-ambiente'   ).children('option[value="' + id + '"]');
+            // and now set the option we want selected
+            $option.attr('selected', true);
+
+        });
+    </script>
+}

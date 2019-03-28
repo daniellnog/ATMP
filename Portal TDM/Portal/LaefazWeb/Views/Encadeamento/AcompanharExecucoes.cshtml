@@ -1,0 +1,319 @@
+﻿@using TDMWeb.Extensions
+@model IEnumerable<LaefazWeb.Models.VOs.Encadeamento_TestDataVO>
+@{
+    ViewBag.Titulo = "Acompanhamento das Execuções";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box box-info">
+    <div class="box-body">
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="nav-tabs-custom">
+                    <div class="tab-content">
+                        <!-- The timeline -->
+                        <ul class="timeline timeline-inverse">
+                            <!-- timeline time label -->
+                            @foreach (var item in Model)
+                            {
+                                <li class="time-label">
+                                    @if (@item.qtdErros > 0)
+                                    {
+                                        <span class="bg-red">
+                                            @item.Descricao
+                                        </span>
+                                    }
+                                    else if (@item.qtdSuccess == @item.qtdTDs)
+                                    {
+                                        <span class="bg-green">
+                                            @item.Descricao
+                                        </span>
+                                    }
+                                    else if (@item.qtdErros == 0 && @item.qtdEmGeracao > 0)
+                                    {
+                                        <span class="bg-light-blue">
+                                            @item.Descricao
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="bg-gray">
+                                            @item.Descricao
+                                        </span>
+                                    }
+                                </li>
+                                foreach (var tds in item.testDatas)
+                                {
+                                    <li>
+                                        @if (tds.idStatusExec == 4)
+                                        {
+                                            <i class="fa fa-check bg-green"></i>
+
+                                        }
+                                        else if (tds.idStatusExec == 5)
+                                        {
+                                            <i class="fa fa-close bg-red"></i>
+                                        }
+                                        else if (tds.idStatusExec == 1)
+                                        {
+                                            <i class="fa fa-clock-o bg-gray"></i>
+                                        }
+                                        else if (tds.idStatusExec == 2 || tds.idStatusExec == 3)
+                                        {
+                                            <i class="fa fa-play-circle bg-light-blue"></i>
+                                        }
+                                        else if (tds.idStatusExec == 6)
+                                        {
+                                            <i class="fa fa-close bg-gray"></i>
+                                        }
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="fa fa-clock-o"></i>&nbsp;@tds.tempoExecString</span>
+                                            <h3 class="timeline-header"><a href="#">@tds.DescricaoAut</a> @tds.Descricao</h3>
+                                            <div class="timeline-footer">
+                                                <button class="btn btn-primary btn-xs consultar-parametros" onclick="chamarModal(@tds.IdTestData)">Parâmetros</button>
+                                                @*<input type="hidden" class="testData" id="td+@tds.IdTestData" value="@tds.IdTestData">*@
+                                                @if (@tds.CaminhoEvidencia != null)
+                                                {
+                                                    <a class="btn btn-primary btn-xs" href="@tds.CaminhoEvidencia">Evidência</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<!-- /.content -->
+
+<div class="modal fade in" id="parametros-testData">
+    <div class="modal-dialog" style="margin-top:2%; width: 60%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="modal-form">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+                    <div class="box-body" id="div-parametros">
+                        <!-- /.codigo dinamico via javascript -->
+                    </div>
+                    <div class="box-footer" align="right">
+                        <button type="button" id="CancelarNovoParametro" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+@section scripts
+{
+    @Styles.Render("~/Asset/Vendor/jquery-upload-file/js")
+
+    <script type="text/javascript">
+
+        function chamarModal(id) {
+            carregarParametros(id);
+            $('#parametros-testData').modal('show');
+        }
+
+        function addLinha(campos) {
+            var iniLinha = "<div class=\"row\">";
+            var linha = "";
+            var fimLinha = "</div>";
+            for (var i = 0; i < campos.length; i++) {
+                linha += campos[i];
+            }
+
+            return iniLinha + linha + fimLinha;
+        }
+
+
+        $('#parametros-testData').on('hidden.bs.modal', function () {
+            $('#div-parametros').html('');
+        })
+
+        function carregarParametros(id) {
+
+            $("#div-parametros").html("loading...");
+
+            $.ajax({
+                url: '@Url.Action("CarregarParametros", "Encadeamento")',
+                type: "POST",
+                data: "{\"idTestData\":\"" + id + "\"}",
+                contentType: 'application/json; charset=utf-8',
+                success: function (json) {
+                    var obj = JSON.parse(json);
+                    var $divParametros = $('#div-parametros');
+
+                    var divForm = "<form class='formLoading' enctype='multipart/form-data' id='form-test-data' method='post'>";
+
+                    var paramEntrada = "<div class='box box-primary' id='box-parametros-entrada'><div class='box-header with-border'><h3 class='box-title'>Parâmetros de Entrada</h3></div><div class='box-body' id='parametros-entrada'>";
+                    var paramSaida = "<div class='box box-primary' id='box-parametros-saida'><div class='box-header with-border'><h3 class='box-title'>Parâmetros de Saída</h3></div><div class='box-body' id='parametros-saida'>";
+
+                    var input = "";
+                    var linhaSaida = "";
+                    var linhaEntrada = "";
+                    var contSaida = 1;
+                    var contEntrada = 1;
+                    var total = obj.length;
+                    var totalEntrada = 0;
+                    var totalSaida = 0;
+                    var divParametro;
+                    var contParametroEntrada = false;
+                    var contParametroSaida = false;
+                    var valor = "";
+
+
+                    obj.forEach(function (o, index) {
+                        if (o.IdTipoParametro == 2) {
+                            totalSaida++;
+                            contParametroSaida = true;
+
+                        } else {
+                            totalEntrada++;
+                            contParametroEntrada = true;
+                        }
+                    });
+
+                    var camposEntrada = [];
+                    var camposSaida = [];
+                    var readOnly = "";
+                    var asteristico = "";
+
+                    obj.forEach(function (o, index) {
+
+                        if (o.Obrigatorio == true) {
+                            asteristico = "required";
+                        } else {
+                            asteristico = "";
+                        }
+
+                        switch (o.Tipo) {
+                            case "NUMBER":
+                                input = "<div class=\"col-xs-6 form-group\"><label>" + o.Descricao + ": </label><label style='font-weight: normal';>&nbsp" + o.Valor + "\</label></div>";
+                                break;
+                            case "DATE":
+                                input = "<div class=\"col-xs-6 form-group\"><label>" + o.Descricao + ": </label><label style='font-weight: normal';>&nbsp" + o.Valor + "\</label></div>";
+                                break;
+                            default:
+                                input = "<div class=\"col-xs-6 form-group\"><label>" + o.Descricao + ": </label><label style='font-weight: normal';>&nbsp" + o.Valor + "\</label></div>";
+                                break;
+                        }
+
+                        if (o.IdTipoParametro == 1) {
+                            camposEntrada.push(input);
+                        } else {
+                            camposSaida.push(input);
+                        }
+                    });
+
+                    //adicionando parâmetros de entrada
+                    if (camposEntrada.length > 0) {
+                        var ultimaPosicao = 0;
+                        var qtdLinhaExtra = camposEntrada.length < 2 ? 0 : Math.round(camposEntrada.length % 2);
+                        var qtdLinha = camposEntrada.length < 2 ? 1 : Math.round(camposEntrada.length / 2);
+
+
+                        for (var i = 0; i < qtdLinha; i++) {
+                            var campos = [];
+                            for (var j = 0; j < 2; j++) {
+                                if (camposEntrada[ultimaPosicao] != undefined) {
+                                    campos[j] = camposEntrada[ultimaPosicao];
+                                    ultimaPosicao++;
+                                } else {
+                                    break;
+                                }
+                            }
+                            var linha = addLinha(campos);
+                            paramEntrada += linha;
+                        }
+
+                        if (camposEntrada.length > 2) {
+                            for (var i = 0; i < qtdLinhaExtra; i++) {
+                                var campos = [];
+                                for (var j = 0; j < 2; j++) {
+                                    if (camposEntrada[ultimaPosicao] != undefined) {
+                                        campos[j] = camposEntrada[ultimaPosicao];
+                                        ultimaPosicao++;
+                                    } else {
+                                        break;
+                                    }
+                                }
+                                var linha = addLinha(campos);
+                                paramEntrada += linha;
+                            }
+                        }
+                        paramEntrada += "</div></div>";
+
+
+                    } else {
+                        $("#box-parametros-entrada").toggle();
+                    }
+
+                    //adicionando parâmetros de saida
+                    if (camposSaida.length > 0) {
+                        var ultimaPosicao = 0;
+                        var qtdLinhaExtra = camposSaida.length < 2 ? 0 : Math.round(camposSaida.length % 2);
+                        var qtdLinha = camposSaida.length < 2 ? 1 : Math.round(camposSaida.length / 2);
+
+
+                        for (var i = 0; i < qtdLinha; i++) {
+                            var campos = [];
+                            for (var j = 0; j < 2; j++) {
+                                if (camposSaida[ultimaPosicao] != undefined) {
+                                    campos[j] = camposSaida[ultimaPosicao];
+                                    ultimaPosicao++;
+                                } else {
+                                    break;
+                                }
+
+                            }
+                            var linha = addLinha(campos);
+                            paramSaida += linha;
+                        }
+
+                        if (camposSaida.length > 2) {
+                            for (var i = 0; i < qtdLinhaExtra; i++) {
+                                var campos = [];
+                                for (var j = 0; j < 2; j++) {
+                                    if (camposSaida[ultimaPosicao] != undefined) {
+                                        campos[j] = camposSaida[ultimaPosicao];
+                                        ultimaPosicao++;
+                                    } else {
+                                        break;
+                                    }
+
+                                }
+                                var linha = addLinha(campos);
+                                paramSaida += linha;
+                            }
+                        }
+                        paramSaida += "</div></div>";
+
+                        //divForm += paramEntrada + paramSaida + "</form>";
+
+                    } else {
+                        $("#box-parametros-saida").toggle();
+                    }
+                    divForm += paramEntrada + paramSaida + "</form>";
+
+                    $divParametros.removeClass('loading');
+                    $divParametros.html(divForm);
+                }
+            })
+        };
+    </script>
+}

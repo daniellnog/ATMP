@@ -1,0 +1,523 @@
+﻿@using TDMWeb.Extensions
+@model IEnumerable<LaefazWeb.Models.VOs.Script_CondicaoScript_CT_VO>
+
+    @{
+        ViewBag.Titulo = "Associação de Scripts com CTs";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    @*<h3>Associação de Scripts com CTs</h3>*@
+
+    <div class="box box-info">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12" style="width: 100%;">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1-1">
+                                <div class="form-group">
+                                    <div class="box-header">
+                                        <input type="button" class="btn btn-block btn-success pull-right" id="btnCriar" style="width: 100px;" value="Criar" />
+                                        <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+                                    </div>
+                                    <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayName("CT")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Script")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Ambiente Execução")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Plataforma")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Sistema")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Status Última Execução")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Fase do CT")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Nome Técnico Script")
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DescricaoCT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DescricaoScript)
+                                                    </td>
+                                                    <td>
+                                                        @Html.HiddenFor(modelItem => item.Id, new { @class = "hidden-id" })
+                                                        @Html.DisplayFor(modelItem => item.DescricaoAmbienteExecucao)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DescricaoPlataforma)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DescricaoSistema)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.DescricaoStatusUltimaExecucao)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FaseCT)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.NomeTecnicoScript)
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+                    <!-- nav-tabs-custom -->
+                </div>
+            </div>
+            <!-- /input-group -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <div class="modal fade in" id="modal-associar-scs-ct">
+        <div class="modal-dialog modal-lg" style="margin-top:5%">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="modal-form">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+                        <div class="box-header with-border">
+                            <h4 class="box-title">Filtro</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-12 form-group">
+                                    @Html.Label("label_sistemas", "AUT")
+                                    @*<input id="list_sistemas" class="form-control" disabled />*@
+                                    @Html.DropDownList("cmp_sistema", new SelectList(ViewBag.ListaSistemas, "Id", "Descricao"), "", new
+                               {
+                                   @class = "form-control select2",
+                                   @id = "list_sistemas",
+                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                   @required = "required",
+                                   @onchange = "alterarSistema()"
+                               }
+                                                 )
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 form-group">
+                                    @Html.Label("label_fase_ct", "Fase CT")
+                                    @Html.DropDownList("cmp_fase_ct", new SelectList(ViewBag.ListaFaseCT, "Id", "Fase"), "", new
+                               {
+                                   @class = "form-control select2",
+                                   @id = "list_fase_ct",
+                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                   @required = "required",
+                                   @onchange = "alterarFaseCT()"
+                               }
+                                        )
+                                </div>
+                                <div class="col-xs-6 form-group">
+                                    @Html.Label("label_fase_script", "Ambiente de Execução")
+                                    @Html.DropDownList("cmp_amb_exec", new SelectList(ViewBag.ListaAmbienteExecucao, "Id", "Descricao"), "", new
+                               {
+                                   @class = "form-control select2",
+                                   @id = "list_ambiente_exec",
+                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                   @required = "required",
+                                   @onchange = "alterarAmbienteExecucao()"
+                               }
+                                        )
+
+                                </div>
+                            </div>
+                            <div class="box-header with-border">
+                                <h4 class="box-title">Associação</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 form-group">
+                                    @Html.Label("label_ct", "CT")
+                                    @Html.DropDownList("cmp_ct", new SelectList(ViewBag.ListCTs, "Id", "Nome"), "", new
+                               {
+                                   @class = "form-control select2",
+                                   @id = "list_cts",
+                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                   @required = "required",
+                               }
+                                        )
+                                </div>
+                                <div class="col-xs-6 form-group">
+                                    @Html.Label("label_script", "Script")
+                                    @Html.DropDownList("cmp_ct", new SelectList(ViewBag.ListScripts, "Id", "Descricao"), "", new
+                               {
+                                   @class = "form-control select2",
+                                   @id = "list_scripts",
+                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                   @required = "required",
+                               }
+                                        )
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer" align="right">
+                            <button type="button" id="btnCancelarAssociacao" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="btnConfirmarAssociacao" onclick="SalvarAssociacao()">Salvar</button>
+                        </div>
+                        <!-- /.box-body -->
+                    </form>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @section scripts
+{
+        <style>
+            /*Adicionar uma cor mais escura para destacar mais a linha*/
+            table.display tr.odd {
+                background-color: whitesmoke;
+            }
+        </style>
+
+        <script type="text/javascript" charset="utf-8">
+
+            $(document).ready(function () {
+                $('.select2').select2();
+            });
+
+            function alterarFaseCT() {
+                var idAut = $('#list_sistemas').val();
+                var FaseCT = $('#list_fase_ct :selected').text();
+
+                carregarCT(idAut, FaseCT);
+            }
+
+            function alterarAmbienteExecucao() {
+                var idAut = $('#list_sistemas').val();
+                var idAmbienteExecucao = $('#list_ambiente_exec').val();
+
+                carregarScript(idAut, idAmbienteExecucao);
+            }
+
+            function alterarSistema() {
+                var idAut = $('#list_sistemas').val();
+                var FaseCT = $('#list_fase_ct :selected').text();
+                var idAmbienteExecucao = $('#list_ambiente_exec').val();
+
+                carregarCT(idAut, FaseCT);
+                carregarScript(idAut, idAmbienteExecucao);
+            }
+
+            function carregarCT(idAut, FaseCT) {
+                FaseCT = (FaseCT == "") ? null : FaseCT;
+
+                var dados = "{ 'IdAut':'" + idAut + "', 'FaseCT': '" + FaseCT + "' }";
+
+                $.ajax({
+                    url: '@Url.Action("CarregarCT", "Script_CondicaoScript_CT")',
+                    data: dados,
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+                        var dados = data.result;
+
+                        $('#list_cts').empty();
+
+                        var o = new Option("", "");
+                        $('#list_cts').append(o);
+
+                        dados.forEach(function (x, index) {
+                            var o = new Option(x.Descricao, x.Id);
+                            $('#list_cts').append(o);
+                        });
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            alert(data.responseText);
+                        } else {
+                            alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            }
+
+            function SalvarAssociacao() {
+
+                $('#list_sistemas').parent().find('span .select2-selection__rendered').text('');
+                $('#list_fase_ct').parent().find('span .select2-selection__rendered').text('');
+                $('#list_ambiente_exec').parent().find('span .select2-selection__rendered').text('');
+                $('#list_cts').parent().find('span .select2-selection__rendered').text('');
+                $('#list_scripts').parent().find('span .select2-selection__rendered').text('');
+
+
+                var idCT = $('#list_cts').val();
+                var idScript_CondicaoScript = $('#list_scripts').val();
+
+                var dados = "{ 'IdCT':'" + idCT + "', 'IdScript_CondicaoScript': '" + idScript_CondicaoScript + "' }";
+
+                if(idCT != "" && idScript_CondicaoScript != ""){
+                    $.ajax({
+                        url: '@Url.Action("SalvarAssociacao", "Script_CondicaoScript_CT")',
+                        data: dados,
+                        contentType: 'application/json; charset=utf-8',
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+                            var dados = data.result;
+
+                            if (dados == "Já existe essa associação.") {
+                                $('#modal-associar-scs-ct').modal('toggle');
+                                //$('#modal-associar-scs-ct').modal('hide');
+                                $.MessageBoxOK({ mensagem: "Essa associação já existe." });
+                            } else {
+                                $('#modal-associar-scs-ct').modal('toggle');
+                                //$('#modal-associar-scs-ct').modal('hide');
+
+                                $.MessageBoxOK({
+                                    mensagem: "Associação realizada com sucesso.",
+                                    argFuncao: data.Status,
+                                    funcaoBotaoOK: function (status) {
+                                        window.location.href = '@Url.Action("Index/", "Script_CondicaoScript_CT")';
+                                    }
+                                });
+                            }
+                        },
+                        error: function (data) {
+
+                            if (data.Result == undefined) {
+                                alert(data.responseText);
+                            } else {
+                                alert(data.Result);
+                            }
+
+                            document.body.style.cursor = 'default';
+                            $("#Loading").fadeOut();
+                        }
+                    });
+                } else {
+                    $('#modal-associar-scs-ct').modal('toggle');
+                    //$('#modal-associar-scs-ct').modal('hide');
+                    $.MessageBoxOK({ mensagem: "Os campos CT e Script são obrigatórios." });
+                }
+            }
+
+            function carregarScript(idAut, idAmbienteExecucao) {
+                idAmbienteExecucao = idAmbienteExecucao == "" ? null : idAmbienteExecucao;
+
+                var dados = "{ 'IdAut':'" + idAut + "', 'IdAmbienteExecucao': '" + idAmbienteExecucao + "' }";
+
+                $.ajax({
+                    url: '@Url.Action("CarregarScript", "Script_CondicaoScript_CT")',
+                    data: dados,
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+                        var dados = data.result;
+
+                        $('#list_scripts').empty();
+
+                        var o = new Option("", "");
+                        $('#list_scripts').append(o);
+                        dados.forEach(function (x, index) {
+                            var o = new Option(x.Descricao, x.Id);
+                            $('#list_scripts').append(o);
+                        });
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            alert(data.responseText);
+                        } else {
+                            alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            }
+
+            $('#btnCriar').on('click', function () {
+                $('#modal-associar-scs-ct').modal('toggle');
+            });
+
+            $('#btnExcluir').on('click', function () {
+                var ids = [];
+
+                $('#grid tr.selected').each(function () {
+                    var idAssociacao = $(this).find('.hidden-id').val()
+                    ids.push(idAssociacao);
+                });
+
+                if (ids.length == 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma associação selecionada." });
+                    return;
+                }
+
+                $.MessageBoxSimNao({
+                    titulo: "Remover Associação(ões)?",
+                    mensagem: "Confirma remoção da(s) Associação(ões)?",
+                    height: "auto",
+                    width: "auto",
+                    funcaoBotaoSim: function () {
+                        Remover(ids);
+                    }
+                });
+            });
+
+            function Remover(ids) {
+
+                $("#Loading").show();
+                document.body.style.cursor = 'wait';
+                $.ajax({
+                    url: '@Url.Action("Remover", "Script_CondicaoScript_CT")',
+                    data: JSON.stringify(ids),
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    async: true,
+                    cache: false,
+                    success: function (data) {
+
+                        $.MessageBoxOK({
+                            mensagem: data.Result,
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function (status) {
+                                if (status == 0)
+                                    window.location = '@Url.Action("Index","Script_CondicaoScript_CT")';
+                            }
+                        });
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    },
+                    error: function (data) {
+
+                        if (data.Result == undefined) {
+                            //alert(data.responseText);
+                        } else {
+                            //alert(data.Result);
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $("#Loading").fadeOut();
+                    }
+                });
+            }
+
+            // Definindo a tabela do tipo DataTable
+            var table = $('#grid').DataTable({
+                columnDefs: [
+                    {
+                        //CT
+                        targets: [0],
+                        sortable: true,
+                        width: '20%'
+                    },
+                    {
+                        //Script
+                        targets: [1],
+                        sortable: true,
+                        width: '20%'
+                    },
+                    {
+                        //DescricaoAmbienteExecucao
+                        targets: [2],
+                        sortable: true,
+                        width: '10%'
+                    },
+                    {
+                        //DescricaoPlataforma
+                        targets: [3],
+                        sortable: true,
+                        width: '5%'
+                    },
+                    {
+                        //Sistema
+                        targets: [4],
+                        sortable: true,
+                        width: '10%'
+                    },
+                    {
+                        //Status ultima exec.
+                        targets: [5],
+                        sortable: true,
+                        width: '15%'
+                    },
+                    {
+                        //Fase CT
+                        targets: [6],
+                        sortable: true,
+                        width: '10%'
+                    },
+                    {
+                        //Nome Técnico do Script
+                        targets: [7],
+                        sortable: true,
+                        width: '10%'
+                    },
+                ],
+                select: {
+                    "style": "os"
+                },
+                aLengthMenu: [[25, 50, 75, -1], [25, 50, 75, "Todos"]],
+                pageLength: 25,
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+
+
+        </script>
+    }

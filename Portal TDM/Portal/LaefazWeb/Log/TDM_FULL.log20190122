@@ -1,0 +1,547 @@
+22-01-2019 10:48:52 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Script editado com sucesso
+22-01-2019 10:48:52 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - Script: Script[{'Id':'10','IdScriptPai':'','IdAUT':'2','Descricao':'SELECIONAR MASSA DE CPF VALIDO E ENDERECO COM VIABILIDADE NO CRM','AUT':'NULL','Script2':'NULL',}]
+22-01-2019 10:48:54 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ScriptCondiçãoScript adicionado com sucesso
+22-01-2019 10:48:55 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ScriptCondiçãoScript = Script_CondicaoScrip_A4B6CC98A5A0869C9560FFA0B2D0A664DB913FBE4308BABAE0513FB72F00E4A5[{'CondicaoScript':'NULL','Id':'9','IdScript':'10','IdCondicaoScript':'','QueryTosca':'SELECT DISTINCT top 10000 tdt.Id AS ID_TEST_DATA, scr.Descricao AS SCRIPT, dem.Descricao AS DEMANDA, tdt.CasoTesteRelativo AS CASO_TESTE, aut.Descricao AS SISTEMA, ambexec.descricao as 'AMBIENTE EXECUCAO', (SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'CPF' AND parvAux.IdTestData = tdt.Id) AS CPF,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'SENHA' AND parvAux.IdTestData = tdt.Id) AS SENHA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'TRILHA' AND parvAux.IdTestData = tdt.Id) AS TRILHA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'AMBIENTE SISTEMA' AND parvAux.IdTestData = tdt.Id) AS AMBIENTE_SISTEMA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'LOCAL' AND parvAux.IdTestData = tdt.Id) AS LOCAL,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'USUARIO' AND parvAux.IdTestData = tdt.Id) AS USUARIO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'NUMERO ENDERECO' AND parvAux.IdTestData = tdt.Id) AS NUMERO_ENDERECO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'COD LOGRADOURO' AND parvAux.IdTestData = tdt.Id) AS COD_LOGRADOURO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: RESULTADO ESPERADO' AND parvAux.IdTestData = tdt.Id) AS RESULTADO_ESPERADO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: AMBIENTE' AND parvAux.IdTestData = tdt.Id) AS AMBIENTE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: AUTOR' AND parvAux.IdTestData = tdt.Id) AS AUTOR,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: DADOS DE ENTRADA' AND parvAux.IdTestData = tdt.Id) AS DADOS_DE_ENTRADA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: FASE' AND parvAux.IdTestData = tdt.Id) AS FASE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: NOME DO CASO DE TESTE' AND parvAux.IdTestData = tdt.Id) AS NOME_DO_CASO_DE_TESTE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: TITULO' AND parvAux.IdTestData = tdt.Id) AS TITULO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: PRJ' AND parvAux.IdTestData = tdt.Id) AS PRJ,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: NUMERO DO CASO DE TESTE' AND parvAux.IdTestData = tdt.Id) AS NUMERO_DO_CASO_DE_TESTE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'SIGLA ESTADO' AND parvAux.IdTestData = tdt.Id) AS SIGLA_ESTADO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'TRECHO' AND parvAux.IdTestData = tdt.Id) AS TRECHO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'CPF GERADO' AND parvAux.IdTestData = tdt.Id) AS CPF_GERADO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'CEP GERADO' AND parvAux.IdTestData = tdt.Id) AS CEP_GERADO FROM TestData tdt INNER JOIN DataPool dtp ON tdt.IdDataPool = dtp.Id LEFT JOIN Script_CondicaoScript scrcon ON dtp.IdScript_CondicaoScript = scrcon.Id LEFT JOIN Script_CondicaoScript_Ambiente scrconamb ON scrconamb.IdScript_CondicaoScript = scrcon.Id INNER JOIN Script scr ON scrcon.IdScript = scr.Id LEFT JOIN CondicaoScript con ON scrcon.IdCondicaoScript = con.Id INNER JOIN ParametroScript parscr ON parscr.IdScript_CondicaoScript = scrcon.Id INNER JOIN Parametro par ON parscr.IdParametro = par.Id INNER JOIN AUT aut ON dtp.IdAut = aut.Id LEFT JOIN Execucao execu ON execu.IdTestData = tdt.Id INNER JOIN AmbienteExecucao ambexec ON scrconamb.IdAmbienteExecucao = ambexec.Id AND execu.IdScript_CondicaoScript_Ambiente = scrconamb.Id INNER JOIN AmbienteVirtual ambvir ON scrconamb.IdAmbienteVirtual = ambvir.Id LEFT JOIN Demanda dem ON dtp.IdDemanda = dem.Id INNER JOIN Usuario us ON tdt.IdUsuario = us.Id WHERE tdt.Id IN (ptdTosca) ORDER BY tdt.id','ListaExecucaoTosca':'/Execution/ExecutionLists/STC/SELECIONAR_MASSA_DE_CPF_VALIDO_E_ENDERECO_COM_VIABILIDADE_NO_CRM','CaminhoArquivoTCS':'C:\Tosca_Projects\Tosca_Workspaces\TDM\remote_exec\selecionar-massa-de-cpf-valido-e-endereco-com-viabilidade-no-crm.tcs','DiretorioRelatorio':'C:/Tosca_Projects/Tosca_Workspaces/TDM/remote_exec/Reports/report.txt','TempoEstimadoExecucao':'01/01/2001 09:20:00','NomeTecnicoScript':'SELECIONAR_MASSA_DE_CPF_VALIDO_E_ENDERECO_COM_VIABILIDADE_NO_CRM',}]
+22-01-2019 10:48:56 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:48:57 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'150','IdParametro':'1','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'False','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 10:48:58 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:48:58 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'151','IdParametro':'26','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'p0o9i8uu','VisivelEmTela':'True',}]
+22-01-2019 10:48:58 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:48:58 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'152','IdParametro':'16','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'STCHA','VisivelEmTela':'True',}]
+22-01-2019 10:48:59 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:48:59 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'154','IdParametro':'14','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'CSOL','VisivelEmTela':'False',}]
+22-01-2019 10:48:59 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:00 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'155','IdParametro':'7','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'BHE','VisivelEmTela':'True',}]
+22-01-2019 10:49:00 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:00 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'156','IdParametro':'25','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'D50206','VisivelEmTela':'True',}]
+22-01-2019 10:49:01 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:01 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'158','IdParametro':'64','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 10:49:01 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:02 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'159','IdParametro':'65','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 10:49:02 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:02 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'160','IdParametro':'52','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:03 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:03 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'162','IdParametro':'53','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:03 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:04 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'163','IdParametro':'54','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:04 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:04 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'164','IdParametro':'55','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'False','ValorDefault':'TESTE','VisivelEmTela':'False',}]
+22-01-2019 10:49:05 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:05 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'166','IdParametro':'57','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:06 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'167','IdParametro':'58','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:07 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:07 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'168','IdParametro':'59','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:07 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:08 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'169','IdParametro':'60','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:08 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:09 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'170','IdParametro':'61','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 10:49:09 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:09 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'958','IdParametro':'174','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'MG','VisivelEmTela':'True',}]
+22-01-2019 10:49:10 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:10 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'959','IdParametro':'175','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'False','ValorDefault':'1','VisivelEmTela':'True',}]
+22-01-2019 10:49:11 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:11 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'960','IdParametro':'176','IdScript_CondicaoScript':'9','IdTipoParametro':'2','Obrigatorio':'False','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 10:49:12 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 10:49:12 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'961','IdParametro':'177','IdScript_CondicaoScript':'9','IdTipoParametro':'2','Obrigatorio':'False','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 11:37:05 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 0
+22-01-2019 11:37:05 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 11:37:05 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 11:37:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 1
+22-01-2019 11:37:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 11:37:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 11:40:23 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Script editado com sucesso
+22-01-2019 11:40:23 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - Script: Script[{'Id':'10','IdScriptPai':'','IdAUT':'2','Descricao':'SELECIONAR MASSA DE CPF VALIDO E ENDERECO COM VIABILIDADE NO CRM','AUT':'NULL','Script2':'NULL',}]
+22-01-2019 11:40:25 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ScriptCondiçãoScript adicionado com sucesso
+22-01-2019 11:40:26 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ScriptCondiçãoScript = Script_CondicaoScrip_A4B6CC98A5A0869C9560FFA0B2D0A664DB913FBE4308BABAE0513FB72F00E4A5[{'CondicaoScript':'NULL','Id':'9','IdScript':'10','IdCondicaoScript':'','QueryTosca':'SELECT DISTINCT top 10000 tdt.Id AS ID_TEST_DATA, scr.Descricao AS SCRIPT, dem.Descricao AS DEMANDA, tdt.CasoTesteRelativo AS CASO_TESTE, aut.Descricao AS SISTEMA, ambexec.descricao as 'AMBIENTE EXECUCAO', (SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'CPF' AND parvAux.IdTestData = tdt.Id) AS CPF,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'SENHA' AND parvAux.IdTestData = tdt.Id) AS SENHA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'TRILHA' AND parvAux.IdTestData = tdt.Id) AS TRILHA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'AMBIENTE SISTEMA' AND parvAux.IdTestData = tdt.Id) AS AMBIENTE_SISTEMA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'LOCAL' AND parvAux.IdTestData = tdt.Id) AS LOCAL,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'USUARIO' AND parvAux.IdTestData = tdt.Id) AS USUARIO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'NUMERO ENDERECO' AND parvAux.IdTestData = tdt.Id) AS NUMERO_ENDERECO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'COD LOGRADOURO' AND parvAux.IdTestData = tdt.Id) AS COD_LOGRADOURO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: RESULTADO ESPERADO' AND parvAux.IdTestData = tdt.Id) AS RESULTADO_ESPERADO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: AMBIENTE' AND parvAux.IdTestData = tdt.Id) AS AMBIENTE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: AUTOR' AND parvAux.IdTestData = tdt.Id) AS AUTOR,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: DADOS DE ENTRADA' AND parvAux.IdTestData = tdt.Id) AS DADOS_DE_ENTRADA,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: FASE' AND parvAux.IdTestData = tdt.Id) AS FASE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: NOME DO CASO DE TESTE' AND parvAux.IdTestData = tdt.Id) AS NOME_DO_CASO_DE_TESTE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: TITULO' AND parvAux.IdTestData = tdt.Id) AS TITULO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: PRJ' AND parvAux.IdTestData = tdt.Id) AS PRJ,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'EVIDENCIA: NUMERO DO CASO DE TESTE' AND parvAux.IdTestData = tdt.Id) AS NUMERO_DO_CASO_DE_TESTE,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'SIGLA ESTADO' AND parvAux.IdTestData = tdt.Id) AS SIGLA_ESTADO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'TRECHO' AND parvAux.IdTestData = tdt.Id) AS TRECHO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'CPF GERADO' AND parvAux.IdTestData = tdt.Id) AS CPF_GERADO,(SELECT parvAux.valor FROM ParametroValor parvAux INNER JOIN ParametroScript parsAux ON parvAux.IdParametroScript = parsAux.Id INNER JOIN Parametro parAux ON parsAux.IdParametro = parAux.Id WHERE parAux.Descricao = 'CEP GERADO' AND parvAux.IdTestData = tdt.Id) AS CEP_GERADO FROM TestData tdt INNER JOIN DataPool dtp ON tdt.IdDataPool = dtp.Id LEFT JOIN Script_CondicaoScript scrcon ON dtp.IdScript_CondicaoScript = scrcon.Id LEFT JOIN Script_CondicaoScript_Ambiente scrconamb ON scrconamb.IdScript_CondicaoScript = scrcon.Id INNER JOIN Script scr ON scrcon.IdScript = scr.Id LEFT JOIN CondicaoScript con ON scrcon.IdCondicaoScript = con.Id INNER JOIN ParametroScript parscr ON parscr.IdScript_CondicaoScript = scrcon.Id INNER JOIN Parametro par ON parscr.IdParametro = par.Id INNER JOIN AUT aut ON dtp.IdAut = aut.Id LEFT JOIN Execucao execu ON execu.IdTestData = tdt.Id INNER JOIN AmbienteExecucao ambexec ON scrconamb.IdAmbienteExecucao = ambexec.Id AND execu.IdScript_CondicaoScript_Ambiente = scrconamb.Id INNER JOIN AmbienteVirtual ambvir ON scrconamb.IdAmbienteVirtual = ambvir.Id LEFT JOIN Demanda dem ON dtp.IdDemanda = dem.Id INNER JOIN Usuario us ON tdt.IdUsuario = us.Id WHERE tdt.Id IN (ptdTosca) ORDER BY tdt.id','ListaExecucaoTosca':'/Execution/ExecutionLists/STC/SELECIONAR_MASSA_DE_CPF_VALIDO_E_ENDERECO_COM_VIABILIDADE_NO_CRM','CaminhoArquivoTCS':'C:\Tosca_Projects\Tosca_Workspaces\TDM\remote_exec\selecionar-massa-de-cpf-valido-e-endereco-com-viabilidade-no-crm.tcs','DiretorioRelatorio':'C:/Tosca_Projects/Tosca_Workspaces/TDM/remote_exec/Reports/report.txt','TempoEstimadoExecucao':'01/01/2001 12:20:00','NomeTecnicoScript':'SELECIONAR_MASSA_DE_CPF_VALIDO_E_ENDERECO_COM_VIABILIDADE_NO_CRM',}]
+22-01-2019 11:40:27 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:27 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'150','IdParametro':'1','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'False','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 11:40:27 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:28 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'151','IdParametro':'26','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'p0o9i8uu','VisivelEmTela':'True',}]
+22-01-2019 11:40:28 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:28 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'152','IdParametro':'16','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'STCHA','VisivelEmTela':'True',}]
+22-01-2019 11:40:28 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:29 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'154','IdParametro':'14','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'CSOL','VisivelEmTela':'False',}]
+22-01-2019 11:40:29 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:29 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'155','IdParametro':'7','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'BHE','VisivelEmTela':'True',}]
+22-01-2019 11:40:30 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:30 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'156','IdParametro':'25','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'D50206','VisivelEmTela':'True',}]
+22-01-2019 11:40:30 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:31 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'158','IdParametro':'64','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 11:40:31 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:31 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'159','IdParametro':'65','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 11:40:31 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:32 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'160','IdParametro':'52','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:32 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:32 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'162','IdParametro':'53','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:33 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'163','IdParametro':'54','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:34 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'164','IdParametro':'55','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'TESTE','VisivelEmTela':'False',}]
+22-01-2019 11:40:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:34 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'166','IdParametro':'57','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:35 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:35 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'167','IdParametro':'58','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:35 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:36 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'168','IdParametro':'59','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:36 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:36 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'169','IdParametro':'60','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:37 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:37 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'170','IdParametro':'61','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'','VisivelEmTela':'False',}]
+22-01-2019 11:40:37 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:38 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'958','IdParametro':'174','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'True','ValorDefault':'MG','VisivelEmTela':'True',}]
+22-01-2019 11:40:38 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:38 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'959','IdParametro':'175','IdScript_CondicaoScript':'9','IdTipoParametro':'1','Obrigatorio':'False','ValorDefault':'1','VisivelEmTela':'True',}]
+22-01-2019 11:40:39 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:39 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'960','IdParametro':'176','IdScript_CondicaoScript':'9','IdTipoParametro':'2','Obrigatorio':'False','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 11:40:40 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+22-01-2019 11:40:40 [DEBUG] (LaefazWeb.Controllers.ScriptController - line 33) - ParametroScript: ParametroScript_E2AC248E5CF0C3CBB3F99C4349E4FBDCA94822B40601FF03A1E77004570E47FD[{'Id':'961','IdParametro':'177','IdScript_CondicaoScript':'9','IdTipoParametro':'2','Obrigatorio':'False','ValorDefault':'','VisivelEmTela':'True',}]
+22-01-2019 13:22:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 0
+22-01-2019 13:22:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 13:22:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:24:29 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 1
+22-01-2019 13:24:29 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 13:24:29 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 2
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 14
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133591
+22-01-2019 13:25:32 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133591','IdTestData':'6602','IdParametroScript':'154','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133591
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 7
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 4
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 5
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 64
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 6
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 65
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 7
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133596
+22-01-2019 13:25:33 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133596','IdTestData':'6602','IdParametroScript':'160','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 8
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133597
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133597','IdTestData':'6602','IdParametroScript':'162','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133597
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 9
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 10
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+22-01-2019 13:25:34 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:25:35 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133599
+22-01-2019 13:25:35 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133599','IdTestData':'6602','IdParametroScript':'164','IdParametroValor_Origem':'','Valor':'',}]
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 11
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133600
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133600','IdTestData':'6602','IdParametroScript':'166','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 12
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+22-01-2019 13:27:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133601
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133601','IdTestData':'6602','IdParametroScript':'167','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 13
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133602
+22-01-2019 13:27:20 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133602','IdTestData':'6602','IdParametroScript':'168','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 14
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133603
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133603','IdTestData':'6602','IdParametroScript':'169','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 15
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133604
+22-01-2019 13:27:21 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133604','IdTestData':'6602','IdParametroScript':'170','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:27:22 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 16
+22-01-2019 13:27:22 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 174
+22-01-2019 13:27:22 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 0
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 1
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 2
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 14
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133591
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133591','IdTestData':'6602','IdParametroScript':'154','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:27:39 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133591
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 7
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 4
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 5
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 64
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 6
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 65
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 7
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133596
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133596','IdTestData':'6602','IdParametroScript':'160','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 8
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133597
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133597','IdTestData':'6602','IdParametroScript':'162','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:27:40 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133597
+22-01-2019 13:27:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 9
+22-01-2019 13:27:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+22-01-2019 13:27:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:27:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 10
+22-01-2019 13:27:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+22-01-2019 13:27:41 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:31:18 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133599
+22-01-2019 13:31:19 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133599','IdTestData':'6602','IdParametroScript':'164','IdParametroValor_Origem':'','Valor':'',}]
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 0
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 1
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 2
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 14
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133591
+22-01-2019 13:38:55 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133591','IdTestData':'6602','IdParametroScript':'154','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133591
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 7
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 4
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 5
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 64
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 6
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 65
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 7
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133596
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133596','IdTestData':'6602','IdParametroScript':'160','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 8
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:38:56 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133597
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133597','IdTestData':'6602','IdParametroScript':'162','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbExec: 3
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133597
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 9
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 10
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+22-01-2019 13:38:57 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:39:42 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133599
+22-01-2019 13:39:43 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133599','IdTestData':'6602','IdParametroScript':'164','IdParametroValor_Origem':'','Valor':'',}]
+22-01-2019 13:39:46 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 11
+22-01-2019 13:39:46 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+22-01-2019 13:39:46 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:39:46 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133600
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133600','IdTestData':'6602','IdParametroScript':'166','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 12
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133601
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133601','IdTestData':'6602','IdParametroScript':'167','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 13
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:39:47 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133602
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133602','IdTestData':'6602','IdParametroScript':'168','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 14
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133603
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133603','IdTestData':'6602','IdParametroScript':'169','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 15
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:39:48 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - _idParamValor: 133604
+22-01-2019 13:39:49 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133604','IdTestData':'6602','IdParametroScript':'170','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:39:49 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - Indice de repetição: 16
+22-01-2019 13:39:49 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - listaParametrosObrigatorios[w].IdParametro: 174
+22-01-2019 13:39:49 [DEBUG] (LaefazWeb.Controllers.DataPoolController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 0
+22-01-2019 13:54:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 13:54:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 1
+22-01-2019 13:54:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 2
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 14
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133757
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133757','IdTestData':'6613','IdParametroScript':'154','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133757
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 7
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 4
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 5
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 64
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 6
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 65
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 7
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133762
+22-01-2019 13:54:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133762','IdTestData':'6613','IdParametroScript':'160','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 8
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133763
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133763','IdTestData':'6613','IdParametroScript':'162','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133763
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 9
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+22-01-2019 13:54:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 10
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133765
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133765','IdTestData':'6613','IdParametroScript':'164','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 11
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133766
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133766','IdTestData':'6613','IdParametroScript':'166','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 12
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+22-01-2019 13:54:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133767
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133767','IdTestData':'6613','IdParametroScript':'167','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 13
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133768
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133768','IdTestData':'6613','IdParametroScript':'168','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 14
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+22-01-2019 13:54:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133769
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133769','IdTestData':'6613','IdParametroScript':'169','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 15
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133770
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133770','IdTestData':'6613','IdParametroScript':'170','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 16
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 174
+22-01-2019 13:54:36 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:22 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 0
+22-01-2019 13:56:22 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 13:56:22 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 1
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 2
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 14
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133776
+22-01-2019 13:56:30 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133776','IdTestData':'6614','IdParametroScript':'154','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133776
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 7
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 4
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 5
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 64
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 6
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 65
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 7
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133781
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133781','IdTestData':'6614','IdParametroScript':'160','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 8
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:56:31 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133782
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133782','IdTestData':'6614','IdParametroScript':'162','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133782
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 9
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 10
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133784
+22-01-2019 13:56:32 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133784','IdTestData':'6614','IdParametroScript':'164','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 11
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133785
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133785','IdTestData':'6614','IdParametroScript':'166','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 12
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133786
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133786','IdTestData':'6614','IdParametroScript':'167','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 13
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+22-01-2019 13:56:33 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133787
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133787','IdTestData':'6614','IdParametroScript':'168','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 14
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133788
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133788','IdTestData':'6614','IdParametroScript':'169','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 15
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:56:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133789
+22-01-2019 13:56:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133789','IdTestData':'6614','IdParametroScript':'170','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:56:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 16
+22-01-2019 13:56:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 174
+22-01-2019 13:56:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 0
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 1
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 16
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 2
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 14
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133795
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133795','IdTestData':'6615','IdParametroScript':'154','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133795
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 7
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 4
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 5
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 64
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 6
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 65
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 7
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:12 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133800
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133800','IdTestData':'6615','IdParametroScript':'160','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 8
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133801
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133801','IdTestData':'6615','IdParametroScript':'162','IdParametroValor_Origem':'','Valor':'CSOL',}]
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_975ED585C31F9CB0BAFE006F1CD51E8A259A1214B5F0CB3A68E3FD6E84F41F93[{'Object':'Script_CondicaoScript_Ambiente','Id':'3','Descricao':'CSOL',}]
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 3
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133801
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 9
+22-01-2019 13:58:13 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+22-01-2019 13:58:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 10
+22-01-2019 13:58:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+22-01-2019 13:58:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:22 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133803
+22-01-2019 13:58:22 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133803','IdTestData':'6615','IdParametroScript':'164','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:58:34 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 11
+22-01-2019 13:58:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+22-01-2019 13:58:35 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:39 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133804
+22-01-2019 13:58:39 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133804','IdTestData':'6615','IdParametroScript':'166','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:58:44 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 12
+22-01-2019 13:58:45 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+22-01-2019 13:58:45 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:46 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133805
+22-01-2019 13:58:46 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133805','IdTestData':'6615','IdParametroScript':'167','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:58:54 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 13
+22-01-2019 13:58:55 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+22-01-2019 13:58:55 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:58:56 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133806
+22-01-2019 13:58:57 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133806','IdTestData':'6615','IdParametroScript':'168','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:59:00 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 14
+22-01-2019 13:59:01 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+22-01-2019 13:59:01 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:59:02 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133807
+22-01-2019 13:59:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133807','IdTestData':'6615','IdParametroScript':'169','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:59:08 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 15
+22-01-2019 13:59:08 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+22-01-2019 13:59:08 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 13:59:10 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 133808
+22-01-2019 13:59:11 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'133808','IdTestData':'6615','IdParametroScript':'170','IdParametroValor_Origem':'','Valor':'TESTE',}]
+22-01-2019 13:59:17 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 16
+22-01-2019 13:59:17 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 174
+22-01-2019 13:59:17 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 3
+22-01-2019 17:03:12 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Entrada no método listarTestDatas do Encadeamento.
+22-01-2019 17:03:12 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Id do DataPool: 166
+22-01-2019 17:03:12 [INFO ] (LaefazWeb.Controllers.EncadeamentoController - line 101) - Preparando a execução da PROC PR_LISTAR_TEST_DATA, passando o parâmtetro: 166

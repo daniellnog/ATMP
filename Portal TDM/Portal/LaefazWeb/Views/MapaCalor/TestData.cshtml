@@ -1,0 +1,228 @@
+﻿@model IEnumerable<LaefazWeb.Models.TelaMapaCalor>
+
+@{
+    ViewBag.Titulo = "Mapa de Calor - TestData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    .heatmapArea {
+        position: relative;
+        width: 800px;
+        height: 381px;
+    }
+</style>
+
+<div class="box-body">
+    <div class="nav-tabs-custom">
+        <div class="tab-content">
+            <div class="row">
+                <input type="hidden" id="dataTestData" />
+                <div class="col-xs-7 form-group">
+                    @foreach (var item in Model)
+                    {
+                        string imagepath = "";
+                        if (item.Descricao == "TestData" && item.Resolucao == "1920x1080" && ViewBag.res == "1920x1080")
+                        {
+                            //imagepath = "C://Portal TDM//Portal//LaefazWeb//Assets//Images//TelaTestData1920x1080.png";
+                            imagepath = @item.Caminho;
+                            FileStream fs = new FileStream(imagepath, FileMode.Open);
+                            byte[] byData = new byte[fs.Length];
+                            fs.Read(byData, 0, byData.Length);
+                            fs.Close();
+
+                            var base64 = Convert.ToBase64String(byData);
+                            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                            <div class="heatmapArea" id="heatmapArea">
+                                <img src=@imgSrc width="800px" height="381px" />
+                            </div>
+                        }
+                        else if (item.Descricao == "TestData" && item.Resolucao == "1600x900" && ViewBag.res == "1600x900")
+                        {
+                            //imagepath = "C://Portal TDM//Portal//LaefazWeb//Assets//Images//TelaTestData1600x900.png";
+                            imagepath = @item.Caminho;
+                            FileStream fs = new FileStream(imagepath, FileMode.Open);
+                            byte[] byData = new byte[fs.Length];
+                            fs.Read(byData, 0, byData.Length);
+                            fs.Close();
+
+                            var base64 = Convert.ToBase64String(byData);
+                            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                            <div class="heatmapArea" id="heatmapArea">
+                                <img src=@imgSrc width="800px" height="381px" />
+                            </div>
+                        }
+                        else if (item.Descricao == "TestData" && item.Resolucao == "1366x768" && ViewBag.res == "1366x768")
+                        {
+                            //imagepath = "C://Portal TDM//Portal//LaefazWeb//Assets//Images//TelaTestData1366x768.png";
+                            imagepath = @item.Caminho;
+                            FileStream fs = new FileStream(imagepath, FileMode.Open);
+                            byte[] byData = new byte[fs.Length];
+                            fs.Read(byData, 0, byData.Length);
+                            fs.Close();
+
+                            var base64 = Convert.ToBase64String(byData);
+                            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                            <div class="heatmapArea" id="heatmapArea">
+                                <img src=@imgSrc width="800px" height="381px" />
+                            </div>
+                        }
+                    }
+                    <!-- /.post -->
+                </div>
+
+                <input type="hidden" id="data" />
+                <div class="col-xs-2 form-group">
+                    @Html.Label("date-interval", "Intervalo de Datas:")
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right date-interval" name="daterange" id="date-interval">
+                    </div>
+                </div>
+
+                <div class="col-xs-1 form-group">
+                    @Html.Label(" ", "   ")
+                    <div class="input-group date">
+                        <input type="button" class="btn btn-block btn-success pull-right" id="btnExibir" value="Exibir" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.box -->
+@section scripts
+{
+    <script type="text/javascript" charset="utf-8">
+
+        $(document).ready(function () {
+            $('.tab-pane a').on('click', function (e) {
+                e.preventDefault()
+                $(this).tab('show')
+            })
+        });
+
+        //$('#reservation').daterangepicker()
+
+        $('input[name="daterange"]').daterangepicker({
+            "opens": "right",
+            "locale": {
+                "format": "DD/MM/YYYY",
+                "separator": " - ",
+                "applyLabel": "Confirmar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "De",
+                "toLabel": "Para",
+                "customRangeLabel": "Custom",
+                "weekLabel": "W",
+                "daysOfWeek": [
+                    "Dom",
+                    "Seg",
+                    "Ter",
+                    "Qua",
+                    "Qui",
+                    "Sex",
+                    "Sab"
+                ],
+                "monthNames": [
+                    "Janeiro",
+                    "Fevereiro",
+                    "Março",
+                    "Abril",
+                    "Maio",
+                    "Junho",
+                    "Julho",
+                    "Agosto",
+                    "Setembro",
+                    "Outubro",
+                    "Novembro",
+                    "Dezembro"
+                ],
+                "firstDay": 1
+            }
+        });
+
+        //$('input[name="daterange"]').on('showCalendar.daterangepicker', function (ev, picker) {
+        //    //do something, like clearing an input
+        //    $('#daterange').val('');
+        //    $('#heatmapArea').attr("hidden", true);
+        //});
+
+        //$('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
+        //    //do something, like clearing an input
+        //    $('#daterange').val('');
+        //    $('#heatmapArea').removeAttr("hidden");
+        //});
+
+        //$('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+        //    //do something, like clearing an input
+        //    $('#daterange').val('');
+        //    $('#heatmapArea').removeAttr("hidden");
+        //});
+
+        var xx = h337.create({ "element": document.getElementById("heatmapArea"), "radius": 25, "visible": true });
+
+        //funcao para carregar os dados do controlador com as informacoes do banco
+        function exibirMapaCalor(dataInicio, dataTermino, res) {
+            dataInicio = dataInicio + "";
+            dataTermino = dataTermino + "";
+            res = res + "";
+
+            if (dataInicio != "" && dataTermino != "") {
+                $.ajax({
+                    url: '@Url.Action("exibirMapaCalorTestData")',
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    traditional: true,
+                    data: "{\"dtInicio\":\"" + dataInicio + "\", \"dtTermino\":\"" + dataTermino + "\", \"res\":\"" + res + "\"}",
+
+                    success: function (data) {
+                        var dados = JSON.parse(data);
+                        var val, clicks;
+                        if (data != "[]") {
+                            clicks = "{max: 100, data: [";
+
+                            dados.forEach(function (o, index) {
+                                clicks += "{x: " + o.PosX + ", y: " + o.PosY + ", count: " + o.Count + "},";
+                            });
+                            clicks = clicks.slice(0, -1);
+                            clicks += "]}";
+
+                            document.getElementById("data").value = clicks;
+                            var el = document.getElementById("data").value;
+
+                            var obj = eval('(' + el + ')');
+
+                            xx.store.setDataSet(obj);
+                        }
+                    }
+                });
+            }
+        }
+
+        //funcao chamada ao clicar no botao exibir
+        $('#btnExibir').click(function () {
+            //recuperando as datas dos campos input
+            var dataInicio = $('#date-interval').data('daterangepicker').startDate.format('DD/MM/YYYY H:mm:ss');
+            var dataTermino = $('#date-interval').data('daterangepicker').endDate.format('DD/MM/YYYY H:mm:ss');
+            var res = window.screen.width + "x" + window.screen.height;
+
+            xx.store.setDataSet({ data: [] });
+
+            exibirMapaCalor(dataInicio, dataTermino, res);
+        });
+
+        
+
+    </script>
+}

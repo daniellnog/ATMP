@@ -1,0 +1,1043 @@
+﻿
+@{
+    ViewBag.Titulo = "Agendamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@Scripts.Render("~/bundles/jquery_3_3_1")*@
+
+<script src='~/Assets/Vendor/fullcalendar-3.9.0/lib/moment.min.js'></script>
+<script src='~/Assets/Vendor/fullcalendar-3.9.0/lib/jquery.min.js'></script>
+
+<script src='~/Assets/Vendor/fullcalendar-3.9.0/lib/jquery-ui.min.js'></script>
+<script src='~/Assets/Vendor/fullcalendar-3.9.0/fullcalendar.min.js'></script>
+<script src='~/Assets/Vendor/fullcalendar-3.9.0/locale/pt-br.js'></script>
+<link href='~/Assets/Vendor/fullcalendar-3.9.0/fullcalendar.css' rel='stylesheet' />
+<link href='~/Assets/Vendor/fullcalendar-3.9.0/fullcalendar.print.css' rel="stylesheet" type="text/css" media='print' />
+
+<style>
+    .modal-dialog {
+        width: 50%;
+    }
+
+    #modal-lateral-direito {
+        width: 500px;
+        height: 400px;
+        float: left;
+        background-color: #F00;
+    }
+
+    .ms-container {
+        width: 100%;
+    }
+
+    #id-tds-selecionados {
+        position: absolute;
+        left: 51%;
+        /*top: 100px;*/
+        /*margin-left: 0;*/
+    }
+
+    #btnexcluir {
+        position: absolute;
+        top: 15px;
+        left: 90%;
+    }
+</style>
+
+<section class="content">
+    <div class="row">
+        @*<div class="col-md-3">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4 class="box-title">Menu</h4>
+                    </div>
+                    <div class="box-body">
+                        <button type="button" class="btn btn-primary" onclick="exibeModal()">Adicionar Agendamento</button>
+                    </div>
+                </div>
+            </div>*@
+        <!-- /.col -->
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id='calendar'></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <div>
+</section>
+
+<div class="modal fade in" id="modalAgendamento">
+    <div class="modal-dialog" style="margin-top:5%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-xs-12 form-group">
+                    <button type="button" class="btn btn-danger pull-right" id="btnexcluir" onclick="remover()">Remover</button>
+                </div>
+                <div id="myTabs" class="tabbable">
+                    <!-- Only required for left/right tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-geral" data-toggle="tab">Geral</a></li>
+                        <li id="tab-exec"><a href="#tab-execs">Execuções</a></li>
+                        <li id="tab-detail"><a href="#tab-detalhes">Detalhes</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-geral">
+                            <form id="modal-form">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("dtAgendamento", "Data de agendamento")
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        @Html.TextBox("dt_agendamento", "", new { @class = "form-control pull-right", required = "required", @id = "dt_agendamento" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("tdm", "ATMP")
+                                                    @Html.DropDownList("list_tdm", new SelectList(ViewBag.listaTDMs, "IdTestData", "Descricao"), "", new
+                                               {
+                                                   @class = "form-control",
+                                                   @id = "lista_tdms",
+                                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                                   @required = "required"
+                                               }
+                        )
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("datapool", "Datapool")
+                                                    <select class="form-control" id="listaDataPools" name="list_testdatas" required="required" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;"></select>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4 form-group">
+                                                    @Html.Label("testData", "TestData Disponível")
+                                                </div>
+                                                <div id="id-tds-selecionados" class="col-xs-6 form-group">
+                                                    &nbsp;&nbsp;&nbsp;@Html.Label("testData", "TestData Selecionado")
+                                                </div>
+                                                <div class="col-xs-12 form-group">
+                                                    <div class="span5">
+                                                        <select multiple="" id="listaTestDatas" required="required" name="list_testdatas[]" style="position: absolute; left: -9999px;"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("escolher_ambiente", "Ambiente")
+                                                    @Html.DropDownList("escolher_ambiente", new SelectList("", "IdAmbienteExecucao", "DescricaoAmbienteExecucao"), null, new
+                                               {
+                                                   @class = "form-control",
+                                                   @id = "list_escolher_ambiente",
+                                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                                   @required = "required"
+
+                                               }
+                                )
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
+                                                    @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirtual, "Id", "Descricao"), null, new
+                                               {
+                                                   @class = "form-control",
+                                                   @id = "list_escolher_maquina_virtual",
+                                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                                   @required = "required",
+
+                                               }
+                )
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
+                                                    @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
+                                               {
+                                                   @class = "form-control",
+                                                   @id = "list_escolher_tipo_fase_teste",
+                                                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                                                   @required = "required",
+                                               }
+                )
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 form-group">
+                                                    @Html.Label("deseja_receber_status_via_telegram", "Notificação Telegram?")
+                                                    <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
+                                                        <option value='1'>Sim</option>
+                                                        <option value='0'>Não</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.box-body -->
+                                    </div>
+                                    @*<div class="row">
+                                        <div class="box-footer" align="right">
+                                            <button type="button" id="CancelarAssociacao" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>*@
+
+                                    <!--<button type="button" class="btn btn-primary" id="btnsalvar" onclick="ManterAgendamento()">Salvar</button>-->
+                                    @*<input id="inputsalvar" type="submit" class="btn btn-primary" value="Salvar">
+                                            </div>
+                                        </div>*@
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div style="min-height:510px" class="tab-pane" id="tab-execs">
+                        </div>
+                        <div style="min-height:510px" class="tab-pane" id="tab-detalhes">
+                            <!-- / Informações mais detalhes do agendamebto  -->
+                            <div id="boxDetalhesAgendamento">
+                                <div class="box-header with-border">
+                                </div>
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="form-group" id="detalhes_agendamento"></div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- / Informações mais detalhes do agendamebto  -->
+                        </div>
+                        <div class="box-footer" align="right">
+                            <button type="button" id="CancelarAssociacao" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                            <!--<button type="button" class="btn btn-primary" id="btnsalvar" onclick="ManterAgendamento()">Salvar</button>-->
+                            <input id="inputsalvar" type="submit" class="btn btn-primary" value="Salvar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    @*</div>*@
+
+
+    <!-- /.box -->
+    @section scripts
+{
+        <script type="text/javascript" charset="utf-8">
+
+            var ev = null;
+
+
+            $(document).on('keyup', function (evt) {
+                if (evt.keyCode == 27) {
+
+                    if (($("#modalAgendamento").data('bs.modal') || { isShown: false }).isShown) {
+                        $('#modalAgendamento').modal('toggle');
+                    }
+
+                }
+            });
+
+
+            $(document).ready(function () {
+                $("#Loading").show();
+                initCalendar();
+                makeFieldCalendar(getLocaleDateTime());
+
+
+
+                //$('#listaTestDatas').multiSelect({ keepOrder: true });
+
+                $("#modal-form").validate({
+                    submitHandler: function (form) {
+                        if ($('#listaTestDatas').val() != "") {
+                            ManterAgendamento();
+                        }
+
+                    }
+                });
+
+
+            });
+
+
+
+            //$('#modal-warning').on('show.bs.modal', function (event) {
+            //    limpaCamposModal();
+            //    makeFieldCalendar(new Date());
+            //});
+
+
+
+            //});
+
+            $('#inputsalvar').click(function () {
+                $('#modal-form').submit()
+            });
+
+
+            function carregarExecucoes(idAgendamento) {
+
+                $('#tab-execs').html("");
+
+                $.ajax({
+                    url: '@Url.Action("CarregarExecucoes", "Agendamento")',
+                    type: 'POST',
+                    async: true,
+                    cache: false,
+                    data: "{'idAgendamento':'" + idAgendamento + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var ag = "<ul class='timeline timeline-inverse'><li class='time-label'>";
+
+                        var qtdExec = data.length;
+                        var qtdSuccess = 0;
+                        var qtdErrors = 0;
+                        var execs = "";
+                        var qtdAgendado = 0;
+
+                        var tituloAgendamento = "";
+
+                        tituloAgendamento = data[0].DataAgendamento + " - " + data[0].DescricaoATMP + " - " + data[0].DescricaoDatapool;
+
+                        data.forEach(function (o, index) {
+                            if (o.IdStatusExecucao == 4) {
+                                qtdSuccess++;
+                                execs += "<li><i class='fa fa-check bg-green'></i>";
+                            }
+                            else if (o.IdStatusExecucao == 5) {
+                                qtdErrors++;
+                                execs += "<li><i class='fa fa-close bg-red'></i>";
+                            }
+                            else if (o.IdStatusExecucao == 1) {
+                                execs += "<li><i class='fa fa-clock-o bg-gray'></i>";
+                            }
+                            else if (o.IdStatusExecucao == 2 || o.idStatusExec == 3) {
+                                execs += "<li><i class='fa fa-play-circle bg-light-blue'></i>";
+                            }
+                            else if (o.IdStatusExecucao == 6) {
+                                execs += "<li><i class='fa fa-close bg-gray'></i>";
+                            }
+                            else if (o.IdStatusExecucao == 8) {
+                                qtdAgendado++;
+                                execs += "<li><i class='fa fa-clock-o bg-blue'></i>";
+                            }
+
+                            execs += "<div class='timeline-item'><h3 class='timeline-header'>" + o.IdTestData + " - " + o.DescricaoTestData + "</h3></div>";
+                        });
+
+                        if (qtdErrors > 0) {
+                            ag += "<br><span class='bg-red'>" + tituloAgendamento + "</span>";
+                        } else if (qtdSuccess == qtdExec) {
+                            ag += "<br><span class='bg-green'>" + tituloAgendamento + "</span>";
+                        } else if (qtdAgendado == qtdExec) {
+                            ag += "<br><span class='bg-blue'>" + tituloAgendamento + "</span>";
+                        } else {
+                            ag += "<br><span class='bg-gray'>" + tituloAgendamento + "</span>";
+                        }
+
+                        ag += "</li>" + execs + "</ul>";
+
+                        $('#tab-execs').append(ag);
+                    },
+                });
+            }
+
+            function getLocaleDateTime() {
+
+                var date = new Date()
+                var userTimezoneOffset = date.getTimezoneOffset() * 30000;
+                return new Date(date.getTime() - userTimezoneOffset);
+            }
+
+            function showModal(event) {
+
+                limpaCamposModal();
+                $('#modal-warning').modal('show');
+
+            }
+
+            function makeFieldCalendar(date) {
+                $('#dt_agendamento').daterangepicker({
+                    "minDate": date <= getLocaleDateTime() ? date : getLocaleDateTime(),
+                    "startDate": date,
+                    "opens": 'auto',
+                    "orientation": 'top left',
+                    "singleDatePicker": true,
+                    "todayBtn": true,
+                    "todayHighlight": true,
+                    "daysOfWeekHighlighted": '0',
+                    "timePicker": true,
+                    "timePicker24Hour": true,
+                    "timePickerIncrement": 05,
+                    "locale": {
+                        "opens": "right",
+                        "format": "DD/MM/YYYY HH:mm",
+                        "separator": " - ",
+                        "applyLabel": "Confirmar",
+                        "cancelLabel": "Cancelar",
+                        "fromLabel": "De",
+                        "toLabel": "Para",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "W",
+                        "daysOfWeek": [
+                            "Dom",
+                            "Seg",
+                            "Ter",
+                            "Qua",
+                            "Qui",
+                            "Sex",
+                            "Sab"
+                        ],
+                        "monthNames": [
+                            "Janeiro",
+                            "Fevereiro",
+                            "Março",
+                            "Abril",
+                            "Maio",
+                            "Junho",
+                            "Julho",
+                            "Agosto",
+                            "Setembro",
+                            "Outubro",
+                            "Novembro",
+                            "Dezembro"
+                        ],
+                        "firstDay": 1
+                    }
+                });
+            }
+
+
+            function initCalendar() {
+                $('#calendar').fullCalendar({
+                    customButtons: {
+                        btnAdd: {
+                            text: 'Novo',
+                            click: function () {
+                                exibeModal(getLocaleDateTime());
+                            }
+                        }
+                    },
+                    //header: {
+                    //    left: 'month,agendaWeek,agendaDay, btnAdd',
+                    //    center: 'title',
+                    //    right: 'prevYear,prev,next,nextYear'
+                    //},
+                    header: {
+                        left: 'prevYear,prev,next,nextYear, today, btnAdd',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    //buttonText: {//This is to add icons to the visible buttons
+                    //    prev: "<span class='fa fa-caret-left'></span>",
+                    //    next: "<span class='fa fa-caret-right'></span>",
+                    //    today: 'Hoje',
+                    //    month: 'Mês',
+                    //    week: 'Semana',
+                    //    day: 'Dia'
+                    //},
+                    //themeSystem: 'bootstrap4',
+                    defaultView: 'month',
+                    businessHours: true,
+                    navLinks: true,
+                    nowIndicator: true,
+                    weekNumbers: false,
+                    eventLimit: true,
+                    loading: function (bool) { 
+                        if (bool)
+                            $('#Loading').show();
+                        else
+                            $('#Loading').remove();
+                    },
+                    eventAfterAllRender: function (view) {
+                        $('.fc-event-container').css('cursor', 'pointer');
+                        $('#Loading').remove();
+                    },                    
+                    eventSources: [
+                {
+                    url: "@Url.Action("CarregaEventos", "Agendamento")",
+                    type: "POST",
+                    data: {
+                        custom_param1: 'something',
+                        custom_param2: 'somethingelse'
+                    },
+                    success: function (data) {
+
+                        $("#Loading").remove();
+                        $('.fc-event-container').css('cursor', 'pointer');
+
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseText);
+                    }
+                },
+
+                    ],
+                    timeFormat: 'HH:mm',
+                    eventClick: function (event) {
+                        clickEvento(event);
+                        ev = event;
+                    },
+                    dayClick: function (date, jsEvent, view) {
+
+                        var day = new Date(date);
+                        day.setDate(day.getDate() + 1);
+
+                        if (view.name == "month") {
+                            if (new Date(day) >= getLocaleDateTime()) {
+                                exibeModal(new Date(day));
+                            }
+                        } else {
+
+                            if (new Date(date._i[0], date._i[1], date._i[2], date._i[3], 0, 0, 0) >= getLocaleDateTime()) {
+                                exibeModal(new Date(date._i[0], date._i[1], date._i[2], date._i[3], 0, 0, 0));
+                            }
+                        }
+
+
+
+                    },
+                    eventRender: function (eventObj, $el) {;
+
+                        var tempoEstimado = moment(eventObj.TempoEstimadoExecucaoCalculado).format('HH:mm:ss');
+                        //var tempoEstimado = CalculaTempoEstimado('00:' + moment(eventObj.TempoEstimadoExecucaoCalculado).format('mm:ss'), eventObj.testDatas.length);
+                        var conteudo = 'Tempo Estimado: ' + tempoEstimado + ' h'
+                        conteudo += '<br/>Início: ' + moment(eventObj.start).format('DD/MM/YYYY HH:mm')
+
+                        if (eventObj.end != null || eventObj.end != undefined) {
+                            conteudo += '<br/>Término: ' + moment(eventObj.end).format('DD/MM/YYYY HH:mm')
+                        }
+
+                        conteudo += "<br/>Autor: " + eventObj.LoginUsuario;
+                        conteudo += "<br/>Ambiente Virtual: " + eventObj.DescricaoAmbienteVirtual;
+                        conteudo += "<br/>Ambiente Execução: " + eventObj.DescricaoAmbienteExecucao;
+                        conteudo += "<br/>Status: " + eventObj.status;
+                        conteudo += "<br/>Quantidade Massa: " + eventObj.testDatas.length;
+                        $el.popover({
+                            title: eventObj.script + " " + eventObj.condicaoScript,
+                            content: conteudo,
+                            trigger: 'hover',
+                            html: 'true',
+                            placement: 'top',
+                            container: 'body'
+                        });
+                    }
+
+                });
+            }
+
+            $('#lista_tdms').change(function () {
+                var selectbox = $('#listaTestDatas');
+                selectbox.empty().multiSelect('refresh');
+                carregaDataPool(null);
+               
+            });
+
+
+            function remover() {
+
+                $.ajax({
+                    url: '@Url.Action("Remover", "Agendamento")',
+                    type: 'POST',
+                    async: true,
+                    cache: false,
+                    data: "{'idAgendamento':'" + ev.IdAgendamento + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        $('#calendar').fullCalendar('removeEvents', ev._id)
+                        $('#listaTestDatas').multiSelect({ keepOrder: true });
+                        $("#Loading").remove();
+                        $('#modalAgendamento').modal('toggle');
+                    },
+                    error: function () {
+                        $("#Loading").remove();
+                    }
+                });
+
+                @*$('#modalAgendamento').modal('toggle');
+            $.MessageBoxSimNao({
+                titulo: "Excluir Agendamento",
+                mensagem: "",
+                height: "auto",
+                width: "auto",
+                funcaoBotaoSim: function () {
+                    if (ev != null) {
+                        $.ajax({
+                            url: '@Url.Action("Remover", "Agendamento")',
+                            type: 'POST',
+                            async: true,
+                            cache: false,
+                            data: "{'idExec':'" + ev.IdExecucao + "', 'idTestData':'" + ev.idTestData + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                var obj = JSON.parse(data);
+                                $('#calendar').fullCalendar( 'removeEvents' ,ev._id )
+                                $("#Loading").remove();
+
+                            },
+                            error: function () {
+                                $("#Loading").remove();
+                            }
+                        });
+                    } else {
+
+                    }
+                }
+            });*@
+            }
+
+
+            function carregaDataPool(event) {
+                var tdm = $('#lista_tdms').val() + '';
+                var idDatapool = "0";
+                if (event != null) {
+                    idDatapool = event.idDatapool;
+                }
+
+
+
+                if (tdm != "") {
+                    $.ajax({
+                        url: '@Url.Action("listarDatapools", "Agendamento")',
+                        type: 'POST',
+                        async: true,
+                        cache: false,
+                        data: "{'tdm':'" + tdm + "','id':'" + idDatapool + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            var selectbox = $('#listaDataPools');
+                            var opcoes = "<option value=''></option>";
+                            obj.forEach(function (o, index) {
+                                opcoes += "<option value='" + o.Id + "'>" + o.Id + " - " + o.DescricaoDataPool + "</option>";
+                            });
+                            selectbox.html(opcoes);
+                            if (event != null) {
+                                $('#listaDataPools').val(event.idDatapool);
+                                carregaTestData(event);
+                                if (new Date(event.start._i) >= getLocaleDateTime()) {
+                                    $('#listaDataPools').removeAttr("disabled");
+                                }
+                            } else {
+                                $('#listaDataPools').removeAttr("disabled");
+                            }
+
+                        }
+                    });
+
+                } else {
+                    $('#listaDataPools').attr("disabled", true);
+                    $('#listaDataPools').html("");
+                    $('#ms-listaTestDatas').attr("disabled", true);
+                    $('#ms-listaTestDatas').html("");
+                    $('#list_escolher_ambiente').attr("disabled", true);
+                    $('#list_escolher_ambiente').html("");
+                }
+            }
+
+            // evento ao selecionar a opção do datapool
+            $('#listaDataPools').change(function () {
+                carregaTestData(null);
+            });
+
+            function carregaTestData(event) {
+                var dp = $('#listaDataPools').val();
+                var idTestData = "0";
+                if (event != null) {
+                    idTestData = event.testDatas;
+                }
+
+                if (dp != "") {
+                    $.ajax({
+                        url: '@Url.Action("listarTestDatas", "Agendamento")',
+                        type: 'POST',
+                        async: true,
+                        cache: false,
+                        data: "{'datapool':'" + dp.toString() + "','id':'" + idTestData + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            var selectbox = $('#listaTestDatas');
+                            var opcoes = "";
+                            var options = "";
+                            var opt = "";
+
+                            $(selectbox).empty();
+
+                            obj.forEach(function (o, index) {
+                                if (o.Selected == true) {
+                                    options += '<option value="' + o.IdTestData + '" selected>' + o.IdTestData + ' - ' + o.Descricao + '</option>';
+                                }
+                                else {
+                                    options += '<option value="' + o.IdTestData + '">' + o.IdTestData + ' - ' + o.Descricao + '</option>';
+                                }
+                            });
+
+                            $('#listaTestDatas').append(options);
+
+                            if (ev != null) {
+                                $(selectbox).multiSelect('refresh');
+                                var selected = $("#listaTestDatas option:selected").map(function () { return this.value }).get();
+                                $('#listaTestDatas').val(selected);
+                                //$('#listaTestDatas').multiSelect({ keepOrder: true });
+
+
+                                carregaListaAmbiente(event);
+                                if (new Date(event.start._i) >= getLocaleDateTime()) {
+                                    $('#listaTestDatas').removeAttr("disabled");
+                                }
+                            } else {
+                                $('#listaTestDatas').removeAttr("disabled");
+                                $(selectbox).multiSelect('refresh');
+                                //$('#listaTestDatas').multiSelect({ keepOrder: true });
+                            }
+                            $('#Loading').remove();
+                            $('#modalAgendamento').modal('show');
+                        }
+                    });
+                } else {
+                    $('#listaTestDatas').attr("disabled", true);
+                    $('#listaTestDatas').html("");
+                    $('#list_escolher_ambiente').attr("disabled", true);
+                    $('#list_escolher_ambiente').html("");
+
+                    $('#Loading').remove();
+                    $('#modalAgendamento').modal('show');
+                }
+            }
+
+            $('#listaDataPools').change(function () {
+                carregaListaAmbiente();
+            });
+
+            function carregaListaAmbiente(event) {
+
+                var idDatapool = $('#listaDataPools').val();
+                if (idDatapool != "") {
+                    $.ajax({
+                        url: '@Url.Action("listarAmbientes", "Agendamento")',
+                        type: 'POST',
+                        async: true,
+                        cache: false,
+                        data: "{'idDatapool':'" + idDatapool.toString() + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+                            var selectbox = $('#list_escolher_ambiente');
+                            // var opcoes = "<option value='" + 0 + "'></option>";
+                            var opcoes;
+                            obj.forEach(function (o, index) {
+                                opcoes += "<option value='" + o.Id + "'>" + o.Descricao + "</option>";
+                            });
+                            selectbox.html(opcoes);
+                            if (event != null) {
+                                $('#list_escolher_ambiente').val(event.idAmbienteExecucao);
+                                if (new Date(event.start._i) >= getLocaleDateTime()) {
+                                    $('#list_escolher_ambiente').removeAttr("disabled");
+                                }
+                            } else {
+                                $('#list_escolher_ambiente').removeAttr("disabled");
+                            }
+
+                        }
+                    });
+                } else {
+                    $('#list_escolher_ambiente').attr("disabled", true);
+                    $('#list_escolher_ambiente').html("");
+                }
+            }
+
+            function exibeModal(date) {
+                //$('#tab-exec').find('a').removeAttr("data-toggle");
+                //$('#tab-detail').find('a').removeAttr("data-toggle");
+
+                $('.nav-tabs a[href="#tab-geral"]').tab('show');
+                $('#tab-exec').hide();
+                $('#tab-detail').hide();
+
+                limpaCamposModal();
+                makeFieldCalendar(date);
+                ev = null;
+                $('#listaTestDatas').empty();
+                //$('#listaTestDatas').multiSelect('refresh');
+                $('#btnsalvar').attr("onclick", "ManterAgendamento()");
+                $('#btnexcluir').attr("onclick", "remover()");
+                $('#lista_tdms').removeAttr("disabled");
+                $('#dt_agendamento').removeAttr("disabled");
+                $('#list_escolher_tipo_fase_teste').removeAttr("disabled");
+                $('#opcaoNotificacaoTelegram').removeAttr("disabled");
+                $('#list_escolher_maquina_virtual').removeAttr("disabled");
+                $('#inputsalvar').show();
+                $('#inputsalvar').removeAttr("disabled");
+                $('#btnexcluir').hide();
+                $('#list_testdatas').hide();
+                $('#boxDetalhesAgendamento').hide();
+                $('#list_escolher_ambiente').empty();
+                $('#modalAgendamento').modal('show');
+
+            }
+
+            function clickEvento(event) {
+
+                $('#Loading').show();
+
+                $('.nav-tabs a[href="#tab-geral"]').tab('show');
+
+                $('#tab-exec').show();
+                $('#tab-detail').show();
+                $('#tab-exec').find('a').attr("data-toggle", "tab");
+                $('#tab-detail').find('a').attr("data-toggle", "tab");
+                $('#inputsalvar').show();
+                $('#btnexcluir').show();
+                makeFieldCalendar(new Date(moment(event.start._i)));
+                $('select[name=list_tdm]').val(event.idTdm);
+                carregaDataPool(event);
+                $('#list_escolher_ambiente').val(event.idAmbienteExecucao);
+                $('#list_escolher_tipo_fase_teste').val(event.idFase);
+                $('#list_escolher_maquina_virtual').val(event.idAmbienteVirtual);
+                $('#boxDetalhesAgendamento').show();
+
+                if (event.status != 'Agendada') {
+                    carregarExecucoes(event.IdAgendamento);
+                    //Setando o valor do Output do agendamento
+                    if (event.Output == null || event.Output == undefined) {
+                        $('#detalhes_agendamento').html('Não há detalhes para o agendamento');
+                    } else {
+
+                        //if (event.status == ('Falha'))
+                        //    $('#detalhes_agendamento').html('<div style="width:auto;Height:478px;overflow:scroll;color:red;">' + event.Output.replace(/\n/g, "<br />") + '</div>');
+                        //else
+                        $('#detalhes_agendamento').html('<div style="width:auto;Height:478px;overflow:scroll;color:black;">' + event.Output.replace(/\n/g, "<br />") + '</div>');
+                    }
+                } else {
+
+                    $('.nav-tabs a[href="#tab-geral"]').tab('show');
+                    $('#tab-exec').hide();
+                    $('#tab-detail').hide();
+
+                }
+
+                $('#listaTestDatas').val(event.testDatas);
+
+                $('#opcaoNotificacaoTelegram').val(event.telegram == true ? 1 : 0);
+
+
+
+                if (new Date(event.start._i) <= getLocaleDateTime()) {
+                    // $('#modalAgendamento').modal('show');
+                    $('#listaDataPools').attr("disabled", "disabled");
+
+                    $('#dt_agendamento').attr("disabled", "disabled");
+                    $('#lista_tdms').attr("disabled", "disabled");
+
+                    $('#listaTestDatas').attr("disabled", "disabled");
+
+                    $('#list_escolher_ambiente').attr('disabled', 'disabled')
+                    $('#list_escolher_tipo_fase_teste').attr("disabled", "disabled");
+                    $('#list_escolher_maquina_virtual').attr("disabled", "disabled");
+
+                    $('#opcaoNotificacaoTelegram').attr("disabled", "disabled");
+
+                    $('#btnsalvar').removeAttr("onclick");
+
+                    $('#btnexcluir').attr("disabled", "disabled");
+
+                    $('#inputsalvar').attr("disabled", "disabled");
+
+                    if (event.status = "Falha") {
+                        $('#inputsalvar').hide();
+                        $('#btnexcluir').hide();
+                    } else {
+                        $('#inputsalvar').show();
+                        $('#btnexcluir').show();
+                    }
+
+
+                } else {
+
+                    //$('#modalAgendamento').modal('show');
+                    $('#list_escolher_ambiente').val(event.idAmbienteExecucao);
+                    $('#dt_agendamento').removeAttr("disabled");
+                    $('#lista_tdms').removeAttr("disabled");
+                    $('#listaDataPools').removeAttr("disabled");
+                    $('#listaTestDatas').removeAttr("disabled");
+                    $('#list_escolher_ambiente').removeAttr("disabled");
+                    $('#list_escolher_tipo_fase_teste').removeAttr("disabled");
+                    $('#opcaoNotificacaoTelegram').removeAttr("disabled");
+                    $('#list_escolher_maquina_virtual').removeAttr("disabled");
+                    $('#btnexcluir').removeAttr("disabled");
+                    $('#btnsalvar').attr("onclick", "ManterAgendamento()");
+                    $('#inputsalvar').removeAttr("disabled");
+
+                }
+
+            }
+
+            function ManterAgendamento() {
+                $("#Loading").show();
+                var date = $('#dt_agendamento').data('daterangepicker').startDate.format('YYYY-MM-DDTHH:mm');
+                var idTdm = $('#lista_tdms').val() + "";
+                var idDatapool = $('#listaDataPools').val() + "";
+                var idTestData = $('#listaTestDatas').val() + "";
+                var idAmbienteVirtual = $('#list_escolher_maquina_virtual').val() + "";
+                var idAmbienteExecucao = $('#list_escolher_ambiente').val() + "";
+                var idFase = $('#list_escolher_tipo_fase_teste').val() + "";
+                var telegram = $('#opcaoNotificacaoTelegram').val() + "";
+                var title = $('#listaTestDatas').val() + "";
+
+                var idAgendamento = 0;
+
+                if (ev != null) {
+                    idAgendamento = ev.IdAgendamento;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("ManterAgendamento", "Agendamento")',
+                    type: 'POST',
+                    async: true,
+                    cache: false,
+                    data: "{'idAgendamento':'" + idAgendamento + "','dtAgendamento':'" + date + "', 'idTestData':'" + idTestData + "','idFaseTeste':'" + idFase + "','idMaquinaVirtual':'" + idAmbienteVirtual + "','opcaoTelegram':'" + telegram + "','idAmbienteExecucao':'" + idAmbienteExecucao + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.Result != "false") {
+                           // var obj = JSON.parse(data.agendamento);
+
+                            if (ev == null) {
+
+                            $('#calendar').fullCalendar('renderEvent', {
+                                IdAgendamento: data.agendamento.IdAgendamento,
+                                title: data.agendamento.title,
+                                start: date,
+                                end: data.agendamento.end,
+                                QtdTds: data.agendamento.QtdTds,
+                                LoginUsuario: data.agendamento.LoginUsuario,
+                                DescricaoAmbienteExecucao: data.agendamento.DescricaoAmbienteExecucao,
+                                status: data.agendamento.status,
+                                allDay: false,
+                                idTdm: idTdm,
+                                testDatas: data.agendamento.testDatas,
+                                idDatapool: idDatapool,
+                                idTestData: idTestData,
+                                idAmbienteVirtual: idAmbienteVirtual,
+                                idAmbienteExecucao: idAmbienteExecucao,
+                                idFase: idFase,
+                                telegram: telegram,
+                                color: "blue",
+                                textColor: "white",
+                                sistema: data.agendamento.sistema,
+                                status: data.agendamento.status,
+                                script: data.agendamento.script,
+                                condicaoScript: data.agendamento.condicaoScript,
+                                IdExecucao: data.agendamento.IdExecucao,
+                                TempoEstimadoExecucaoCalculado: data.agendamento.TempoEstimadoExecucaoCalculado,
+                                DescricaoAmbienteVirtual: data.agendamento.DescricaoAmbienteVirtual
+
+
+                                });
+                                var dt = $('#dt_agendamento').data('daterangepicker');
+                                dt.startDate = moment(date);
+                                dt.endDate = moment(date);
+                                dt.updateView();
+                                dt.updateCalendars();
+                                $('#lista_tdms').val("");
+
+                            } else {
+
+                                ev.title = data.agendamento.title;
+                                ev.start = data.agendamento.start;
+                                ev.end = data.agendamento.end;
+                                ev.IdAgendamento = data.agendamento.IdAgendamento;
+                                ev.DescricaoAmbienteExecucao = data.agendamento.DescricaoAmbienteExecucao;
+                                ev.LoginUsuario = data.agendamento.LoginUsuario;
+                                ev.QtdTds = data.agendamento.QtdTds;
+                                ev.color = data.agendamento.color;
+                                ev.idAmbienteExecucao = idAmbienteExecucao;
+                                ev.idAmbienteVirtual = idAmbienteVirtual;
+                                ev.idFase = data.agendamento.idFase;
+                                ev.idTdm = data.agendamento.idFase;
+                                ev.script = data.agendamento.script;
+                                ev.sistema = data.agendamento.sistema;
+                                ev.status = data.agendamento.status;
+                                ev.testDatas = data.agendamento.testDatas;
+
+                                $('#calendar').fullCalendar('updateEvent', ev);
+                            }
+                            $("#Loading").remove();
+                        } else
+                        {
+                            window.location = '/Agendamento/index';
+                            event.preventDefault();
+                        }
+                    },
+                    error: function () {
+                        $("#Loading").remove();
+                    }
+                });
+                $('#modalAgendamento').modal('toggle');
+            }
+
+            function limpaCamposModal() {
+                $('#lista_tdms').val("");
+                $('list_escolher_ambiente').empty();
+                $('#listaDataPools').html("");
+                $('#listaDataPools').attr("disabled", true);
+                $('').html("");
+                $('#ms-listaTestDatas').attr("disabled", true);
+
+                $('#ms-listaTestDatas').hide();
+
+                // $('#list_escolher_ambiente').val("");
+                $('#list_escolher_ambiente').attr("disabled", true);
+            }
+
+
+            function CalculaTempoEstimado(tempo, qtd) {
+
+                var hms = tempo;   // your input string
+                var a = hms.split(':'); // split it at the colons
+
+                // minutes are worth 60 seconds. Hours are worth 60 minutes.
+                var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                var newSeconds = qtd * seconds;
+
+                // multiply by 1000 because Date() requires miliseconds
+                var date = new Date(newSeconds * 1000);
+                var hh = date.getUTCHours();
+                var mm = date.getUTCMinutes();
+                var ss = date.getSeconds();
+                // If you were building a timestamp instead of a duration, you would uncomment the following line to get 12-hour (not 24) time
+                // if (hh > 12) {hh = hh % 12;}
+                // These lines ensure you have two-digits
+                if (hh < 10) { hh = "0" + hh; }
+                if (mm < 10) { mm = "0" + mm; }
+                if (ss < 10) { ss = "0" + ss; }
+                // This formats your string to HH:MM:SS
+                var t = hh + ":" + mm + ":" + ss;
+
+                return t;
+            }
+
+
+        </script>
+    }

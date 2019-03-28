@@ -1,0 +1,39 @@
+﻿/*---------------------------------------------------------------Modal Loading----------------------------------------------------------------*/
+
+.Hidden
+{
+    display:none; 
+}
+
+#Loading, #LoadingGrid
+{
+    background-color: #000000;
+    display: none;
+    left: 0;
+    height: 100%;
+    opacity: 0.8;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999999;
+}
+
+#imgLoading, #imgLoadingGrid
+{
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-left:-110px;
+    margin-top:-40px;
+}
+
+#lblLoading
+{
+    float: left;
+    z-index: 99999999;
+    opacity: 0.8;
+    font-size: 18px;
+    color: #FFFFFF;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------*/

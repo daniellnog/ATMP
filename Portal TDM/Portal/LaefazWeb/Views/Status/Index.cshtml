@@ -1,0 +1,333 @@
+﻿@model IEnumerable<TDMWeb.Models.VOs.StatusVO>
+
+@{
+    ViewBag.Titulo = "Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="alert">
+    
+
+</div>
+
+
+<!-- /.box -->
+<div class="box box-info">
+    <button type="button" class="btn btn-primary" id="hiddenRemover" style="display: none;">Remover</button>
+    <div class="box-header">
+        @*<a href="@Url.Action("Adicionar", "Status")" class="btn btn-block btn-success pull-right" style="width: 100px;">Criar</a>*@
+        <input type="button" class="btn btn-block btn-success pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Criar" id="btnCriar" />
+        <input type="button" class="btn btn-block btn-info pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Editar" id="btnEditar"/>
+        <input type="button" class="btn btn-block btn-default pull-right" style="width: 100px; margin-top: 0px; margin-right: 10px;" value="Excluir" id="btnExcluir" />
+    </div>
+    
+
+
+    <div class="box-body">
+        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+            <thead> 
+                <tr>
+                    <th>                        
+                        Decrição
+                    </th>
+                    <th>
+                        Tipo
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (item.Status != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Status.Descricao)
+                                @Html.HiddenFor(modelItem => item.Status.Id, new { @class = "hidden-id" })
+                                @Html.HiddenFor(modelItem => item.Status.Descricao, new { @class = "hidden-descricao" })
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.StatusExecucao.Descricao)
+                                @Html.HiddenFor(modelItem => item.StatusExecucao.Id, new { @class = "hidden-id" })
+                                @Html.HiddenFor(modelItem => item.StatusExecucao.Descricao, new { @class = "hidden-descricao" })
+                            }                            
+                           
+                        </td>
+                        <td>
+                           @item.Tipo
+                           @Html.HiddenFor(modelItem => item.Tipo, new { @class = "hidden-tipo" })                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+<div class="modal fade in" id="modal-play">
+    <div class="modal-dialog" style="margin-top:15%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Criar Status</h4>
+            </div>
+            <div class="modal-body">
+                
+               @using (Html.BeginForm("Salvar", "Status", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data" }))
+               {
+                <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+               // <div class="box box-primary">
+                    @*<div class="box-header with-border">
+                        <h3 class="box-title">Editar Sistema</h3>
+                    </div>*@                   
+                 <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.Label("descricao", "Descrição")
+                            @Html.TextBox("descricao", "", new { @class = "form-control", required = "required", @id = "modal-descricao" })
+                            @Html.Hidden("id","", new { @class = "hidden-id", @id="modal-id" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.Label("descricao", "Tipo")
+                            <select id="tipo" name="tipoStatus" class = "form-control" required = "required">
+                                <option value="STATUS">STATUS</option>
+                                <option value="STATUS EXECUÇÃO">STATUS EXECUÇÃO</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                     </div>
+                <div class="box-footer" align="right">
+                    <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    @*<button type="submit" class="btn btn-primary">Salvar</button>*@
+                    <button type="button" onclick="salvaEdicao()" class="btn btn-primary">Salvar</button>
+                </div>
+               }
+            </div>
+
+            @*<div class="modal-footer">
+                <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="ConfirmarEscolhaAmbiente" onclick="play()">Executar</button>
+            </div>*@
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript" charset="utf-8">
+
+        function Remover(id) {
+
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: "/Status/Remover",
+                data: { id: id.toString() },
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function(data) {
+
+                    $.MessageBoxOK({
+                        mensagem: data.Result,
+                        argFuncao: data.Status,
+                        funcaoBotaoOK: function(status) {
+                            if (status == 0)
+                                window.location = '/Status/Index';
+                        }
+                    });
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function(data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $(".ul li").removeClass("active");
+            $('#Status').addClass('active');
+
+            $("#btnEditar").click(function() {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                var descricao = $('table.display:visible').find('tr.selected').find('input.hidden-descricao').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                var tipo = $('table.display:visible').find('tr.selected').find('input.hidden-tipo').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Sistema selecionado." });
+                    return;
+                }
+
+
+
+                $("#modal-descricao").val(descricao);
+                $("#tipo").val(tipo);
+                $("#tipo").attr("disabled", "true");
+                $("#modal-id").val(id);
+                $(".modal-header > h4").text("Editar Status");
+
+                $('#modal-play').modal('show');
+
+
+
+
+
+
+
+           //     window.location = '/Status/editar?id=' + id;
+            });
+
+            $('#btnExcluir').click(function() {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhum Status selecionado." });
+                    return;
+                }
+
+                $.MessageBoxSimNao({
+                    titulo: "Remover Status?",
+                    mensagem: "Confirma remoção do Status",
+                    height: "auto",
+                    width: "auto",
+                    funcaoBotaoSim: function() {
+                        Remover(id);
+                    }
+                });
+            });
+
+            $('#grid').DataTable({
+                columnDefs: [
+                    {
+                        targets: [0],
+                        sortable: true
+                    },
+                    {
+                        targets: [1],
+                        sortable: true
+                    }
+                ],
+                order: [[0, "asc"]],
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+            var table = $('#grid').DataTable();
+
+            $('#grid tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            $('#btnCriar').on('click', function () {
+                $("#modal-descricao").val("");
+                $("#tipo").val("STATUS");
+                $("#tipo").removeAttr("disabled");
+                $("#modal-id").val(0);
+                $(".modal-header > h4").text("Criar Status");
+                $('#modal-play').modal('show');
+            });
+
+
+
+        });
+
+        function salvaEdicao() {
+
+            id = $("#modal-id").val();
+            descricao = $("#modal-descricao").val();
+            tipo = $("#tipo").val();
+            var editar = true;
+            if ($(".modal-header > h4").text() == "Criar Status") {
+                editar = false;
+            }
+            var msg = "";
+
+            $.ajax(
+                  {
+                      url: '@Url.Action("EditarStatus", "Status")',
+                      type: 'POST',
+                      data: "{'id':'" + id + "', 'descricao':'" + descricao + "', 'tipo':'" + tipo + "', 'editar':'" + editar + "'}",
+                      contentType: 'application/json; charset=utf-8',
+                      success: function (result) {
+                          //var json = $.parseJSON(result);
+                          $('#modal-play').modal('toggle');
+                         
+                          if (editar)
+                              msg = "Status editado com sucesso!"
+                          else
+                              msg = "Status adicionado com sucesso!";
+                          $('#alert').html("<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-check'></i> Status!</h4>"+msg+".</div>");
+                      },
+                      error: function (erro) {
+
+                          if (editar)
+                              msg = "Não foi possível editar!"
+                          else
+                              msg = "Não foi possível adicionar!";
+
+
+                          $('#modal-play').modal('toggle');
+                          $('#alert').html("<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button><h4><i class='icon fa fa-ban'></i> Status!</h4>" + msg + ". Erro: " + erro + ".</div>");
+
+                      }
+                  });
+        }
+    </script>
+}

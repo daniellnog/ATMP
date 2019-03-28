@@ -1,0 +1,1209 @@
+﻿@using System.Web.Optimization
+@model LaefazWeb.Models.VOs.EncadeamentoVO
+@{
+    ViewBag.Titulo = "Editar Execução Encadeada";
+}
+
+@section styles {
+
+    @*@Styles.Render("~/Assets/assets/css/bootstrap.min.css")*@
+    @Styles.Render("~/Asset/Vendor/Wizard/css")
+    @*@Styles.Render("~/Assets/Vendor/css/paper-bootstrap-wizard.css")*@
+    <!-- Fonts and Icons -->
+    @*<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>*@
+    @*<link href="/Assets/Vendor/Wizard/css/themify-icons.css" rel="stylesheet">*@
+    @*<script src="https://code.jquery.com/jquery-1.10.2.js"></script>*@
+
+
+
+}
+<style>
+    #salvarEncadeamento {
+        display: none;
+    }
+</style>
+
+<div class="card wizard-card" data-color="green" id="wizardProfile">
+    <form action="" method="">
+        <div class="wizard-navigation">
+            <div class="progress-with-circle">
+                <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" style="width: 21%;"></div>
+            </div>
+            <ul>
+                <li id="tab-encadeamento">
+                    <a href="#encadeamento" data-toggle="tab">
+                        <div class="icon-circle">
+                            <i class="ti-settings"></i>
+                        </div>
+                        Definição Geral
+                    </a>
+                </li>
+                <li id="tab-testdatas">
+                    <a href="#testdatas" data-toggle="tab">
+                        <div class="icon-circle">
+                            <i class="ti-layout-list-thumb-alt"></i>
+                        </div>
+                        TestDatas
+                    </a>
+                </li>
+                <li id="tab-parametros">
+                    <a href="#parametros" data-toggle="tab">
+                        <div class="icon-circle">
+                            <i class="ti-layout-grid4"></i>
+                        </div>
+                        Parâmetros
+                    </a>
+                </li>
+                <li id="tab-resumo">
+                    <a href="#resumo" data-toggle="tab">
+                        <div class="icon-circle">
+                            <i class="ti-layout-grid4"></i>
+                        </div>
+                        Resumo
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane" id="encadeamento">
+                <div class="row">
+                    @Html.Label("descricao", "Descrição")
+                    <input type="text" class="form-control" required id="descricao-encadeamento">
+                    <input type="hidden" id="IdEncadeamento">
+                </div>
+            </div>
+            <div class="tab-pane" id="testdatas">
+                <input type="hidden" id="qtdTDs" value="0">
+                <ul data-role="listview" class="timeline timeline-inverse" id="lista-tds-associados">
+                    <li class="time-label">
+                        <span class="bg-light-blue">
+                            <label id="label-encadeamento"></label>
+                        </span>
+                        <button type="button" class="btn btn-primary" id="btnNovoTestData" style="float:right">Associar</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="parametros">
+                <div class="row">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">TestData</h3>
+                    </div>
+                    <select class="form-control select2-hidden-accessible" id="lista-tds-do-encadeamento" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" aria-required="true" tabindex="-1" aria-hidden="true">
+                        <option value="0" selected="selected">TODOS</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                </div>
+
+                <div class="row">
+                    <div class="box-header">
+                        <br>
+                        <h3 id="processarTestData" onchange="processarTestDatas()" class="box-title">Parâmetros</h3>
+                    </div>
+                </div>
+
+                <div class="box box-info">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12" style="width: 100%;">
+                                <div class="form-group">
+                                    <table id="grid-parametros" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayName("TestData")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Descrição")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Tipo")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Origem")
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayName("Valor")
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <div class="tab-pane" id="resumo">
+                <ul data-role="listview" class="timeline timeline-inverse" id="tds-resumo">
+                    <li class="time-label">
+                        <span class="bg-light-blue">
+                            <label id="label-encadeamento-resumo"></label>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="wizard-footer">
+            <div class="pull-right">
+                <input type='button' class='btn btn-fill btn-warning btn-wd' id="salvarEncadeamento" value='Salvar' />
+                <input type='button' class='btn btn-next btn-fill btn-warning btn-wd' name='next' value='Próximo' />
+            </div>
+            <div class="pull-left">
+                <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Anterior' />
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade in" id="parametros-testData">
+    <div class="modal-dialog" style="margin-top:2%; width: 60%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="modal-form">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+                    <div class="box-body" id="div-parametros">
+                        <!-- /.codigo dinamico via javascript -->
+                    </div>
+                    <div class="box-footer" align="right">
+                        <button type="button" id="CancelarNovoParametro" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade in" id="modal-novo-testData">
+    <div class="modal-dialog" style="margin-top:15%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form id="modal-form">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Adicionar TestData</h3>
+                        <div id="divError" style="display:none"></div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                @Html.Label("tdm", "TDM")
+                                @Html.DropDownList("list_tdm", new SelectList(ViewBag.listaTDMs, "IdTestData", "Descricao"), "", new
+                           {
+                               @class = "form-control",
+                               @id = "lista_tdms",
+                               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                               @required = "required",
+                           }
+                                )
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                @Html.Label("datapool", "Datapool")
+                                <select class="form-control" id="listaDataPools" name="list_testdatas" required="required" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;"></select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                @Html.Label("testData", "TestData")
+                                <select class="form-control" id="listaTestDatas" name="list_testdatas" required="required" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                @Html.Label("ambiente_exec", "Ambiente de Execução")
+                                <select class="form-control" id="listaAmbExec" name="list_amb_exec" required="required" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer" align="right">
+                        <button type="button" id="CancelarAssociacao" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="novaAssociacao" onclick="confirmarAssociacao()">Salvar</button>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<!-- /.box -->
+@section scripts
+    {
+
+    @*@Styles.Render("~/Asset/Vendor/jquery-upload-file/js")*@
+
+    <script type="text/javascript">
+
+        var encadeamento = @Html.Raw(Json.Encode(Model));
+
+        carregarValores();
+
+        function carregarValores(){
+            $('#IdEncadeamento').val(encadeamento.IdEncadeamento);
+            $('#descricao-encadeamento').val(encadeamento.Descricao);
+            $('#qtdTDs').val(encadeamento.qtdTds)
+            $('#label-encadeamento').text(encadeamento.Descricao);
+            var tds = encadeamento.testDatas;
+            for (var i = 0; i < tds.length; i++) {
+                var testdata = "<li><i onclick='removerTestData(" + tds[i].Id + ", this)' class='fa fa-trash bg-light-blue'></i><div class='timeline-item'><span class='time'><i onclick='moverNoBanco(0, " + tds[i].Id + ", this)' class='fa fa-chevron-up moveUp'></i></span><span class='time'><i onclick='moverNoBanco(1, " + tds[i].Id + ", this)' class='fa fa-chevron-down moveDown'></i></span><h3 class='timeline-header testDatas' id=" + tds[i].Id + " ordem=" + tds[i].Ordem + "><a>" + tds[i].DescricaoAut + "</a> " + tds[i].Descricao + "</h3></div></li>";
+                $('#lista-tds-associados').append(testdata);
+            }
+        }
+
+        //var encadeamento = {};
+        //var testDatas = [];
+        //var parametros = [];
+        //encadeamento.testDatas = testDatas;
+        //var tempTds = [];
+
+        $('#tab-parametros').on('click', function() {
+            var args = [];
+            encadeamento.testDatas.forEach(function (o, index) {
+                var obj = [];
+                obj["Id"] = o.Id;
+                obj["Descricao"] = o.Descricao;
+                args.push(obj);
+            });
+            ProcessarTestDatas(args);
+            initDataTable();
+        });
+
+        $('#tab-resumo').on('click', function() {
+            carregarResumo();
+        });
+
+
+        $("input[name='next']").click(function () {
+            nextWizard();
+        });
+
+        $("input[name='previous']").click(function () {
+            var back = 'back';
+            nextWizard(back);
+        });
+
+        function nextWizard() {
+
+            var backOrNext = arguments[0] == 'back' ? 'back' : 'next';
+
+            var tabEncadeamento = $('#tab-encadeamento').attr('class') == 'active' ? true : false;
+            var tabTestDatas = $('#tab-testdatas').attr('class') == 'active' ? true : false;
+            var tabParametros = $('#tab-parametros').attr('class') == 'active' ? true : false;
+            var tabResumo = $('#tab-resumo').attr('class') == 'active' ? true : false;
+
+            if (tabEncadeamento) {
+                encadeamento.Descricao = $('#descricao-encadeamento').val();
+                $('#label-encadeamento').text(encadeamento.Descricao);
+                if (encadeamento.testDatas.length == 0) {
+                    $('#qtdTDs').val(0)
+                    $("input[name='next']").attr('disabled', 'disabled');
+                }
+            }
+            if (tabTestDatas) {
+                var args = [];
+                encadeamento.testDatas.forEach(function (o, index) {
+                    var obj = [];
+                    obj["Id"] = o.Id;
+                    obj["Descricao"] = o.Descricao;
+                    args.push(obj);
+                });
+                ProcessarTestDatas(args);
+                initDataTable();
+            }
+            if (tabParametros) {
+                carregarResumo();
+                if (backOrNext == 'back') {
+                    $('#salvarEncadeamento').hide();
+                } else {
+                    $('#salvarEncadeamento').show();
+                }
+            }
+            if (tabResumo) {
+                $('#salvarEncadeamento').hide();
+            }
+        }
+
+        window.onload = function () {
+            //$("#tab-testdatas").bind('click', false);
+            //$("#tab-parametros").bind('click', false);
+            //$("#tab-resumo").bind('click', false);
+            //$('#salvarEncadeamento').hide();
+        }
+
+        $('#salvarEncadeamento').on('click', function () {
+            salvarEncadeamento();
+        });
+
+        $("select[name='select-origem']").on('change', function () {
+            var value = $(this).children(":selected").attr("value");
+
+            //console.log('Valor do selecionado é: ' + value);
+        });
+
+        function salvarEncadeamento() {
+            $("#Loading").show();
+
+            var myJSON = JSON.stringify(encadeamento);
+
+            $.ajax({
+                url: '@Url.Action("Salvar", "Encadeamento")',
+                type: 'POST',
+                async: true,
+                cache: false,
+                data: "{'encadeamentoJson':'" + myJSON + "'}",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "true") {
+                        $("#Loading").fadeOut();
+                        $.MessageBoxOK({
+                            mensagem: "Encadeamento editado com sucesso.",
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function () {
+                                window.location = '@Url.Action("Index", "Encadeamento")';
+                            }
+                        });
+                    } else {
+                        $.MessageBoxOK({
+                            mensagem: "Erro ao salvar o Encadeamento.",
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function () {
+                                return;
+                            }
+                        });
+                        //$.MessageBoxOK({ mensagem: xhr + " - " + statusText + " - " + errorThrown });
+                    }
+                },
+                error: function (xhr, statusText, errorThrown) {
+                    $.MessageBoxOK({ mensagem: xhr + " - " + statusText + " - " + errorThrown });
+                }
+            });
+        }
+
+
+        $('#CancelarAssociacao').click(function () {
+            $('#lista_tdms').val("");
+            $('#listaDataPools').val("");
+            $('#listaTestDatas').val("");
+            $('#listaAmbExec').val("");
+        });
+
+        $('#btnNovoTestData').click(function () {
+            $('#modal-novo-testData').modal('show');
+        });
+        // evento ao selecionar a opção do TDM
+        $('#lista_tdms').change(function () {
+            var tdm = $('#lista_tdms').val() + '';
+
+            $.ajax({
+                url: '@Url.Action("listarDatapools", "Encadeamento")',
+                type: 'POST',
+                async: true,
+                cache: false,
+                data: "{'tdm':" + tdm + "}",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    var selectbox = $('#listaDataPools');
+                    var opcoes = "<option value=''></option>";
+
+                    obj.forEach(function (o, index) {
+                        opcoes += "<option value='" + o.Id + "'>" + o.Id + " - " + o.DescricaoDataPool + "</option>";
+                    });
+
+                    selectbox.html(opcoes);
+                }
+            });
+        });
+
+
+        // evento ao selecionar a opção do datapool
+        $('#listaDataPools').change(function () {
+            var dp = $('#listaDataPools').val();
+
+            $.ajax({
+                url: '@Url.Action("listarTestDatas", "Encadeamento")',
+                type: 'POST',
+                async: true,
+                cache: false,
+                data: "{'datapool':'" + dp.toString() + "'}",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    var selectbox = $('#listaTestDatas');
+                    var opcoes = "<option value=''></option>";
+                    tempTds = [];
+
+                    var campoAmbExec = $('#listaAmbExec');
+                    var opts = "<option value=''></option>";
+
+                    obj.forEach(function (o, index) {
+                        var tdtemp = {
+                            "Descricao": o.Descricao,
+                            "DescricaoAut": o.DescricaoAut,
+                            "Id": o.Id,
+                            "idAmbienteExecucao": o.idAmbienteExecucao,
+                            "IdTestData": o.IdTestData,
+                            "Ordem": encadeamento.testDatas.length + 1,
+                            "parametros": o.valores,
+                            "tempoExecString": o.tempoExecString,
+                            "CaminhoEvidencia": o.CaminhoEvidencia,
+                            "Ambiente": o.AmbientesExecs
+                        }
+
+                        //tempTds.parametros = o.valores;
+                        tempTds.push(tdtemp);
+
+
+
+
+                        opcoes += "<option value='" + o.IdTestData + "'>" + o.IdTestData + " - " + o.Descricao + "</option>";
+                    });
+
+                    tempTds[0].Ambiente.forEach(function (x, index) {
+                        opts += "<option value='" + x.Id + "'>" + x.Descricao + "</option>";
+                    });
+                    campoAmbExec.html(opts);
+
+                    selectbox.html(opcoes);
+                }
+            });
+        });
+
+        $("#lista-tds-do-encadeamento").select2({
+            placeholder: "Selecione o TestData que deseja processar...",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $('#lista-tds-do-encadeamento').on('change', function () {
+            var idTd = $('#lista-tds-do-encadeamento').val();
+            initDataTable(idTd);
+        });
+
+        function montarOptionsDescricaoOrigem() {
+            var option = {};
+            var keys = [];
+            var values = [];
+            option.keys = keys;
+            option.values = values;
+
+            var tds = encadeamento.testDatas;
+
+            option.keys.push("ATMP");
+            option.values.push(0);
+
+            for (var i = 0; i < tds.length; i++) {
+                for (var x = 0; x < tds[i].parametros.length; x++) {
+                    option.keys.push(tds[i].Descricao + " - " + tds[i].parametros[x].DescricaoParametro + " (" + tds[i].parametros[x].DescricaoTipoParametro + ")");
+                    option.values.push(tds[i].parametros[x].IdParametroValor);
+                }
+            }
+
+            return option;
+        }
+
+        function initDataTable() {
+
+            var testData = arguments[0] > 0 ? arguments[0] : false;
+
+            var data = [];
+
+            var options = montarOptionsDescricaoOrigem();
+
+            var td = [];
+            if (testData != false) {
+                td = encadeamento.testDatas.find(x => x.Id == testData);
+
+                var obj;
+                var test = '<div class="text-desc" name="DescricaoTestData">' + td.Descricao + '</div>' + ' <input type="hidden" class="hidden-id-testdata" value="' + td.Id + '" />';
+
+                for (var w = 0; w < td.parametros.length; w++) {
+                    var descParam = '<div style="width:100%" class="text-desc" name="DescricaoParametro">' + td.parametros[w].DescricaoParametro + '</div>' + ' <input type="hidden" class="hidden-id-parametro" value="' + td.parametros[w].IdParametro + '" />';
+                    var descTipoParam = '<div style="width:100%" class="text-desc-unificada" name="DescricaoTipoParametro">' + td.parametros[w].DescricaoTipoParametro + '</div>' + ' <input type="hidden" class="hidden-id-tipo-parametro" value="' + td.parametros[w].IdTipoParametro + '" />';
+                    var descOrigem = "<select style='width:100%' class='select2-selection__rendered' size='1' onchange=alterarOrigemParametro('select-origem-" + td.parametros[w].IdParametroValor + "'," + td.parametros[w].IdParametroValor + "," + td.Id + ") name='select-origem' id='select-origem-" + td.parametros[w].IdParametroValor + "'>";
+                    //var valor =
+
+                    //var keys = Object.keys(td.parametros[w].DescricaoOrigem);
+                    //var values = Object.values(td.parametros[w].DescricaoOrigem);
+
+                    var origem = "";
+                    if (td.parametros[w].IdParametroValor_Origem != null) {
+                        origem = "disabled"
+                    }
+
+                    var valor = "<input style='width:100%' " + origem + " type='text' name='Valor' id='input-valor-" + td.parametros[w].IdParametroValor + "' onchange=alterarValor('input-valor-" + td.parametros[w].IdParametroValor + "'," + td.parametros[w].IdParametroValor + "," + td.Id + ") value='" + td.parametros[w].Valor + "' />";
+
+                    for (var y = 0; y < options.keys.length; y++) {
+                        var selected = "";
+                        if (td.parametros[w].IdParametroValor_Origem != null) {
+                            selected = "selected";
+                        }
+                        option = "<option " + selected + " value=" + options.values[y] + ">" + options.keys[y] + "</option>";
+                        descOrigem += option;
+                    }
+
+                    descOrigem += "</select>";
+
+                    obj = [test, descParam, descTipoParam, descOrigem, valor];
+                    data.push(obj);
+                }
+            } else {
+
+                montarOptionsDescricaoOrigem();
+
+                td = encadeamento.testDatas;
+
+                for (var i = 0; i < td.length; i++) {
+
+                    var obj;
+                    var test = '<div class="text-desc" name="DescricaoTestData">' + td[i].Descricao + '</div>' + ' <input type="hidden" class="hidden-id-testdata" value="' + encadeamento.testDatas[i].Id + '" />';
+
+                    for (var w = 0; w < td[i].parametros.length; w++) {
+                        var descParam = '<div style="width:100%" class="text-desc" name="DescricaoParametro">' + td[i].parametros[w].DescricaoParametro + '</div>' + ' <input type="hidden" class="hidden-id-parametro" value="' + td[i].parametros[w].IdParametro + '" />';
+                        var descTipoParam = '<div style="width:100%" class="text-desc-unificada" name="DescricaoTipoParametro">' + td[i].parametros[w].DescricaoTipoParametro + '</div>' + ' <input type="hidden" class="hidden-id-tipo-parametro" value="' + td[i].parametros[w].IdTipoParametro + '" />';
+                        var descOrigem = "<select style='width:100%' class='select2-selection__rendered' size='1' onchange=alterarOrigemParametro('select-origem-" + td[i].parametros[w].IdParametroValor + "'," + td[i].parametros[w].IdParametroValor + "," + td[i].Id + ") name='select-origem' id='select-origem-" + td[i].parametros[w].IdParametroValor + "'>";
+                        //var valor =
+
+                        //var keys = Object.keys(td[i].parametros[w].DescricaoOrigem);
+                        //var values = Object.values(td[i].parametros[w].DescricaoOrigem);
+
+                        var origem = "";
+                        if (td[i].parametros[w].IdParametroValor_Origem != null) {
+                            origem = "disabled"
+                        }
+
+                        var valor = "<input style='width:100%' " + origem + " type='text' name='Valor' id='input-valor-" + td[i].parametros[w].IdParametroValor + "' onchange=alterarValor('input-valor-" + td[i].parametros[w].IdParametroValor + "'," + td[i].parametros[w].IdParametroValor + "," + td[i].Id + ") value='" + td[i].parametros[w].Valor + "' />";
+
+                        for (var y = 0; y < options.keys.length; y++) {
+                            var selected = "";
+                            if (td[i].parametros[w].IdParametroValor_Origem != null) {
+                                selected = "selected";
+                            }
+                            option = "<option " + selected + " value=" + options.values[y] + ">" + options.keys[y] + "</option>";
+                            descOrigem += option;
+                        }
+
+                        descOrigem += "</select>";
+
+                        obj = [test, descParam, descTipoParam, descOrigem, valor];
+                        data.push(obj);
+                    }
+                }
+            }
+
+            var IdEncadeamento = $('#id-encadeamento').val();
+
+            var table = $('#grid-parametros').DataTable();
+
+            table.destroy();
+
+            table = $('#grid-parametros').DataTable({
+                retrieve: true,
+                data: data,
+                "iDisplayLength": 50,
+                "aLengthMenu": [5, 10, 50, 500, 1000],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        sortable: true,
+                        width: '20%'
+                    },
+                    {
+                        targets: [1],
+                        sortable: true,
+                        width: '15%',
+                    },
+                    {
+                        targets: [2],
+                        sortable: true,
+                        width: '5%',
+                    },
+                    {
+                        targets: [3],
+                        sortable: true,
+                        width: '30%',
+                    },
+                    {
+                        targets: [4],
+                        sortable: false,
+                        width: '30%',
+                    }
+                ],
+                aoColumnDef: [
+                    null,
+                    { "sSortDataType": "dom-text", "sType": 'string' },
+                    null
+                ],
+
+                aoColumnDef: [
+                    null,
+                    { "sSortDataType": "dom-text", "sType": 'string' },
+                    null
+                ],
+                oLanguage: {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    }
+                }
+            });
+
+            // Mostrando e escondendo a coluna de TestData
+            if (testData != false) {
+                $("#grid-parametros").DataTable().column("0").visible(false);
+            }
+            else {
+                $("#grid-parametros").DataTable().column("0").visible(true);
+            }
+        }
+
+        function ProcessarTestDatas(testData) {
+
+            $("#lista-tds-do-encadeamento").empty();
+
+            var selectbox = $('#lista-tds-do-encadeamento');
+            var opcoes = "<option value='0'> TODOS </option>";
+
+            for (var i = 0; i < testData.length; i++) {
+                opcoes += "<option value='" + testData[i].Id + "'>" + testData[i].Id + " - " + testData[i].Descricao + "</option>";
+            }
+            selectbox.append(opcoes);
+        }
+
+        function moverNoBanco(cimaOuBaixo, IdTestData, obj) {
+            var liItem = obj.parentElement.parentElement.parentElement;
+            if (cimaOuBaixo == 0) {
+                if (!$(liItem).prev().is('li.time-label')) {
+                    moverCimaOuBaixo(cimaOuBaixo, IdTestData, $(liItem));
+                }
+            } else {
+                if ($(liItem).next().is('li')) {
+                    moverCimaOuBaixo(cimaOuBaixo, IdTestData, $(liItem));
+                }
+            }
+        }
+
+        function moverCimaOuBaixo(cimaOuBaixo, IdTestData, item) {
+            //cima
+            if (cimaOuBaixo == 0) {
+                for (var i = 0; i < encadeamento.testDatas.length; i++) {
+                    if (encadeamento.testDatas[i].Id == IdTestData) {
+                        if (i == 0) {
+                            var objAtual = encadeamento.testDatas[i];
+                            objAtual.Ordem--;
+                            var objSucessor = encadeamento.testDatas[i + 1];
+                            objSucessor.Ordem++;
+                            encadeamento.testDatas[i + 1] = objAtual;
+                            encadeamento.testDatas[i] = objSucessor;
+                            item.insertBefore(item.prev())
+                            return;
+                        } else {
+                            var objAtual = encadeamento.testDatas[i];
+                            objAtual.Ordem--;
+                            var objAntecessor = encadeamento.testDatas[i - 1];
+                            objAntecessor.Ordem++;
+                            encadeamento.testDatas[i - 1] = objAtual;
+                            encadeamento.testDatas[i] = objAntecessor;
+                            item.insertBefore(item.prev())
+                            return;
+                        }
+                    }
+                }
+
+
+            }
+                //baixo
+            else {
+                for (var i = 0; i < encadeamento.testDatas.length; i++) {
+                    if (encadeamento.testDatas[i].Id == IdTestData) {
+                        if (i == 0) {
+                            var objAtual = encadeamento.testDatas[i];
+                            objAtual.ordem++;
+                            var objSucessor = encadeamento.testDatas[i + 1];
+                            objSucessor.ordem--;
+                            encadeamento.testDatas[i] = objSucessor;
+                            encadeamento.testDatas[i + 1] = objAtual;
+                            item.insertAfter(item.next())
+                            return;
+                        } else {
+                            var objAtual = encadeamento.testDatas[i];
+                            objAtual.ordem++;
+                            var objSucessor = encadeamento.testDatas[i + 1];
+                            objSucessor.ordem--;
+                            encadeamento.testDatas[i] = objSucessor;
+                            encadeamento.testDatas[i + 1] = objAtual;
+                            item.insertAfter(item.next())
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        function montarValores() {
+            var valores = {};
+            var id = [];
+            var valor = [];
+            valores.id = id;
+            valores.valor = valor;
+
+            var tds = encadeamento.testDatas;
+
+            for (var i = 0; i < tds.length; i++) {
+                for (var x = 0; x < tds[i].parametros.length; x++) {
+                    valores.id.push(tds[i].parametros[x].IdParametroValor);
+                    valores.valor.push(tds[i].parametros[x].Valor);
+                }
+            }
+
+            return valores;
+        }
+
+        function alterarOrigemParametro(campo, IdParametroValor, idTd) {
+            var IdParametroOrigem = $('#' + campo).val();
+            var tdOrigem = [];
+
+            var valores = montarValores();
+
+            var tds = encadeamento.testDatas;
+
+            for (var i = 0; i < tds.length; i++) {
+                var tdsObjGlobal = tds[i].parametros;
+
+                if (IdParametroOrigem == 0) {
+                    tdOrigem = tdsObjGlobal.find(x => x.IdParametroValor == IdParametroValor);
+                    if(tdOrigem != null){
+                        $('#input-valor-' + IdParametroValor).prop("disabled", false);
+                        $('#input-valor-' + IdParametroValor).val("");
+
+                        tdOrigem = tdsObjGlobal.find(x => x.IdParametroValor == IdParametroValor);
+                        tdOrigem.IdParametroValor_Origem = null;
+                        tdOrigem.Valor = "";
+                        return;
+                    }
+                } else {
+                    $('#input-valor-' + IdParametroValor).prop("disabled", true);
+                    var idAtualizado = 0;
+                    var valorAtualizado = "";
+
+                    for (var x = 0; x < valores.id.length; x++) {
+                        if (valores.id[x] == IdParametroOrigem) {
+                            idAtualizado = valores.id[x];
+                            valorAtualizado = valores.valor[x];
+                        }
+                    }
+
+                    for (var w = 0; w < tdsObjGlobal.length; w++) {
+                        if (tdsObjGlobal[w].IdParametroValor == IdParametroOrigem) {
+                            $('#input-valor-' + IdParametroValor).val(valorAtualizado);
+
+                            var tdAtualizado = encadeamento.testDatas.find(x=>x.Id == idTd).parametros.find(x=>x.IdParametroValor == IdParametroValor)
+
+                            tdAtualizado.IdParametroValor_Origem = idAtualizado;
+                            tdAtualizado.Valor = valorAtualizado;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        function alterarValor(campo, IdParametroValor, IdTd) {
+            var valor = $('#' + campo).val();
+
+            var td = encadeamento.testDatas.find(td => td.Id == IdTd);
+            var paramTds = td.parametros;
+
+            for (var i = 0; i < paramTds.length; i++) {
+                if (paramTds[i].IdParametroValor == IdParametroValor) {
+                    paramTds[i].Valor = valor;
+                }
+            }
+        }
+
+        function removerTestData(IdTestData, obj) {
+
+            $.MessageBoxSimNao({
+                titulo: "Desassociar TestData",
+                mensagem: "Confirma desassociação do TestData?",
+                height: "auto",
+                width: "auto",
+                funcaoBotaoSim: function () {
+                    var item = $(obj.parentElement);
+
+                    var qtd = parseInt($('#qtdTDs').val());
+
+                    var tds = encadeamento.testDatas;
+                    if (tds != null) {
+                        var index = tds.indexOf(tds.find(x => x.Id == IdTestData));
+
+                        if (index > -1) {
+                            tds.splice(index, 1);
+                        }
+
+                        item.remove();
+                        qtd--;
+                        encadeamento.qtdTds--;
+                        $('#qtdTDs').val(qtd);
+                    }
+
+                    if ($('#qtdTDs').val() == 0) {
+                        $("input[name='next']").attr('disabled', 'disabled');
+                    }
+                },
+                funcaoBotaoNao: function() {
+                    return;
+                }
+            });
+        }
+
+        function carregarResumo() {
+            //var idEncadeamento = $('#id-encadeamento').val();
+
+            $('#tds-resumo').html("");
+
+            var nomeEncadeamento = encadeamento.Descricao;
+
+            var tds = encadeamento.testDatas;
+
+            $('#label-encadeamento-resumo').text(nomeEncadeamento);
+            var remover = "bg-light-blue";
+            var adicionar = "";
+            $("#label-encadeamento-resumo").parent().addClass("bg-gray");
+
+            var strRet = "";
+
+            tds.forEach(function (o, index) {
+                var icon = "";
+                var tempo = "";
+                var evid = "";
+
+                if (o.tempoExecString != "" && o.tempoExecString != null) {
+                    tempo = o.tempoExecString;
+                }
+                if (o.CaminhoEvidencia != "" && o.CaminhoEvidencia != null) {
+                    evid = o.CaminhoEvidencia;
+                }
+
+                if (o.idStatusExec == 4) {
+                    icon = "fa fa-check bg-green";
+                } else if (o.idStatusExec == 5) {
+                    icon = "fa fa-close bg-red";
+                } else if (o.idStatusExec == 1) {
+                    icon = "fa fa-clock-o bg-gray";
+                } else if (o.idStatusExec == 2 || o.idStatusExec == 3) {
+                    icon = "fa fa-play-circle bg-light-blue";
+                } else if (o.idStatusExec == 6) {
+                    icon = "fa fa-close bg-gray";
+                } else {
+                    icon = "fa fa-clock-o bg-gray";
+                }
+
+                if (evid != "") {
+                    if (tempo != "") {
+                        strRet += "<li><i class='" + icon + "'></i><div class='timeline-item'><span class='time'><i class='fa fa-clock-o'></i>&nbsp;" + tempo + "</span><h3 class='timeline-header'>" + o.DescricaoAut + " - " + o.Descricao + "</h3><div class='timeline-footer'><input type='button' class='btn btn-primary btn-xs consultar-parametros' onclick='chamarModal(" + o.Id + ")' value='Parâmetros'></input><a class='btn btn-primary btn-xs' href='" + evid + "'>Evidência</a></div></div></li>";
+                    } else {
+                        strRet += "<li><i class='" + icon + "'></i><div class='timeline-item'><h3 class='timeline-header'>" + o.DescricaoAut + " - " + o.Descricao + "</h3><div class='timeline-footer'><input type='button' class='btn btn-primary btn-xs consultar-parametros' onclick='chamarModal(" + o.Id + ")' value='Parâmetros'></input><a class='btn btn-primary btn-xs' href='" + evid + "'>Evidência</a></div></div></li>";
+                    }
+                } else {
+                    if (tempo != "") {
+                        strRet += "<li><i class='" + icon + "'></i><div class='timeline-item'><span class='time'><i class='fa fa-clock-o'></i>&nbsp;" + tempo + "</span><h3 class='timeline-header'>" + o.DescricaoAut + " - " + o.Descricao + "</h3><div class='timeline-footer'><input type='button' class='btn btn-primary btn-xs consultar-parametros' onclick='chamarModal(" + o.Id + ")' value='Parâmetros'></input></div></div></li>";
+                    } else {
+                        strRet += "<li><i class='" + icon + "'></i><div class='timeline-item'><h3 class='timeline-header'>" + o.DescricaoAut + " - " + o.Descricao + "</h3><div class='timeline-footer'><input type='button' class='btn btn-primary btn-xs consultar-parametros' onclick='chamarModal(" + o.Id + ")' value='Parâmetros'></input></div></div></li>";
+                    }
+                }
+            });
+            $('#tds-resumo').append(strRet);
+        }
+
+        function addLinha(campos) {
+            var iniLinha = "<div class=\"row\">";
+            var linha = "";
+            var fimLinha = "</div>";
+            for (var i = 0; i < campos.length; i++) {
+                linha += campos[i];
+            }
+
+            return iniLinha + linha + fimLinha;
+        }
+
+        function chamarModal(id) {
+            carregarParametros(id);
+        }
+
+        function carregarParametros(id) {
+
+            var $divParametros = $('#div-parametros');
+
+            var divForm = "<form class='formLoading' enctype='multipart/form-data' id='form-test-data' method='post'>";
+
+            var paramEntrada = "<div class='box box-primary' id='box-parametros-entrada'><div class='box-header with-border'><h3 class='box-title'>Parâmetros de Entrada</h3></div><div class='box-body' id='parametros-entrada'>";
+            var paramSaida = "<div class='box box-primary' id='box-parametros-saida'><div class='box-header with-border'><h3 class='box-title'>Parâmetros de Saída</h3></div><div class='box-body' id='parametros-saida'>";
+
+            var input = "";
+            var linhaSaida = "";
+            var linhaEntrada = "";
+            var contSaida = 1;
+            var contEntrada = 1;
+            var total = 0;
+            var totalEntrada = 0;
+            var totalSaida = 0;
+            var divParametro;
+            var contParametroEntrada = false;
+            var contParametroSaida = false;
+            var valor = "";
+
+            var camposEntrada = [];
+            var camposSaida = [];
+            var readOnly = "";
+            var asteristico = "";
+
+            var td = encadeamento.testDatas.find(x => x.Id == id);
+
+            td.parametros.forEach(function (o, index) {
+                if (o.IdTipoParametro == 2) {
+                    totalSaida++;
+                    contParametroSaida = true;
+
+                } else {
+                    totalEntrada++;
+                    contParametroEntrada = true;
+                }
+
+                if (o.Obrigatorio == true) {
+                    asteristico = "required";
+                } else {
+                    asteristico = "";
+                }
+
+                switch (o.Tipo) {
+                    case "NUMBER":
+                        input = "<div class=\"col-xs-6 form-group\"><label>" + o.DescricaoParametro + ": </label><label style='font-weight: normal';>&nbsp" + o.Valor + "\</label></div>";
+                        break;
+                    case "DATE":
+                        input = "<div class=\"col-xs-6 form-group\"><label>" + o.DescricaoParametro + ": </label><label style='font-weight: normal';>&nbsp" + o.Valor + "\</label></div>";
+                        break;
+                    default:
+                        input = "<div class=\"col-xs-6 form-group\"><label>" + o.DescricaoParametro + ": </label><label style='font-weight: normal';>&nbsp" + o.Valor + "\</label></div>";
+                        break;
+                }
+
+                if (o.IdTipoParametro == 1) {
+                    camposEntrada.push(input);
+                } else {
+                    camposSaida.push(input);
+                }
+            });
+
+            total = td.parametros.length;
+
+            //adicionando parâmetros de entrada
+            if (camposEntrada.length > 0) {
+                var ultimaPosicao = 0;
+                var qtdLinhaExtra = camposEntrada.length < 2 ? 0 : Math.round(camposEntrada.length % 2);
+                var qtdLinha = camposEntrada.length < 2 ? 1 : Math.round(camposEntrada.length / 2);
+
+
+                for (var i = 0; i < qtdLinha; i++) {
+                    var campos = [];
+                    for (var j = 0; j < 2; j++) {
+                        if (camposEntrada[ultimaPosicao] != undefined) {
+                            campos[j] = camposEntrada[ultimaPosicao];
+                            ultimaPosicao++;
+                        } else {
+                            break;
+                        }
+                    }
+                    var linha = addLinha(campos);
+                    paramEntrada += linha;
+                }
+
+                if (camposEntrada.length > 2) {
+                    for (var i = 0; i < qtdLinhaExtra; i++) {
+                        var campos = [];
+                        for (var j = 0; j < 2; j++) {
+                            if (camposEntrada[ultimaPosicao] != undefined) {
+                                campos[j] = camposEntrada[ultimaPosicao];
+                                ultimaPosicao++;
+                            } else {
+                                break;
+                            }
+                        }
+                        var linha = addLinha(campos);
+                        paramEntrada += linha;
+                    }
+                }
+                paramEntrada += "</div></div>";
+
+
+            } else {
+                $("#box-parametros-entrada").toggle();
+            }
+
+            //adicionando parâmetros de saida
+            if (camposSaida.length > 0) {
+                var ultimaPosicao = 0;
+                var qtdLinhaExtra = camposSaida.length < 2 ? 0 : Math.round(camposSaida.length % 2);
+                var qtdLinha = camposSaida.length < 2 ? 1 : Math.round(camposSaida.length / 2);
+
+
+                for (var i = 0; i < qtdLinha; i++) {
+                    var campos = [];
+                    for (var j = 0; j < 2; j++) {
+                        if (camposSaida[ultimaPosicao] != undefined) {
+                            campos[j] = camposSaida[ultimaPosicao];
+                            ultimaPosicao++;
+                        } else {
+                            break;
+                        }
+
+                    }
+                    var linha = addLinha(campos);
+                    paramSaida += linha;
+                }
+
+                if (camposSaida.length > 2) {
+                    for (var i = 0; i < qtdLinhaExtra; i++) {
+                        var campos = [];
+                        for (var j = 0; j < 2; j++) {
+                            if (camposSaida[ultimaPosicao] != undefined) {
+                                campos[j] = camposSaida[ultimaPosicao];
+                                ultimaPosicao++;
+                            } else {
+                                break;
+                            }
+
+                        }
+                        var linha = addLinha(campos);
+                        paramSaida += linha;
+                    }
+                }
+                paramSaida += "</div></div>";
+
+                //divForm += paramEntrada + paramSaida + "</form>";
+
+            } else {
+                $("#box-parametros-saida").toggle();
+            }
+            divForm += paramEntrada + paramSaida + "</form>";
+
+            //$divParametros.removeClass('loading');
+            $divParametros.html(divForm);
+
+            $('#parametros-testData').modal('show');
+        }
+
+        function confirmarAssociacao() {
+
+            var msg = '';
+
+            if ($('#lista_tdms').val() == null || $('#lista_tdms').val() == '') {
+                msg += '<li>O campo de TDM é obrigatório !</li>';
+            }
+            if ($('#listaDataPools').val() == null || $('#listaDataPools').val() == '') {
+                msg += '<li>O campo de Datapool é obrigatório !</li>';
+            }
+            if ($('#listaTestDatas').val() == null || $('#listaTestDatas').val() == '') {
+                msg += '<li>O campo TestData é obrigatório !</li>';
+            }
+            if ($('#listaAmbExec').val() == null || $('#listaAmbExec').val() == '') {
+                msg += '<li>O campo de Ambiente de Execução é obrigatório !</li>';
+            }
+
+            if (msg == '') {
+                var idTd = $('#listaTestDatas').val();
+
+                var idAmbiente = $('#listaAmbExec').val();
+
+                var qtd = parseInt($('#qtdTDs').val());
+
+                var td = tempTds.find(td => td.IdTestData == idTd);
+
+                td.idAmbienteExecucao = idAmbiente;
+                encadeamento.testDatas.push(td);
+                encadeamento.qtdTds++;
+
+                var testdata = "<li><i onclick='removerTestData(" + td.Id + ", this)' class='fa fa-trash bg-light-blue'></i><div class='timeline-item'><span class='time'><i onclick='moverNoBanco(0, " + td.Id + ", this)' class='fa fa-chevron-up moveUp'></i></span><span class='time'><i onclick='moverNoBanco(1, " + td.Id + ", this)' class='fa fa-chevron-down moveDown'></i></span><h3 class='timeline-header testDatas' id=" + td.Id + " ordem=" + td.ordem + "><a>" + td.DescricaoAut + "</a> " + td.Descricao + "</h3></div></li>";
+
+                $('#lista-tds-associados').append(testdata);
+
+                $('#lista_tdms').val("");
+                $('#listaDataPools').empty();
+                $('#listaTestDatas').empty();
+                $('#listaAmbExec').empty();
+
+                qtd += 1;
+
+                $('#qtdTDs').val(qtd);
+
+                $('li i.fa-trash').mouseover(function () {
+                    //Alterando a classe dinamicamente quando o mouse passar por cima da lixeira
+                    $(this).attr('class', 'fa fa-trash bg-red')
+                    $(this).css("cursor", "pointer");
+                }).mouseout(function () {
+                    $(this).attr('class', 'fa fa-trash bg-light-blue')
+                });
+
+                $('.modal').modal('hide');
+
+                $("input[name='next']").removeAttr('disabled');
+
+                return true;
+            } else {
+                msg = '<ul>' + msg + '</ul>';
+                $("#divError").html(msg).css("color", "red").fadeIn(300);
+
+                return false;
+            }
+        }
+
+    </script>
+    <!--   Core JS Files   -->
+    @*<script src="/Assets/assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>*@
+    @*<script src="/Assets/assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/Assets/assets/js/jquery.bootstrap.wizard.js" type="text/javascript"></script>*@
+
+    <!--  More information about jquery.validate here: http://jqueryvalidation.org/	 -->
+    @*<script src="/Assets/assets/js/jquery.validate.min.js" type="text/javascript"></script>*@
+    <!--  Plugin for the Wizard -->
+    @*<script src="/Assets/assets/js/paper-bootstrap-wizard.js" type="text/javascript"></script>*@
+
+}

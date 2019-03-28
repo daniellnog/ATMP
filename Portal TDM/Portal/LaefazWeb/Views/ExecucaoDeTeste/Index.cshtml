@@ -1,0 +1,1332 @@
+﻿@using TDMWeb.Extensions
+<!--model IEnumerable<LaefazWeb.Models.CT>-->
+@model LaefazWeb.Models.CT
+@{
+    ViewBag.Titulo = "Execução de Teste";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <style type="text/css">
+        td.btnImportar {
+            cursor: pointer;
+        }
+
+        td.btnPlay {
+            cursor: pointer;
+        }
+
+        .template {
+            cursor: pointer;
+        }
+
+        #imgAnexo:hover {
+            cursor: pointer;
+        }
+
+        #evidencia {
+            text-align: center;
+        }
+
+        .imgExcluir {
+            cursor: pointer;
+        }
+    </style>
+}
+
+
+<!-- /.box -->
+<div class="box box-header box-info">
+    <div class="box-header with-border">
+        <h4 class="box-title">Filtros</h4>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-danger" id="btn-limpar-filtro">Limpar Filtro</button>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                @Html.Label("label_projeto", "Projeto")
+                @Html.DropDownList("listProjetos", new SelectList(ViewBag.Projeto, "Id", "Descricao"), "", new
+           {
+               @class = "form-control",
+               @id = "list-projeto",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required",
+
+           }
+                    )
+            </div>
+            <div class="col-xs-12 form-group">
+                @Html.Label("label_sistema", "Sistema")
+                @Html.DropDownList("listaSistemas", new SelectList(ViewBag.Sistema, "Id", "Descricao"), "", new
+           {
+               @class = "form-control",
+               @id = "list-sistema",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required",
+           }
+                    )
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                @Html.Label("label_pasta", "Pasta")
+                @Html.DropDownList("listaPasta", new SelectList(ViewBag.Pasta, "Id", "Descricao"), "", new
+           {
+               @class = "form-control",
+               @id = "list-pasta",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required",
+           }
+                    )
+            </div>
+            <div class="col-xs-12 form-group">
+                @Html.Label("label_plano_de_teste", "Plano de Teste")
+                @Html.DropDownList("listaPlanoDeTeste", new SelectList(ViewBag.PlanoDeTeste, "Id", "Descricao"), "", new
+           {
+               @class = "form-control",
+               @id = "list-plano-de-teste",
+               @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+               @required = "required",
+           }
+                    )
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.box-body -->
+<div class="box box-primary" id="box-parametros">
+    <div class="box-header with-border">
+        <h4 class="box-title">Execuções</h4>
+        <table id="grid" class="display table table-bordered table-striped dataTable" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("")
+                    </th>
+                    <th>
+                        <label>Exec. Automatizada</label>
+                    </th>
+                    <th>
+                        @Html.DisplayName("Motivo Execução Manual")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nº Ofensor")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Scripts")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nº Cen")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nº CT")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nome do CT")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Plano de Teste")
+                    </th>
+                    <th>
+                        @Html.DisplayName("")
+                    </th>
+                    <th>
+                        @Html.DisplayName("")
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade in" id="modal-execucao-manual">
+    <div class="modal-dialog" style="margin-top:15%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Justificar execução manual</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="IdPlanoTeste_TI_atual" value="" />
+                    <div class="col-xs-6 form-group">
+                        @Html.Label("escolher_motivo_ofensor", "Motivo Ofensor")
+                        @Html.DropDownList("escolher_ambiente", new SelectList(ViewBag.Motivo, "Id", "Descricao"), "", new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_motivo_ofensor",
+                       @style = "width: 100%; padding-right: 10px; padding-left: 10px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                            )
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        @Html.Label("descricao", "Nº Ofensor")
+                        <input disabled="disabled" id="nrOfensorModal" style="width:99%;" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="CancelarExecucaoNaoAutomatizada" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="salvarExecucaoDeTeste">Salvar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modalImportarArquivo" tabindex="-1" role="dialog" aria-labelledby="modalImportarArquivo">
+    <div class="modal-dialog" style="margin-top:15%" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Selecione o Arquivo</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ImportarArquivo", "DataPool", FormMethod.Post, new { @id = "frmArquivoProduto", @class = "formLoading", enctype = "multipart/form-data" }))
+                {
+                    <input type="hidden" id="IdPlanoTeste_TI" />
+                    <div class="form-group">
+                        @Html.InputFile("fileArquivoProduto", "Arquivo com Massa de Teste")
+                    </div>
+                    <div class="form-group" id="div-list-scripts">
+                        @Html.Label("label_plano_de_teste", "Script")
+                        <select name="scripts-idScript_CondicaoScript" required id="lista-scripts" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;"></select>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <!--<a href="C:/EvidenciasTDM/TemplateEvidencia/Template_Planilha_TDM.xlsb" class="pull-left">Baixar Template</a>-->
+                @*<a href="http://10.43.6.160:8081/PortalTDM/Evidencias/TemplateEvidencia/Template_Planilha_TDM.xlsb" class="pull-left">Baixar Template</a>*@
+                <a href="@System.Configuration.ConfigurationManager.AppSettings["DiretorioPlanilhaTemplate"]" class="pull-left template">Baixar Template</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviarArquivoProduto">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade in" id="modal-play">
+    <div class="modal-dialog" style="margin-top:5%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Escolher Ambiente de Execução</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="IdMassas" value="" />
+                    <div class="col-xs-12 form-group">
+                        @Html.Label("escolher_ambiente", "Ambiente")
+                        @Html.DropDownList("escolher_ambiente", new SelectList(ViewBag.ListaAmbienteExec, "IdAmbienteExecucao", "DescricaoAmbienteExecucao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_ambiente",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 form-group">
+                        @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
+                        @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirt, "IdAmbienteVirtual", "DescricaoAmbienteVirtual"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_maquina_virtual",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                    <div class="col-xs-4 form-group">
+                        @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
+                        @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_tipo_fase_teste",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                    <div class="col-xs-4 form-group">
+                        @Html.Label("deseja_receber_status_via_telegram", "Notificação via Telegram?")
+                        <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
+                            <option value='1'>Sim</option>
+                            <option value='0'>Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        @Html.Label("escolher_script", "Script")
+                        @Html.DropDownList("escolher_dropdownlist_script", new SelectList(ViewBag.ListaScript, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "dropdownlist_script",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="CancelarEscolhaAmbiente" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="ConfirmarEscolhaAmbiente" onclick="play()">Executar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+
+<!-- /.box -->
+@section scripts
+    {
+    <script type="text/javascript" charset="utf-8">
+
+        $("#list-projeto").select2({
+            placeholder: "Selecione o projeto que deseja processar...",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $("#list-sistema").select2({
+            placeholder: "Selecione o sistema que deseja processar...",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $("#list-pasta").select2({
+            placeholder: "Selecione a pasta que deseja processar...",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $("#list-plano-de-teste").select2({
+            placeholder: "Selecione o plano de teste que deseja processar...",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $("#list_escolher_motivo_ofensor").select2({
+            placeholder: "Selecione o motivo.",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        var dataSet1 = [
+
+        ];
+
+        $("#list-projeto").on('change', function () {
+            var projeto = $("#list-projeto").find(':selected').text();
+
+            if ($('#list-sistema').val() != "") {
+                $('#list-sistema').val(null).trigger('change');
+            }
+            if ($("#list-pasta").val() != "") {
+                $("#list-pasta").val(null).trigger('change');
+            }
+            if ($("#list-plano-de-teste").val() != "") {
+                $("#list-plano-de-teste").val(null).trigger('change');
+                initTable(dataSet1)
+            }
+
+            $("#list-sistema").empty();
+            $("#list-pasta").empty();
+            $("#list-plano-de-teste").empty();
+
+            carregarSistemas(projeto);
+        });
+
+        $("#list-sistema").on('change', function () {
+            var projeto = $("#list-projeto").find(':selected').text();
+            var sistema = $("#list-sistema").find(':selected').text();
+
+            $("#list-pasta").empty();
+            $("#list-plano-de-teste").empty();
+
+            //$('#list-pasta').val(null).trigger('change');
+            //$('#list-plano-de-teste').val(null).trigger('change');
+
+            carregarPastas(projeto, sistema);
+        });
+
+        $("#list-pasta").on('change', function () {
+            //var projetoNome = $("#list-projeto").find(':selected').text();
+            //var sistemaNome = $("#list-sistema").find(':selected').text();
+            //var pastaNome = $("#list-pasta").find(':selected').text();
+
+            var pasta = $("#list-pasta").val();
+            $("#list-plano-de-teste").empty();
+
+            carregarPlanoTeste(pasta).done(function () {
+                var projeto = $("#list-projeto").val();
+                var sistema = $("#list-sistema").val();
+                var pasta = $("#list-pasta").val();
+                var plano_teste = $("#list-plano-de-teste").val();
+
+                dataSet1 = [];
+
+                if (projeto != "" && projeto != null && sistema != "" && sistema != null && pasta != "" && pasta != null) {
+                    carregarDadosGrid(projeto, sistema, pasta, plano_teste);
+                }
+            });
+        });
+
+        $('#btn-limpar-filtro').on('click', function () {
+            $("#list-projeto").val('');
+            $("#list-sistema").val('');
+            $("#list-pasta").val('');
+            $("#list-plano-de-teste").val('');
+
+            $('#select2-list-projeto-container').text('');
+            $('#select2-list-sistema-container').text('');
+            $('#select2-list-pasta-container').text('');
+            $('#select2-list-plano-de-teste-container').text('');
+
+            table.clear().draw();
+        });
+
+        $("#list-plano-de-teste").on('change', function () {
+
+            var projeto = $("#list-projeto").val();
+            var sistema = $("#list-sistema").val();
+            var pasta = $("#list-pasta").val();
+            var plano_teste = $("#list-plano-de-teste").val();
+
+            if ($.fn.dataTable.isDataTable("#grid")) {
+                table.destroy();
+            }
+
+            dataSet1 = [];
+
+            if (projeto != "" && projeto != null && sistema != "" && sistema != null && pasta != "" && pasta != null) {
+                carregarDadosGrid(projeto, sistema, pasta, plano_teste);
+            }
+        });
+
+        $('#list_escolher_motivo_ofensor').on('change', function () {
+            var opcao = $('#list_escolher_motivo_ofensor').val();
+
+            var index = motivosExecucoesManual.find(x => x.Id == opcao);
+
+            if (index != undefined) {
+                if (index.AtivaOfensor == true) {
+                    $('#nrOfensorModal').removeAttr('disabled');
+                } else {
+                    $('#nrOfensorModal').prop('disabled', 'disabled');
+                }
+            }
+        });
+        //ao clicar no ícone da evidência
+        $('#grid-testDatas tbody tr').on('click', 'td.class-evidencia', function () {
+            var idTestData = $(this).parent().find('input[name="item.Id"]').val();
+            var idStatus = $(this).parent().find('input[name="item.IdStatus"]').val();
+            var status = $(this).parent().find('.status')[0];
+            var evidencia = $(this).parent().find('#evidencia');
+
+            //Só é permitido baixar evidência quando o status do testData for disponível, erro ou utilizada.
+            if ((idStatus == 3 || idStatus == 4 || idStatus == 6) && (evidencia.length > 0)) {
+                var time = setTimeout(function () { alterarStatusTestData(evidencia, idTestData, idStatus, status) }, 200);
+            }
+        });
+
+        function fecharModal() {
+            $('#modal-detalhe-ct').modal('toggle');
+        }
+
+        function carregarSistemas(projeto) {
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+
+            $.ajax({
+                url: '@Url.Action("CarregarSistema", "ExecucaoDeTeste")',
+                data: "{'projeto':'" + projeto + "'}",
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    if (obj.length == 0) {
+                        //$("#list-sistema").attr("disabled", true);
+                        $("#list-sistema").empty();
+                    } else {
+                        $("#list-sistema").append($('<option></option>'));
+                        obj.forEach(function (o, index) {
+                            $("#list-sistema").append($('<option></option>').val(o.Id).html(o.Descricao))
+                        });
+                        $("#list-sistema").removeAttr("disabled");
+                    }
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        function carregarPastas(projeto, sistema) {
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+
+            $.ajax({
+                url: '@Url.Action("CarregarPasta", "ExecucaoDeTeste")',
+                data: "{'projeto':'" + projeto + "','sistema':'" + sistema + "'}",
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    if (obj != false) {
+                        if (obj.length == 0) {
+                            $("#list-pasta").attr("disabled", true);
+                            $("#list-pasta").empty();
+                        } else {
+                            $("#list-pasta").append($('<option></option>'));
+                            obj.forEach(function (o, index) {
+                                $("#list-pasta").append($('<option></option>').val(o.Id).html(o.Descricao))
+                            });
+                            $("#list-pasta").removeAttr("disabled");
+                        }
+                    }
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        function carregarPlanoTeste(pasta) {
+
+            return $.ajax({
+                url: '@Url.Action("CarregarPlanoTeste", "ExecucaoDeTeste")',
+                data: "{'pasta':'" + pasta + "'}",
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                async: false,
+                //cache: false,
+                beforeSend: function () {
+                    $("#Loading").show();
+                    document.body.style.cursor = 'wait';
+                },
+                complete: function () {
+                    $("#Loading").hide();
+                    document.body.style.cursor = 'default';
+                },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    if (obj != false) {
+                        if (obj.length == 0) {
+                            $("#list-plano-de-teste").attr("disabled", true);
+                            $("#list-plano-de-teste").empty();
+                        } else {
+                            $("#list-plano-de-teste").append($('<option></option>'));
+                            obj.forEach(function (o, index) {
+                                $("#list-plano-de-teste").append($('<option></option>').val(o.Id).html(o.Descricao))
+                            });
+                            $("#list-plano-de-teste").removeAttr("disabled");
+                        }
+                    }
+                    //document.body.style.cursor = 'default';
+                    //$("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    //document.body.style.cursor = 'default';
+                    //$("#Loading").fadeOut();
+                }
+            });
+        }
+
+        function opcaoEvidencia(evidencia, idTestData, IdStatusTestData, DescricaoStatus) {
+
+            if ((IdStatusTestData == 3 || IdStatusTestData == 4 || IdStatusTestData == 6) && ($(evidencia).length > 0)) {
+                var time = setTimeout(function () { alterarStatusTestData(evidencia, idTestData, IdStatusTestData, status) }, 200);
+            }
+        }
+
+        function alterarStatusTestData(evidencia, idTestData, IdStatusTestData, status) {
+
+            $.MessageBoxSimNao({
+                titulo: "Baixar evidência?",
+                mensagem: "Deseja fazer download da evidência?",
+                height: "auto",
+                width: "auto",
+                funcaoBotaoSim: function () {
+                    $.ajax({
+                        url: '@Url.Action("AlterarStatusTestData", "ExecucaoDeTeste")',
+                        data: { IdTestData: idTestData.toString(), IdStatus: IdStatusTestData.toString() },
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+                            var obj = JSON.parse(data);
+
+                            if (obj.Data == null || obj.Data == "" || obj.Data == 'undefined') {
+                                $.MessageBoxOK({ mensagem: "Ocorreu um erro e a evidência não foi gerada." });
+                            } else {
+                                $(evidencia).append('<a id="link_evidencia"></a>').attr('href', obj.Data);
+                                window.open(obj.Data);
+
+                                if (IdStatusTestData == 3) {
+                                    var campo_status = $(evidencia.parentElement.parentElement).find('td.status');
+                                    campo_status.text('UTILIZADA');
+                                    //$(status).html(html);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function mostrarTestDatas(IdPlanoTeste_TI) {
+
+            var div = $('<div id="planoTeste_TI' + IdPlanoTeste_TI[0] + '"' + '><div/>')
+                  .addClass('loading')
+                  .text('Loading...');
+
+            var linhas = "";
+
+            var dados = "{'IdPlanoTeste_TI':'" + IdPlanoTeste_TI + "'}";
+
+            $.ajax({
+                url: '@Url.Action("CarregarTestDataAssociados", "ExecucaoDeTeste")',
+                type: "POST",
+                data: dados,
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    var inicio = '<table id="grid-testDatas" class="display table table-bordered table-striped dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="grid_info"><thead><tr role="row"><th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 5%;">ID</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 5%;">Evidência</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 30%;">Massa de Dados</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 20%;">Demanda</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Nº Caso de Teste</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Status</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Gerada Por</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Data Geração</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Script</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Plataforma</th><th class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;"></th></tr></thead><tbody>';
+
+                    linhas += inicio;
+                    // caso o CT possua TestDatas associados a ele.
+
+                    if (obj == false) {
+                        linhas += '<td valign="top" colspan="10" class="dataTables_empty">Esse CT não possui TestData(s) associado a ele.</td>';
+                    } else {
+                        if (obj.length > 0) {
+                            obj.forEach(function (o, index) {
+                                var caminhoEvidencia = '';
+                                var MassaDeDados = '';
+                                var Demanda = '';
+                                var NumeroCasoDeTeste = '';
+                                var Status = '';
+                                var GeradoPor = '';
+                                var DataGeracao = '';
+                                var DesricaoScript = '';
+                                var DescricaoPlataforma = '';
+                                var IdStatusTestData = '';
+
+                                if (o.CaminhoEvidencia != null) {
+                                    if (o.Status != null) {
+                                        Status = o.Status;
+                                    }
+                                    caminhoEvidencia = '<div id="evidencia"><img id="imgAnexo" src="../../Assets/Images/Attachment.png" width="23" height="23" border="0" onclick=opcaoEvidencia(this.parentElement,' + o.IdTestData + ',' + o.IdStatusTestData + ',"' + o.Status + '")></div>';
+                                }
+                                if (o.MassaDeDados != null) {
+                                    MassaDeDados = o.MassaDeDados;
+                                }
+                                if (o.Demanda != null) {
+                                    Demanda = o.Demanda;
+                                }
+                                if (o.NumeroCasoDeTeste != null) {
+                                    NumeroCasoDeTeste = o.NumeroCasoDeTeste;
+                                }
+                                if (o.Status != null) {
+                                    Status = o.Status;
+                                }
+                                if (o.GeradoPor != null) {
+                                    GeradoPor = o.GeradoPor;
+                                }
+                                if (o.DataGeracao != null) {
+                                    DataGeracao = o.DataGeracao;
+                                }
+                                if (o.DescricaoScript != null) {
+                                    DescricaoScript = o.DescricaoScript;
+                                }
+                                if (o.DescricaoPlataforma != null) {
+                                    DescricaoPlataforma = o.DescricaoPlataforma;
+                                }
+
+                                var ExcluirAssociacao = '<center><img src="@Url.Content("~/Assets/Images/Trash.png")" class="imgExcluir" onclick="excluirAssociacao(' + o.Id + ')" id="excluirAssociacao-' + o.Id + '" height="20" value=""/></center>';
+
+                                linhas += '<tr id=' + o.Id + ' role="row" style="background-color: #ffffff" class="details"><td><div id=' + o.IdTestData + '>' + o.IdTestData + '</td><td class="class-evidencia">' + caminhoEvidencia + '</td><td><div>' + MassaDeDados + '</td><td><div>' + Demanda + '</td><td><div>' + NumeroCasoDeTeste + '</td><td class="status"><div>' + Status + '</td><td><div>' + GeradoPor + '</td><td><div>' + DataGeracao + '</td><td><div>' + DescricaoScript + '</td><td><div>' + DescricaoPlataforma + '</td><td><div>' + ExcluirAssociacao + '</td></tr>';
+                            });
+                        } else {
+                            linhas += '<td valign="top" colspan="10" class="dataTables_empty">Esse CT não possui TestData(s) associado a ele.</td>';
+                        }
+                    }
+
+                    var fim = '</tbody></table>';
+
+                    linhas += fim
+
+                    div.removeClass('loading');
+                    div.html(linhas);
+                }
+            });
+
+            return div;
+        }
+
+        function excluirAssociacao(IdTestData_CT) {
+            $.MessageBoxSimNao({
+                titulo: "Excluir Associação?",
+                mensagem: "Deseja excluir a associação do TestData com o CT em questão?",
+                height: "auto",
+                width: "auto",
+                funcaoBotaoSim: function () {
+                    $.ajax({
+                        url: '@Url.Action("ExcluirAssociacaoCT_TestData", "ExecucaoDeTeste")',
+                        data: { IdTestData_CT: IdTestData_CT },
+                        type: "POST",
+                        async: true,
+                        cache: false,
+                        success: function (data) {
+                            if (data.Result == "Associação excluída com sucesso.") {
+                                $.MessageBoxOK({
+                                    titulo: "Associação Excluída",
+                                    mensagem: "Associação Excluída com Sucesso.",
+                                    height: "auto",
+                                    width: "auto",
+                                    funcaoBotaoOK: function () {
+                                        $('#grid-testDatas tbody tr#' + IdTestData_CT).remove();
+                                        if ($('#grid-testDatas tbody').find('tr').size() == 0) {
+                                            var linha = '<tr><td valign="top" colspan="10" class="dataTables_empty">Esse CT não possui TestData(s) associado a ele.</td></tr>';
+                                            $('#grid-testDatas tbody').append(linha);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        var table;
+
+        function initTable(dataSet1) {
+
+            if (!$.fn.dataTable.isDataTable("#grid")) {
+                table = $('#grid').DataTable({
+                    data: dataSet1,
+                    retrieve: true,
+                    order: [[0, "asc"]],
+                    bPaginate: true,
+                    paging: true,
+                    searching: true,
+                    columns: [
+                        { data: "MaximizarTestDatas", class: "details-plus", orderable: false },
+                        { data: "ExecucaoAutomatizada", orderable: false },
+                        { data: "MotivoExecucao", orderable: false },
+                        { data: "NrOfensor", orderable: false },
+                        { data: "ListaScripts", orderable: false },
+                        { data: "NRO_CENARIO", orderable: true },
+                        { data: "NRO_CT", orderable: true },
+                        { data: "NOME", orderable: true },
+                        { data: "Plano_Teste", orderable: true },
+                        { data: "play", orderable: false, class: "btnPlay" },
+                        { data: "importarExcel", orderable: false, class: "btnImportar" }
+
+                    ],
+                    columnDefs: [
+                        {
+                            targets: [0],
+                            sortable: true,
+                            width: '5%'
+                        },
+                        {
+                            targets: [1],
+                            sortable: true,
+                            width: '5%',
+                        },
+                        {
+                            targets: [2],
+                            sortable: true,
+                            width: '15%',
+                        },
+                        {
+                            targets: [3],
+                            sortable: true,
+                            width: '5%',
+                        },
+                        {
+                            targets: [4],
+                            sortable: true,
+                            width: '20%',
+                        },
+                        {
+                            targets: [5],
+                            sortable: true,
+                            width: '3%',
+                        },
+                        {
+                            targets: [6],
+                            sortable: true,
+                            width: '3%',
+                        },
+                        {
+                            targets: [7],
+                            sortable: true,
+                            width: '30%',
+                        },
+                        {
+                            targets: [8],
+                            sortable: true,
+                            width: '15%',
+                        },
+                    ],
+                    oLanguage: {
+                        "sEmptyTable": "Nenhum registro encontrado",
+                        "sProcessing": "A processar...",
+                        "sLengthMenu": "Mostrar _MENU_ registos",
+                        "sZeroRecords": "Não foram encontrados resultados",
+                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registos",
+                        "sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Procurar:",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "Primeiro",
+                            "sPrevious": "Anterior",
+                            "sNext": "Seguinte",
+                            "sLast": "Último"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Ordenar colunas de forma ascendente",
+                            "sSortDescending": ": Ordenar colunas de forma descendente"
+                        }
+                    },
+                });
+
+                //removendo a classe de ordenação, pois não estava funcionando quando setava direto no datatable.
+                $('#grid tr th').eq(0).removeClass("sorting_asc");
+
+                var detailRows = [];
+
+                $('#grid tbody').off('click', 'tr td.details-plus');
+
+                $('#grid tbody').on('click', 'tr td.details-plus', function () {
+                    var tr = $(this).closest('tr');
+                    var row = table.row(tr);
+                    var idx = $.inArray(tr.find('input').attr('id'), detailRows);
+
+                    var data = [];
+                    if (idx == -1) {
+                        data.push(tr.find('input').attr('id'));
+                    }
+
+                    if (row.child.isShown()) {
+                        tr.removeClass('details');
+                        row.child.hide();
+
+                        // Remove from the 'open' array
+                        detailRows.splice(idx, 1);
+                    }
+                    else {
+                        tr.addClass('details');
+                        row.child(mostrarTestDatas(data)).show();
+
+                        // Add to the 'open' array
+                        if (idx === -1) {
+                            detailRows.push(tr.find('input').attr('id'));
+                        }
+                    }
+
+                });
+                //$('#grid tbody').find('.details-control').css({ 'background': 'url(../../Assets/Images/collapse.png) center center no-repeat' })
+                //.css({'background':'url(images/background_' + newIndex + '.jpg) center center no-repeat'})
+            } else {
+                table.clear().draw();// Limpando a tabela
+                table.rows.add(dataSet1); // Add new data
+                table.columns.adjust().draw(); // Redraw the DataTable
+            }
+
+
+        }
+
+        $('#salvarExecucaoDeTeste').on('click', function () {
+            var idPlanoTeste = $('#IdPlanoTeste_TI_atual').val();
+            var execAutomatizada = $('#selectExecAutomatizada-' + idPlanoTeste).val()
+            var motivoExecucao = $('#list_escolher_motivo_ofensor').val();
+            var nrOfensor = $('#nrOfensorModal').val();
+
+            salvarLinha(execAutomatizada, idPlanoTeste, motivoExecucao, nrOfensor);
+        });
+
+        function atualizaValorCampo(valor, IdPlanoTeste_TI) {
+            //se o campo de execução automática for marcado como não
+            if (valor == 0) {
+                //$('#list_escolher_motivo_ofensor').text('');
+                $('#select2-list_escolher_motivo_ofensor-container').text('');
+                $('#list_escolher_motivo_ofensor').val('');
+                $('#nrOfensorModal').prop('disabled', 'disabled');
+                $('#nrOfensorModal').val('');
+                $('#modal-execucao-manual').modal('show');
+                $('#IdPlanoTeste_TI_atual').attr('value', IdPlanoTeste_TI);
+
+                $('#CancelarExecucaoNaoAutomatizada').on('click', function () {
+                    $('#selectExecAutomatizada-' + IdPlanoTeste_TI).val('');
+                });
+            }
+                //se o campo de execução automática for marcado como sim
+            else if (valor == 1) {
+                var motivoExecucao = '';
+                var nrOfensor = '';
+                var automatizado = $('#selectExecAutomatizada-' + IdPlanoTeste_TI).val()
+                var script = $('#selectScripts-' + IdPlanoTeste_TI).val();
+
+                if (script != "0") {
+
+                    var plataforma = $('#selectScripts-' + IdPlanoTeste_TI + ' :selected').parent().attr('label');;
+
+                    script = $('#selectScripts-' + IdPlanoTeste_TI).find(':selected').val();
+
+                    $.MessageBoxSimNao({
+                        titulo: "Atualização",
+                        mensagem: "Deseja salvar sua alteração?",
+                        height: "auto",
+                        width: "auto",
+                        funcaoBotaoSim: function () {
+                            salvarLinha(valor, IdPlanoTeste_TI, motivoExecucao, nrOfensor, script, plataforma);
+                        },
+                        funcaoBotaoNao: function () {
+                            $('#selectExecAutomatizada-' + IdPlanoTeste_TI).val('');
+                        }
+                    });
+                }
+            }
+        }
+
+        function salvarLinha(execAutomatizada, IdPlanoTeste_TI, motivoExecucao, nrOfensor, script, plataforma) {
+
+            nrOfensor = (typeof nrOfensor !== 'undefined') ? nrOfensor : null;
+            script = (typeof script !== 'undefined') ? script : null;
+            plataforma = (typeof plataforma !== 'undefined') ? plataforma : null;
+
+            var dados = "";
+
+            //SIM
+            if (execAutomatizada == '1') {
+                dados = "{'execAutomatizada':'" + execAutomatizada + "', 'idPlanoTeste_TI':'" + IdPlanoTeste_TI + "', 'descricaoScript':'" + script + "', 'plataforma':'" + plataforma + "'}";
+            }
+                //NAO
+            else if (execAutomatizada == '0') {
+                dados = "{'execAutomatizada':'" + execAutomatizada + "', 'idPlanoTeste_TI':'" + IdPlanoTeste_TI + "', 'motivoExecucao':'" + motivoExecucao + "', 'nrOfensor':'" + nrOfensor + "'}";
+            }
+
+            $.ajax({
+                url: '@Url.Action("SalvarLinha", "ExecucaoDeTeste")',
+                data: dados,
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    if (data != "false") {
+                        // Não automatizado
+                        if (execAutomatizada == "0") {
+                            $('#motivoExec-' + obj.ID).text(obj.MotivoExecucao_ATMP);
+                            $('#selectScripts-' + obj.ID).val(0);
+                            obj.OFENSOR_ATMP = null ? $('#nrOfensor-' + obj.ID).text("") : $('#nrOfensor-' + obj.ID).text(obj.OFENSOR_ATMP);
+                            $('#modal-execucao-manual').modal('toggle');
+                        }
+                            // Automatizado
+                        else if (execAutomatizada == "1") {
+                            $('#motivoExec-' + obj.ID).text("");
+                            $('#nrOfensor-' + obj.ID).text("");
+                        }
+                    }
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        $('.custom-file-upload').each(function () {
+            var formGroup = this;
+
+            var fileElem = $(formGroup).find('input[type="file"]');
+
+            $(formGroup).find('.input-file-filename, .btn-selecionar-arquivo').click(function () {
+                fileElem.click();
+            });
+
+            $(formGroup).find('.btn-limpar-arquivo').click(function () {
+                fileElem.val('').change();
+            });
+
+            fileElem.change(function () {
+                var input = document.getElementById(this.id);
+                var filename = "";
+
+                for (var i = 0; i < input.files.length; i++) {
+                    var filename = filename + "'" + input.files[i].name + "' ";
+                }
+
+                $(formGroup).find('.input-file-filename').val(filename);
+                $(formGroup).find('.btn-limpar-arquivo').prop('disabled', filename.length == 0);
+            });
+        });
+
+        $("#btnEnviarArquivoProduto").click(function () {
+
+            var data = new FormData();
+
+            var files = $("input[name=fileArquivoProduto").get(0).files;
+
+            if (files.length <= 0) {
+                $('#modalImportarArquivo').modal('hide');
+                $.MessageBoxOK({ mensagem: "Nenhum arquivo selecionado. O processamento não foi realizado." });
+                return;
+            }
+            data.append("UploadedImage", files[0]);
+            data.append("IdPlanoTeste_TI", $('#IdPlanoTeste_TI').val());
+            data.append("scripts-idScript_CondicaoScript", $('#lista-scripts').val());
+
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: '@Url.Action("ImportarArquivo", "ExecucaoDeTeste")',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (data) {
+                    if (data.Result == "Arquivo importado com sucesso.") {
+                        $('#modalImportarArquivo').modal('hide');
+
+                        $.MessageBoxOK({
+                            mensagem: data.Result,
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function (status) {
+
+                            }
+                        });
+                    } else if (data.Result == "Esta planilha não corresponde ao DataPool selecionado, favor verificar os campos 'Sistema','Script' e 'Condição' na planilha.") {
+                        $('#modalImportarArquivo').modal('hide');
+
+                        $.MessageBoxOK({
+                            mensagem: data.Result,
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function (status) {
+
+                            }
+                        });
+                    } else if (data.Result == "Os campos 'Arquivo com Massa de Testes' e 'Script' são obrigatórios.") {
+                        $('#modalImportarArquivo').modal('hide');
+
+                        $.MessageBoxOK({
+                            mensagem: data.Result,
+                            argFuncao: data.Status,
+                            funcaoBotaoOK: function (status) {
+
+                            }
+                        });
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        $.MessageBoxOK({ mensagem: data.responseText });
+                    } else {
+                        $.MessageBoxOK({ mensagem: data.Result });
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+
+        });
+
+        function abrirDetalhe() {
+            $('#modal-detalhe-ct').show();
+        }
+
+        $('#lista-scripts').select2({
+            placeholder: "Selecione o script que deseja importar as massas...",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        function abrirPopUpImportarPlanilha(IdPlanoTeste_TI) {
+
+            $('input[name=fileArquivoProduto]').eq(1).val('')
+            $('#select2-lista-scripts-container').empty()
+            $('#IdPlanoTeste_TI').val(IdPlanoTeste_TI);
+
+            $('#lista-scripts').empty();
+
+            var select = '<label for="label_lista_scripts">Script</label>';
+            var options = dataSet1.find(x=>x.IdPlanoTeste_TI == IdPlanoTeste_TI).Scripts;
+
+            $('#lista-scripts').append(options);
+            $('#lista-scripts').val('');
+
+            //$('#div-list-scripts').html(select);
+
+            $('#modalImportarArquivo').modal('show');
+        }
+
+        var motivosExecucoesManual = [];
+
+        function carregarDadosGrid(projeto, sistema, pasta, plano_teste) {
+
+            var result;
+
+            $.ajax({
+                url: '@Url.Action("CarregarDados", "ExecucaoDeTeste")',
+                data: "{'projeto':'" + projeto + "', 'sistema':'" + sistema + "', 'pasta':'" + pasta + "', 'plano_teste':'" + plano_teste + "'}",
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#Loading").show();
+                    //console.log("Starting...");
+                },
+                complete: function () {
+                    $("#Loading").fadeOut();
+                    //console.log("Complete!");
+                },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    if (obj != false) {
+                        obj.forEach(function (o, index) {
+                            var exec_auto = "";
+
+                            if (o.ExecucaoAutomatizada_ATMP == true) {
+                                exec_auto = '<select id=selectExecAutomatizada-' + o.IdPlanoTeste_TI + ' onchange=atualizaValorCampo(this.value,' + o.IdPlanoTeste_TI + ');><option value="2"></option><option value="1" selected="">SIM</option><option value="0">NÃO</option></select>';
+                            } else if (o.ExecucaoAutomatizada_ATMP == false) {
+                                exec_auto = '<select id=selectExecAutomatizada-' + o.IdPlanoTeste_TI + ' onchange=atualizaValorCampo(this.value,' + o.IdPlanoTeste_TI + ');><option value="2"></option><option value="1">SIM</option><option value="0" selected="">NÃO</option></select>';
+                            } else {
+                                exec_auto = '<select id=selectExecAutomatizada-' + o.IdPlanoTeste_TI + ' onchange=atualizaValorCampo(this.value,' + o.IdPlanoTeste_TI + ');><option value="2"></option><option value="1">SIM</option><option value="0">NÃO</option></select>';
+                            }
+
+                            var listaScripts = "";
+
+                            var optTosca = "";
+                            var optRft = "";
+
+                            if (o.ListaScripts.length == 0) {
+                                listaScripts = '<select id=selectScripts-' + o.IdPlanoTeste_TI + ' disabled="disabled" style="width: 100%";><option value=0>Não existe script associado ao CT</option>';
+                            } else {
+                                listaScripts = '<select id=selectScripts-' + o.IdPlanoTeste_TI + ' onchange=atualizaValorCampo(1,' + o.IdPlanoTeste_TI + ') style="width: 100%"><option value=0></option>';
+
+                                optTosca = '<optgroup label=TOSCA>';
+                                optRft = '<optgroup label=RFT>';
+
+                                o.ListaScripts.forEach(function (x, index) {
+                                    if (x.Plataforma == 'TOSCA') {
+                                        if (o.SCRIPT_SELECIONADO == x.Id) {
+                                            optTosca += '<option selected value=' + x.Id + '>' + x.Descricao + '</option>';
+                                        } else {
+                                            optTosca += '<option value=' + x.Id + '>' + x.Descricao + '</option>';
+                                        }
+                                    } else if (x.Plataforma == 'RFT') {
+                                        if (o.SCRIPT_SELECIONADO == x.Id) {
+                                            optRft += '<option selected value=' + x.Id + '>' + x.Descricao + '</option>';
+                                        } else {
+                                            optRft += '<option value=' + x.Id + '>' + x.Descricao + '</option>';
+                                        }
+                                    }
+                                });
+
+                                optTosca += '</optgroup>';
+                                optRft += '</optgroup>';
+                            }
+
+                            var scripts = optTosca + optRft;
+
+                            var maximizarTestDatas = '<input class="hidden-id" id=' + o.IdPlanoTeste_TI + ' name="item.Id" type="hidden" >';
+
+                            listaScripts += optTosca + optRft + '</select>';
+
+                            var script_rft = "";
+                            if (!(o.Script_RFT == null || o.Script_RFT == 'undefined')) {
+                                script_rft = o.Script_RFT;
+                            }
+
+                            var script_tosca = "";
+                            if (!(o.Script_Tosca == null || o.Script_Tosca == 'undefined')) {
+                                script_tosca = o.Script_Tosca;
+                            }
+
+                            var motivoExec = "";
+
+                            if (o.MotivoExecucao_ATMP == null) {
+                                motivoExec = '<div id=motivoExec-' + o.IdPlanoTeste_TI + '></div>';
+                            } else {
+                                motivoExec = '<div id=motivoExec-' + o.IdPlanoTeste_TI + '>' + o.MotivoExecucao_ATMP + '</div>';
+                            }
+
+                            var nr_ofensor = "";
+
+                            if (o.Ofensor_ATMP == null) {
+                                nr_ofensor = '<div id=nrOfensor-' + o.IdPlanoTeste_TI + '></div>';
+                            } else {
+                                nr_ofensor = '<div id=nrOfensor-' + o.IdPlanoTeste_TI + '>' + o.Ofensor_ATMP + '</div>';
+                            }
+
+                            o.MotivosExecucoes.forEach(function (x, index) {
+                                var motivo = { Id: x.Id, Descricao: x.Descricao, AtivaOfensor: x.AtivaOfensor };
+
+                                var index = motivosExecucoesManual.indexOf(motivosExecucoesManual.find(x => x.Id == motivo.Id));
+
+                                if (index == -1) {
+                                    motivosExecucoesManual.push(motivo);
+                                }
+                            });
+
+                            var ImportarExcel = '<center><img src="@Url.Content("~/Assets/Images/importarExcel.png")" onclick="abrirPopUpImportarPlanilha(' + o.IdPlanoTeste_TI + ')" id="importar-' + o.IdPlanoTeste_TI + '" height="20" value=""/></center>';
+
+                            var btnPlay = '<center><img src="@Url.Content("~/Assets/Images/media_play_green.png")" onclick="modalPlay(' + o.IdPlanoTeste_TI + ')" id="play-' + o.IdPlanoTeste_TI + '" height="20" value=""/></center>';
+
+                            var obj_atual = { MaximizarTestDatas: maximizarTestDatas, ExecucaoAutomatizada: exec_auto, MotivoExecucao: motivoExec, NrOfensor: nr_ofensor, ListaScripts: listaScripts, NRO_CT: o.NRO_CT, NRO_CENARIO: o.NRO_CENARIO, NOME: o.NOME, Plano_Teste: o.Plano_Teste, play: btnPlay, importarExcel: ImportarExcel, IdPlanoTeste_TI: o.IdPlanoTeste_TI, Scripts: scripts };
+
+                            dataSet1.push(obj_atual);
+                        });
+                        initTable(dataSet1);
+                    }
+                    result = true;
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+
+            return result;
+        }
+
+        function modalPlay(IdPlanoTeste_TI) {
+            $('#modal-play').modal('toggle');
+
+            if(IdPlanoTeste_TI != 0){
+                $.ajax({
+                    url: '@Url.Action("CarregarDadosModalPlay", "ExecucaoDeTeste")',
+                    data: "{'IdPlanoTeste_TI':'" + IdPlanoTeste_TI + "'}",
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    cache: false,
+                    async: true,
+                    beforeSend: function () {
+                        $("#Loading").show();
+                        //console.log("Starting...");
+                    },
+                    complete: function () {
+                        $("#Loading").fadeOut();
+                        //console.log("Complete!");
+                    },
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        
+                    },
+                    error: function () {
+                        result = false;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+        });
+    </script>
+}

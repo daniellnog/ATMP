@@ -1,0 +1,127 @@
+﻿@model IEnumerable<LaefazWeb.Models.Pessoas>
+
+@{
+    ViewBag.Titulo = "Pessoas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- /.box -->
+<div class="box box-info">
+    <div class="box-header">
+        <a href="@Url.Action("Adicionar", "Pessoas")" class="btn btn-block btn-success pull-right" style="width: 200px;">Executar Jenkins</a>
+    </div>
+
+
+    
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+@section scripts
+{
+    <script type="text/javascript" charset="utf-8">
+
+        function Remover(id) {
+
+            $("#Loading").show();
+            document.body.style.cursor = 'wait';
+            $.ajax({
+                url: "/Pessoas/Remover",
+                data: { id: id.toString() },
+                type: "POST",
+                async: true,
+                cache: false,
+                success: function (data) {
+
+                    $.MessageBoxOK({
+                        mensagem: data.Result,
+                        argFuncao: data.Status,
+                        funcaoBotaoOK: function (status) {
+                            if (status == 0)
+                                window.location = '/Pessoas/Index';
+                        }
+                    });
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                },
+                error: function (data) {
+
+                    if (data.Result == undefined) {
+                        alert(data.responseText);
+                    } else {
+                        alert(data.Result);
+                    }
+
+                    document.body.style.cursor = 'default';
+                    $("#Loading").fadeOut();
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $(".ul li").removeClass("active");
+            $('#Pessoas').addClass('active');
+
+            $("#btnEditar").click(function () {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma Pessoa selecionada." });
+                    return;
+                }
+
+                window.location = '/Pessoas/editar?id=' + id;
+            });
+
+            $('#btnExcluir').click(function () {
+
+                var id = $('table.display:visible').find('tr.selected').find('input.hidden-id').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (id === "" || id.length <= 0) {
+                    $.MessageBoxOK({ mensagem: "Nenhuma Pessoa selecionada." });
+                    return;
+                }
+
+                $.MessageBoxSimNao({
+                    titulo: "Remover Pessoa?",
+                    mensagem: "Confirma remoção da Pessoa",
+                    height: "auto",
+                    width: "auto",
+                    funcaoBotaoSim: function () {
+                        Remover(id);
+                    }
+                });
+            });
+
+            $('#grid').DataTable({
+
+                "processing": true,
+                "serverside": true,
+
+                ajax: {
+                    url: "@Url.Action("Getdata","Pessoas")",
+                    type: "POST"
+                    
+                }
+
+
+            });
+
+            $('#grid tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+        });
+    </script>
+}

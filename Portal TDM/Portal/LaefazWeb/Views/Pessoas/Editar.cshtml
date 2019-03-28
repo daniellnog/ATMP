@@ -1,0 +1,42 @@
+﻿@using TDMWeb.Extensions
+@model LaefazWeb.Models.Pessoas
+
+@{
+    ViewBag.Title = "Pessoas";
+}
+
+@section styles {
+    <style type="text/css">
+        .form-control[readonly] {
+            background-color: white;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("SalvarEdicao", "Status", FormMethod.Post, new { @class = "formLoading", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" name="MAX_FILE_SIZE" value="314572800" />
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Editar Sistema</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                @Html.Label("nome", "Nome")
+                @Html.TextBoxFor(m => m.Descricao, new { @class = "form-control", required = "required" })
+                @Html.HiddenFor(m => m.Id, new { Id ="id" })
+            </div>
+        </div>
+        <div class="box-footer" align="right">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+    </script>
+}

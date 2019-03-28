@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[CT]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Nome] VARCHAR(500) NOT NULL, 
+    [Sistema] VARCHAR(500) NOT NULL, 
+    [Fase] VARCHAR(500) NOT NULL,
+
+)

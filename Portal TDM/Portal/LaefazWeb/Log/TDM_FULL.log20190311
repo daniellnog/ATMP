@@ -1,0 +1,38 @@
+11-03-2019 10:51:28 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - sistemas carregados: System.Collections.Generic.List`1[LaefazWeb.Models.VOs.listaVO]
+11-03-2019 10:51:32 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - resultado setado como false
+11-03-2019 10:51:32 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrada no try 
+11-03-2019 10:51:32 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Count Motivo execucao: 9
+11-03-2019 10:51:32 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Carregou os parametros
+11-03-2019 10:51:32 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - verificou se o plano de teste está null ou diferente de  vazio
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Executou a proc
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - criou lista temporaria
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - entrou no loopLaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - obeto carregado: LaefazWeb.Models.VOs.CTVO
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - populou todos os CT's
+11-03-2019 10:51:34 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - retornou com sucesso.
+11-03-2019 10:55:44 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - PlatoTeste_TI carregado: System.Data.Entity.DynamicProxies.PlanoTeste_TI_C06650C347FFDDA3E4A061B41DC29FE2F66290AA2D1CC9E6521819640F717072
+11-03-2019 10:55:44 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - CT carregado: System.Data.Entity.DynamicProxies.CT_699185753805F6CF386F914BF953A0B1B5CAEE17E11F14EBD55CAC2E234E534A
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Script_CondicaoScript_CT carregado: System.Collections.Generic.List`1[LaefazWeb.Models.Script_CondicaoScript_CT]
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Script_CondicaoScript carregado: System.Data.Entity.DynamicProxies.Script_CondicaoScrip_C9C379813DCC62DA30D4F6528D19304CE6925B0ABE01E96B7D560286EDBB682D
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - TDM carregado: System.Data.Entity.DynamicProxies.TDM_07913F15DC813921F369978C9852C398472A522925A148F6BE19A791F71125FF
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Script carregado: System.Data.Entity.DynamicProxies.Script_4A9A058FF8FC1C00089DC2238834452DEB4AEA84430796F31EBAF8C5EFEC7617
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - AUT carregado: System.Data.Entity.DynamicProxies.AUT_FA16D70360C6434DABC83D8F0800814B68159D84A8579046166438848D962150
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Demanda carregado: System.Data.Entity.DynamicProxies.Demanda_EC94379432A05B4CB05256744961F65346788BE139B78D586F0422E542632B3E
+11-03-2019 10:55:46 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - DataPool carregado: System.Data.Entity.DynamicProxies.DataPool_1BB69646C4F36047DDBEC7314D2EE97BD6B184C6CADEB2B9447F937386A14F5A
+11-03-2019 10:55:50 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - Planilha importada: Template_Planilha_TDM.xlsbIdUsuario: 6
+11-03-2019 10:56:58 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - PlatoTeste_TI carregado: System.Data.Entity.DynamicProxies.PlanoTeste_TI_C06650C347FFDDA3E4A061B41DC29FE2F66290AA2D1CC9E6521819640F717072
+11-03-2019 10:56:59 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - CT carregado: System.Data.Entity.DynamicProxies.CT_699185753805F6CF386F914BF953A0B1B5CAEE17E11F14EBD55CAC2E234E534A
+11-03-2019 10:56:59 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 74) - Erro ao importar a planilha {IdUsuario: 6}
+System.Exception: Esta planilha não corresponde ao DataPool selecionado, favor verificar os campos 'Sistema','Script' e 'Condição' na planilha.
+   at LaefazWeb.Controllers.ExecucaoDeTesteController.SalvarImportacao(String path, Int32 IdPlanoTeste_TI, Int32 IdScript_CondicaoScript) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ExecucaoDeTesteController.cs:line 577
+   at LaefazWeb.Controllers.ExecucaoDeTesteController.ImportarArquivo() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\ExecucaoDeTesteController.cs:line 445
