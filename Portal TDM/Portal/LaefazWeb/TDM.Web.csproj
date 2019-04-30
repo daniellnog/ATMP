@@ -309,7 +309,7 @@
     <Compile Include="Models\StatusExecucao.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
+    <Compile Include="Models\StatusScript.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TDM.cs">
@@ -394,6 +394,7 @@
     <Compile Include="Models\VOs\DadosExecucaoVO.cs" />
     <Compile Include="Models\VOs\Alteracao.cs" />
     <Compile Include="Models\VOs\DadosModalPlayExecucaoTesteVO.cs" />
+    <Compile Include="Models\VOs\ListaScriptsVO.cs" />
     <Compile Include="Models\VOs\TestDataCtVO.cs" />
     <Compile Include="Models\VOs\listaVO.cs" />
     <Compile Include="Models\VOs\PlataformaVO.cs" />

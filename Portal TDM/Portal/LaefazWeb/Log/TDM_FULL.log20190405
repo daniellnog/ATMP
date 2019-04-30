@@ -1,0 +1,70 @@
+05-04-2019 10:23:53 [ERROR] (LaefazWeb.Controllers.TestDataController - line 74) - Erro ao editar tesdata. CODIGO_ERRO: 38826411
+System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.TestDataController.SalvarEdicao(TestData objeto) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\TestDataController.cs:line 140
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 0
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 25
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 26
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 2
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 2
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 3
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 18
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 4
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 34
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 5
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 47
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 6
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 52
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162731
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162731','IdTestData':'9121','IdParametroScript':'14','IdParametroValor_Origem':'','Valor':'CASO DE TESTE CRIAÇÃO DE CONTATO E CONTA PF  REALIZADO(A) COM SUCESSO!',}]
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 7
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162732
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162732','IdTestData':'9121','IdParametroScript':'15','IdParametroValor_Origem':'','Valor':'',}]
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_9B8882199AC9C319FB89A3968CBC6A78C84CA9F3A5AF5B6BA9FBA3CA7C5B865A[{'Object':'DeParaAtmpAlmFase','Object':'Script_CondicaoScript_Ambiente','Id':'1','Descricao':'TI8',}]
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162732
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 8
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 9
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 57
+05-04-2019 10:27:14 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162735
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162735','IdTestData':'9121','IdParametroScript':'19','IdParametroValor_Origem':'','Valor':'PRJ00007149_ENT00003722',}]
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 10
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 58
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162736
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162736','IdTestData':'9121','IdParametroScript':'20','IdParametroValor_Origem':'','Valor':'01.02 - CRIAÇÃO DE CONTATO E CONTA PF ',}]
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 11
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 59
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162737
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162737','IdTestData':'9121','IdParametroScript':'21','IdParametroValor_Origem':'','Valor':'TEste',}]
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 12
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 60
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162738
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162738','IdTestData':'9121','IdParametroScript':'22','IdParametroValor_Origem':'','Valor':'PRJ00007149_ENT00003722',}]
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 13
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 61
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 162739
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'162739','IdTestData':'9121','IdParametroScript':'23','IdParametroValor_Origem':'','Valor':'01.02',}]
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 14
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 178
+05-04-2019 10:27:15 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1

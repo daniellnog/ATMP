@@ -58,7 +58,7 @@ namespace LaefazWeb.Models
         public virtual DbSet<Script_CondicaoScript_Ambiente> Script_CondicaoScript_Ambiente { get; set; }
         public virtual DbSet<Script_CondicaoScript_CT> Script_CondicaoScript_CT { get; set; }
         public virtual DbSet<Status> Status { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<StatusScript> StatusScript { get; set; }
         public virtual DbSet<TDM> TDM { get; set; }
         public virtual DbSet<TDM_Usuario> TDM_Usuario { get; set; }
         public virtual DbSet<TestData> TestData { get; set; }

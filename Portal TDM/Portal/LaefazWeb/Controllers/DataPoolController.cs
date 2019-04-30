@@ -1301,7 +1301,7 @@ namespace LaefazWeb.Controllers
                     int IdCondicaoScript;
                     Script_CondicaoScript Script_CondicaoScript = new Script_CondicaoScript();
 
-                    if (Request.Form.Get("listCondicaoScript") == null)
+                    if (Request.Form.Get("listCondicaoScript") == null || Request.Form.Get("listCondicaoScript") == "")
                     {
                         Script_CondicaoScript = db.Script_CondicaoScript.Where(x => x.IdScript == IdScript).Where(x => x.IdCondicaoScript == null).ToList().FirstOrDefault();
                     }
@@ -1628,7 +1628,7 @@ namespace LaefazWeb.Controllers
                                             t.IdDataPool
                                         }).ToList();
 
-                int idDataPoolAnterior = testdataAnterior[0].IdDataPool;
+                int idDataPoolAnterior = (int)testdataAnterior[0].IdDataPool;
 
                 var countTds = (from t in db.TestData
                                 where t.IdDataPool == idDataPoolAnterior
@@ -1795,9 +1795,7 @@ namespace LaefazWeb.Controllers
         }
 
         public JsonResult GetDadosModalPlayTestData(string id)
-
         {
-
             TestData TestData = db.TestData.Find(Int32.Parse(id));
             DataPool datapool = db.DataPool.FirstOrDefault(x => x.Id == TestData.IdDataPool);
 

@@ -37,7 +37,7 @@
                     @Html.DropDownList("listaAUT", new SelectList(ViewBag.ListaAUT, "Id", "Descricao"), "", new
                {
                    @class = "form-control",
-                   //@id = "list-script",
+                   @id = "list-aut",
                    @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
                    @required = "required",
                }
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-3 form-group">
+                <div class="col-xs-2 form-group">
                     @Html.Label("condicao_script", "Condição Script")
                     @Html.DropDownList("listCondicaoScript", new SelectList(ViewBag.CondicaoScript, "Id", "Descricao"), "N/A", new
                {
@@ -70,7 +70,7 @@
                         )
 
                 </div>
-                <div class="col-xs-3 form-group">
+                <div class="col-xs-2 form-group">
                     @Html.Label("ambienteexec", "Ambiente de Execução")
                     @Html.DropDownList("listambientesexec", new SelectList(ViewBag.ListaAmbientesExec, "Id", "Descricao"), "", new
                {
@@ -82,6 +82,17 @@
                    @required = "required",
                }
                         )
+                </div>
+                <div class="col-xs-2 form-group" id="divAmbienteExec">
+                    @Html.Label("label_plataforma", "Plataforma")
+                    @Html.DropDownList("listPlataforma", new SelectList(ViewBag.Plataforma, "Id", "Descricao"), "", new
+               {
+                   @class = "form-control",
+                   @id = "list-plataforma",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                    )
                 </div>
                 <div class="col-xs-3 form-group">
                     <input type="hidden" id="viewBagTipoDadoParametro" data-value="@ViewBag.TipoDadoParametro" />
@@ -127,6 +138,19 @@
                    @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
                }
                        )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 form-group">
+                    @Html.Label("label_status_script", "Status do Script")
+                    @Html.DropDownList("listaStatusScript", new SelectList(ViewBag.ListaStatusScript, "Id", "Nome"), "", new
+               {
+                   @class = "form-control",
+                   @id = "list-status-script",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                        )
                 </div>
             </div>
             <div class="box-footer" align="right">
@@ -243,6 +267,7 @@
                 DiretorioRelatorio: null,
                 TempoEstimadoExecucao: null,
                 NomeTecnicoScript: null,
+                IdPlataforma: null
             };
 
         //var ambienteExecucao =
@@ -298,6 +323,7 @@
             initTable();
 
         });
+        
 
         var dataSet1 = [
             //{ parametro: 'ADDONS', tipo: 'Entrada', valor_default: '<input style="width:100%" id="valorDefault123" value="ABC" onchange=saveRow("ADDON",123,"valorDefault")></input><input type="hidden" id=param123></input>', obrigatorio: '<input type="checkbox" name=obrigatorio123 onclick=saveRow("ADDON",123,"obrigatorio") checked>', visivel_em_tela: '<input type="checkbox" name=visivel_em_tela123 onclick=saveRow("ADDON",123,"visivelEmTela") checked>' },
@@ -729,8 +755,10 @@
                             mensagem: "Parâmetro adicionado com sucesso",
                             argFuncao: result.Status,
                             funcaoBotaoOK: function (status) {
-                                listaDE = "<li data-draggable='item' value='0' class='ui-draggable ui-draggable-handle list-group-item' draggable='true' aria-grabbed='false' tabindex='0'>" + Descricao.toString() + "<input name='checkBox' descricao='" + Descricao.toString() + "' id='" + result.Id + "' colunaTecnica='" + NomeTecnico.toString() + "' type='checkbox' checked class='pull-right'></li>";
-                                $("#panel_left").append(listaDE);
+                                $("#list-param-entrada").append("<option value='" + result.Id + "' selected>" + Descricao + "</option>");
+                                $("#list-param-saida").append("<option value='" + result.Id + "' selected>" + Descricao + "</option>");
+                                //listaDE = "<li data-draggable='item' value='0' class='ui-draggable ui-draggable-handle list-group-item' draggable='true' aria-grabbed='false' tabindex='0'>" + Descricao.toString() + "<input name='checkBox' descricao='" + Descricao.toString() + "' id='" + result.Id + "' colunaTecnica='" + NomeTecnico.toString() + "' type='checkbox' checked class='pull-right'></li>";
+                                //$("#panel_left").append(listaDE);
                                 $('#idDescricao').val("");
                                 $('#idNomeTecnico').val("");
                                 $('#list_tipo_dado_parametro').val("");
@@ -776,6 +804,9 @@
 
             scriptVO.Script_CondicaoScript.IdScript = 0;
             scriptVO.Script.Id = 0;
+            scriptVO.Script_CondicaoScript.IdPlataforma = $('#list-plataforma').val();
+            scriptVO.Script.IdAUT = $('#list-aut').val();
+            scriptVO.Script_CondicaoScript.IdStatusScript = $('#list-status-script').val();
 
             var myJSON = JSON.stringify(scriptVO);
 

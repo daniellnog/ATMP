@@ -49,6 +49,7 @@ namespace LaefazWeb.Models
         public string VARIANTE { get; set; }
         public string PRE_CONDICAO { get; set; }
         public string OBS { get; set; }
+        public string OBS_2 { get; set; }
         public Nullable<decimal> NRO_CENARIO { get; set; }
         public Nullable<decimal> NRO_CT { get; set; }
         public string EVIDENCIA_VALIDACAO_CLIENTE { get; set; }

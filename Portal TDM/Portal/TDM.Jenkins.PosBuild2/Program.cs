@@ -395,6 +395,27 @@ namespace TDM.Jenkins.PosBuild2
                 {
                     string DirReport = ConfigurationSettings.AppSettings["DirReport"];
 
+                    int counter = 0;
+                    string line;
+
+                    // Read the file and display it line by line.  
+                    System.IO.StreamReader file =
+                        new System.IO.StreamReader(DirReport);
+
+                    Log.Info("Iniciando a leitura do relatório do Tosca");
+
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        Log.Info(line);
+                        //System.Console.WriteLine(line);
+                        counter++;
+                    }
+                    Log.Info("Fim da leitura do relatório do tosca.");
+                    file.Close();
+                    //System.Console.WriteLine("There were {0} lines.", counter);
+                    // Suspend the screen.  
+                    //System.Console.ReadLine();
+
                     Log.Info("Iniciando método para exclusão do relatório do Tosca.");
                     Log.Info("Excluindo Arquivo: " + DirReport);
                     File.Delete(DirReport);

@@ -16,37 +16,37 @@ namespace LaefazWeb.Models
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DbEntities>());
         }
 
-        public override int SaveChanges()
-        {
-            // Detecta as alterações existentes na instância corrente do DbContext.
-            this.ChangeTracker.DetectChanges();
+        //public override int SaveChanges()
+        //{
+        //    // Detecta as alterações existentes na instância corrente do DbContext.
+        //    this.ChangeTracker.DetectChanges();
 
            
-            var entries = DetectEntries();                  
+        //    var entries = DetectEntries();                  
 
-            // Cria lista para armazenamento temporário dos registros em Historico.
-                List<Historico> Historicos = new List<Historico>();
+        //    // Cria lista para armazenamento temporário dos registros em Historico.
+        //        List<Historico> Historicos = new List<Historico>();
 
-            // Varre as entidades que devem gerar registros em Historico.
-            foreach (var entry in entries)
-            {
-                // Cria novo registro de Historico.
-                Historico newHistorico = GetHistorico(entry);
+        //    // Varre as entidades que devem gerar registros em Historico.
+        //    foreach (var entry in entries)
+        //    {
+        //        // Cria novo registro de Historico.
+        //        //Historico newHistorico = GetHistorico(entry);
 
-                if (newHistorico != null)
-                    Historicos.Add(newHistorico);
-            }
-            // Adiciona os registros de Historico na fonte de dados.
-            foreach (var item in Historicos)
-            {
-                this.Entry(item).State = EntityState.Added;
+        //        //if (newHistorico != null)
+        //        //    Historicos.Add(newHistorico);
+        //    }
+        //    // Adiciona os registros de Historico na fonte de dados.
+        //    foreach (var item in Historicos)
+        //    {
+        //        this.Entry(item).State = EntityState.Added;
 
-            }
+        //    }
 
 
-            return base.SaveChanges();
+        //    return base.SaveChanges();
 
-        }
+        //}
 
 
         /// <summary>
@@ -71,32 +71,32 @@ namespace LaefazWeb.Models
         /// <summary>
         /// Cria os registros de Historico.
         /// </summary>
-        private Historico GetHistorico(DbEntityEntry entry)
-        {
+        //private Historico GetHistorico(DbEntityEntry entry)
+        //{
 
-            Historico returnValue = null;
+        //    Historico returnValue = null;
 
-            if (entry.State == EntityState.Added)
-            {
-                returnValue = GetInsertHistorico(entry);
-            }
-            else if (entry.State == EntityState.Modified)
-            {
-                returnValue = GetUpdateHistorico(entry);
-            }
-            else if (entry.State == EntityState.Deleted)
-            {
-                returnValue = GetDeleteHistorico(entry);
-            }
+        //    if (entry.State == EntityState.Added)
+        //    {
+        //        returnValue = GetInsertHistorico(entry);
+        //    }
+        //    else if (entry.State == EntityState.Modified)
+        //    {
+        //        returnValue = GetUpdateHistorico(entry);
+        //    }
+        //    else if (entry.State == EntityState.Deleted)
+        //    {
+        //        returnValue = GetDeleteHistorico(entry);
+        //    }
 
-            return returnValue;
-        }
+        //    return returnValue;
+        //}
 
-        private Historico GetInsertHistorico(DbEntityEntry entry)
-        {
+        //private Historico GetInsertHistorico(DbEntityEntry entry)
+        //{
 
-            return HistoricoVO.CreateInsertHistorico(entry.Entity);
-        }
+        //    //return HistoricoVO.CreateInsertHistorico(entry.Entity);
+        //}
 
         private Historico GetDeleteHistorico(DbEntityEntry entry)
         {

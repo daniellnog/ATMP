@@ -137,7 +137,7 @@ namespace LaefazWeb.Controllers
         {
             try
             {
-                log.Debug(Util.ToString(objeto));
+                //log.Debug(Util.ToString(objeto));
                 Salvar(objeto, true);
                 this.FlashSuccess("Massa de teste editada com sucesso.");
             }
@@ -225,6 +225,7 @@ namespace LaefazWeb.Controllers
 
                                 count++;
                             }
+                            TestData t = db.TestData.Where(x=>x.Id == objeto.Id).FirstOrDefault();
 
                             objeto.Descricao = Request.Form.Get("Descricao") == null ? Request.Form.Get("hidden-descricao") : Request.Form.Get("Descricao");
                             objeto.IdStatus = Request.Form.Get("listStatus") == null ? objeto.IdStatus : Int32.Parse(Request.Form.Get("listStatus"));
@@ -232,7 +233,7 @@ namespace LaefazWeb.Controllers
                                 objeto.GerarMigracao = (Int32.Parse(Request.Form.Get("listMigracao")) == 0) ? false : true;
                             objeto.CasoTesteRelativo = Request.Form.Get("CasoTesteRelativo") == null ? Request.Form.Get("hidden-caso-teste-relativo") : Request.Form.Get("CasoTesteRelativo");
                             objeto.Observacao = Request.Form.Get("Observacao") == null ? Request.Form.Get("hidden-observacao") : Request.Form.Get("Observacao");
-
+                            objeto.CaminhoEvidencia = t.CaminhoEvidencia;
                             string horaEstimada = "2001-01-01";
                             string tempoEstimado = Request["tempoEstimado"].ToString();
                             if (tempoEstimado != "NaN : NaN")
@@ -249,15 +250,15 @@ namespace LaefazWeb.Controllers
                             // anexar objeto ao contexto
                             context.TestData.Attach(objeto);
 
-                            log.Debug(Util.ToString(objeto));
+                            //log.Debug(Util.ToString(objeto));
                             context.Entry(objeto).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
-                            log.Info("TestData editado com sucesso");
+                            //log.Info("TestData editado com sucesso");
                             
                             if (SalvaParametros(objeto.Id, objeto.IdScript_CondicaoScript, context, editar))
                             {
                                 dbContextTransaction.Commit();
-                                this.FlashSuccess("Massa de teste adicionada com sucesso.");
+                                this.FlashSuccess("TestData editada com sucesso.");
                             }
                             else
                             {
@@ -275,7 +276,7 @@ namespace LaefazWeb.Controllers
                             // tratamento para impedir que o status seja diferente de cadastrada
                             if (Int32.Parse(Request.Form.Get("ListStatus")) != 1)
                             {
-                                log.Debug(Util.ToString(objeto));
+                                //log.Debug(Util.ToString(objeto));
                                 log.Warn("Não é possível inserir um testData com status diferente de cadastrada!");
                                 this.FlashError("Não é possível inserir um testData com status diferente de cadastrada!");
                             }
@@ -311,7 +312,7 @@ namespace LaefazWeb.Controllers
 
                                 context.TestData.Add(testData);
                                 context.SaveChanges();
-                                log.Debug(Util.ToString(objeto));
+                                //log.Debug(Util.ToString(objeto));
                                 log.Info("TestData adicionado com sucesso");
                                 //Salvar parametros
                                 if (SalvaParametros(testData.Id, testData.IdScript_CondicaoScript, context, editar))

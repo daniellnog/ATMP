@@ -45,6 +45,8 @@ namespace LaefazWeb.Controllers
             ViewBag.TipoDadoParametro = db.TipoDadoParametro.ToList();
             ViewBag.ListaScriptPai = db.Script.ToList();
             ViewBag.CondicaoScript = db.CondicaoScript.ToList();
+            ViewBag.Plataforma = db.Plataforma.ToList();
+            ViewBag.ListaStatusScript = db.StatusScript.ToList();
 
             ViewBag.ListaParametros = db.Parametro.ToList();
 
@@ -91,7 +93,6 @@ namespace LaefazWeb.Controllers
                         {
                             db.Script_CondicaoScript_Ambiente.Remove(scsa[w]);
                             log.Info("Script_CondicaoScript_Ambiente excluído com sucesso!");
-                            log.Debug("Script_CondicaoScript_Ambiente: " + Util.ToString(scsa[w]));
                         }
                         db.SaveChanges();
 
@@ -99,7 +100,6 @@ namespace LaefazWeb.Controllers
                         {
                             db.ParametroScript.Remove(ps[y]);
                             log.Info("ParametroScript excluído com sucesso!");
-                            log.Debug("ParametroScript: " + Util.ToString(ps[y]));
                         }
                         db.SaveChanges();
 
@@ -113,7 +113,6 @@ namespace LaefazWeb.Controllers
                         db.Script_CondicaoScript.Remove(scriptCS);
                         db.SaveChanges();
                         log.Info("Script_CondicaoScript excluído com sucesso!");
-                        log.Debug("Script_CondicaoScript: " + Util.ToString(scriptCS));
 
                         //caso seja == 1, quer dizer que o script deve ser excluído, pois é a última condição daquele script existente.
                         if (qtdCondScripts == 1)
@@ -121,7 +120,6 @@ namespace LaefazWeb.Controllers
                             db.Script.Remove(script);
                             db.SaveChanges();
                             log.Info("Script excluído com sucesso!");
-                            log.Debug("Script: " + Util.ToString(script));
                             result.Data = new { Result = "Script removido com sucesso.", Status = (int)WebExceptionStatus.Success };
                         }
                         else
@@ -135,14 +133,12 @@ namespace LaefazWeb.Controllers
                     if (ex.InnerException != null && ex.InnerException.InnerException != null && (ex.InnerException.InnerException.Message.ToString().Contains("FK_TestData_DataPool") || ex.InnerException.InnerException.Message.ToString().Contains("FK_ParametroValor_ParametroScript") || ex.InnerException.InnerException.Message.ToString().Contains("FK_DataPool_Script_CondicaoScript")))
                     {
                         log.Error("Esse registro contém dependência com outra entidade. ", ex);
-                        log.Debug("Script: " + Util.ToString(script));
                         result.Data = new { Result = "Esse registro contém dependência com outra entidade.", Status = (int)WebExceptionStatus.SendFailure };
                     }
                     else
                         result.Data = new { Result = ex.Message, Status = (int)WebExceptionStatus.UnknownError };
 
                     log.Error("Erro ao excluir o Script.", ex);
-                    log.Debug("Script: " + Util.ToString(script));
                 }
             }
             return result;
@@ -189,6 +185,8 @@ namespace LaefazWeb.Controllers
 
             ViewBag.ListCTs = new List<listaVO>();
 
+            ViewBag.ListaStatusScript = db.StatusScript.ToList();
+
             List<PlataformaVO> listaPlataforma = (from p in db.Plataforma
                                                   select new PlataformaVO
                                                   {
@@ -206,7 +204,8 @@ namespace LaefazWeb.Controllers
                 IdCondicaoScript = scs_.IdCondicaoScript,
                 TempoEstimadoExecucao = scs_.TempoEstimadoExecucao,
                 NomeTecnicoScript = scs_.NomeTecnicoScript,
-                IdPlataforma = scs_.IdPlataforma
+                IdPlataforma = scs_.IdPlataforma,
+                IdStatusScript = scs_.IdStatusScript
             };
 
             Script s = db.Script.Where(x => x.Id == script_cs.IdScript).FirstOrDefault();
@@ -720,7 +719,6 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("Script_CondicaoScript_Ambiente removido com sucesso");
-                            log.Debug("Script_CondicaoScript_Ambiente: " + Util.ToString(scsa_banco));
                         }
 
                         for (int y = 0; y < ambientesTela.Count(); y++)
@@ -735,7 +733,6 @@ namespace LaefazWeb.Controllers
                                 context.Script_CondicaoScript_Ambiente.Add(scsa_tela_temp);
                                 context.SaveChanges();
                                 log.Info("Script_CondicaoScript_Ambiente adicionado com sucesso");
-                                log.Debug("Script_CondicaoScript_Ambiente: " + Util.ToString(scsa_tela_temp));
                             }
                         }
                     }
@@ -775,7 +772,6 @@ namespace LaefazWeb.Controllers
                         context.Script_CondicaoScript_Ambiente.Add(scsa);
                         context.SaveChanges();
                         log.Info("Ambiente adicionado com sucesso na tabela Script_CondicaoScript_Ambiente");
-                        log.Debug("Script_CondicaoScript_Ambiente = " + Util.ToString(scsa));
                     }
                 }
             }
@@ -848,7 +844,6 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("ParametroScript removido com sucesso");
-                            log.Debug("ParametroScript: " + Util.ToString(ps));
                         }
                         else
                         {
@@ -869,7 +864,6 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("ParametroScript atualizado com sucesso");
-                            log.Debug("ParametroScript: " + Util.ToString(ps));
                         }
                     }
 
@@ -896,7 +890,6 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("ParametroScript adicionado com sucesso");
-                            log.Debug("ParametroScript: " + Util.ToString(ps_temp));
                         }
                     }
 
@@ -914,7 +907,6 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("ParametroScript removido com sucesso");
-                            log.Debug("ParametroScript: " + Util.ToString(ps));
                         }
                         else
                         {
@@ -935,7 +927,6 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("ParametroScript atualizado com sucesso");
-                            log.Debug("ParametroScript: " + Util.ToString(ps));
                         }
                     }
 
@@ -962,272 +953,10 @@ namespace LaefazWeb.Controllers
                             context.SaveChanges();
 
                             log.Info("ParametroScript adicionado com sucesso");
-                            log.Debug("ParametroScript: " + Util.ToString(ps_temp));
                         }
                     }
 
                     retorno = true;
-
-
-                    //List<ParametroVO> paramEntradaTela = listaParametrosEntrada;
-                    //List<ParametroVO> paramSaidaTela = listaParametrosSaida;
-
-                    //string listaParametrosEntradaBanco = "";
-                    //string listaParametrosSaidaBanco = "";
-                    //string listaParametrosEntradaTela = "";
-                    //string listaParametrosSaidaTela = "";
-
-                    ////crio uma string com todos os Id's, obrigatoriedades e visiveis em tela dos parametros de entrada que vieram do banco de dados.
-                    //if (paramEntradaBanco.Count > 0)
-                    //{
-                    //    for (int i = 0; i < paramEntradaBanco.Count; i++)
-                    //    {
-                    //        listaParametrosEntradaBanco += paramEntradaBanco[i].IdParametroScript + "," + paramEntradaBanco[i].Obrigatorio + "," + paramEntradaBanco[i].VisivelEmTela + "," + paramEntradaBanco[i].ValorDefault + "|";
-                    //    }
-                    //    listaParametrosEntradaBanco = listaParametrosEntradaBanco.Remove(listaParametrosEntradaBanco.Length - 1);
-                    //}
-                    ////crio uma string com todos os Id's, obrigatoriedades e visiveis em tela dos parametros de saída que vieram do banco de dados.
-                    //if (paramSaidaBanco.Count > 0)
-                    //{
-                    //    for (int i = 0; i < paramSaidaBanco.Count; i++)
-                    //    {
-                    //        listaParametrosSaidaBanco += paramSaidaBanco[i].IdParametroScript + "," + paramSaidaBanco[i].Obrigatorio + "," + paramSaidaBanco[i].VisivelEmTela + "," + paramSaidaBanco[i].ValorDefault + "|";
-                    //    }
-                    //    listaParametrosSaidaBanco = listaParametrosSaidaBanco.Remove(listaParametrosSaidaBanco.Length - 1);
-                    //}
-                    ////crio uma string com todos os Id's, obrigatoriedades e visiveis em tela dos parametros de entrada que vieram da tela.
-                    //if (paramEntradaTela.Count > 0)
-                    //{
-                    //    for (int x = 0; x < paramEntradaTela.Count; x++)
-                    //    {
-                    //        listaParametrosEntradaTela += paramEntradaTela[x].IdParametro + "," + paramEntradaTela[x].Obrigatorio + "," + paramEntradaTela[x].VisivelEmTela + "," + paramEntradaTela[x].ValorDefault + "|";
-                    //    }
-                    //    listaParametrosEntradaTela = listaParametrosEntradaTela.Remove(listaParametrosEntradaTela.Length - 1);
-                    //}
-                    ////crio uma string com todos os Id's, obrigatoriedades e visiveis em tela dos parametros de saída que vieram da tela.
-                    //if (paramSaidaTela.Count > 0)
-                    //{
-                    //    for (int y = 0; y < paramSaidaTela.Count; y++)
-                    //    {
-                    //        listaParametrosSaidaTela += paramSaidaTela[y].IdParametro + "," + paramSaidaTela[y].Obrigatorio + "," + paramSaidaTela[y].VisivelEmTela + "," + paramSaidaTela[y].ValorDefault + "|";
-                    //    }
-                    //    listaParametrosSaidaTela = listaParametrosSaidaTela.Remove(listaParametrosSaidaTela.Length - 1);
-                    //}
-                    ////Converto todas as strings em arrays
-                    //string[] arrParamEntradaTela = listaParametrosEntradaTela.Split('|');
-                    //string[] arrParamSaidaTela = listaParametrosSaidaTela.Split('|');
-                    //string[] arrParamEntradaBanco = listaParametrosEntradaBanco.Split('|');
-                    //string[] arrParamSaidaBanco = listaParametrosSaidaBanco.Split('|');
-
-                    //if (arrParamEntradaBanco[0] != "")
-                    //{
-                    //    for (int i = 0; i < arrParamEntradaBanco.Length; i++)
-                    //    {
-                    //        string[] arrTempParamEntBanco = arrParamEntradaBanco[i].Split(',');
-                    //        int idParamBanco = Int32.Parse(arrTempParamEntBanco[0]);
-                    //        int tipoParamBanco = (int)EnumTipoParametro.Input;
-                    //        // Caso tenha parâmetros de entrada na tela
-                    //        #region
-                    //        if (arrParamEntradaTela[0] != "")
-                    //        {
-                    //            bool temp = false;
-                    //            for (int x = 0; x < arrParamEntradaTela.Length; x++)
-                    //            {
-                    //                string[] arrTempParamEntTela = arrParamEntradaTela[x].Split(',');
-                    //                if (arrTempParamEntTela[0] == arrTempParamEntBanco[0])
-                    //                {
-                    //                    temp = true;
-                    //                    int idParam = Int32.Parse(arrTempParamEntTela[0]);
-                    //                    int tipoParam = (int)EnumTipoParametro.Input;
-                    //                    ParametroScript ps = db.ParametroScript.Where(y => y.IdParametro == idParam).Where(y => y.IdScript_CondicaoScript == IdScript_CondicaoScript).Where(y => y.IdTipoParametro == tipoParam).First();
-                    //                    if (arrTempParamEntTela[1] != arrTempParamEntBanco[1])
-                    //                    {
-                    //                        ps.Obrigatorio = Convert.ToBoolean(arrTempParamEntTela[1]);
-                    //                        db.ParametroScript.Attach(ps);
-                    //                        //Prepara a entidade para uma Edição
-                    //                        db.Entry(ps).State = System.Data.Entity.EntityState.Modified;
-                    //                    }
-                    //                    if (arrTempParamEntTela[2] != arrTempParamEntBanco[2])
-                    //                    {
-                    //                        ps.VisivelEmTela = Convert.ToBoolean(arrTempParamEntTela[2]);
-                    //                        db.ParametroScript.Attach(ps);
-                    //                        //Prepara a entidade para uma Edição
-                    //                        db.Entry(ps).State = System.Data.Entity.EntityState.Modified;
-                    //                    }
-                    //                    if (arrTempParamEntTela[3] != arrTempParamEntBanco[3])
-                    //                    {
-                    //                        ps.ValorDefault = arrTempParamEntTela[3];
-                    //                        db.ParametroScript.Attach(ps);
-                    //                        //Prepara a entidade para uma Edição
-                    //                        db.Entry(ps).State = System.Data.Entity.EntityState.Modified;
-                    //                    }
-                    //                }
-                    //            }
-                    //            if (temp == false)
-                    //            {
-                    //                ParametroScript ps = db.ParametroScript.Where(y => y.IdParametro == idParamBanco).Where(y => y.IdScript_CondicaoScript == IdScript_CondicaoScript).Where(y => y.IdTipoParametro == tipoParamBanco).First();
-                    //                db.ParametroScript.Remove(ps);
-                    //            }
-                    //        }
-                    //        #endregion
-                    //        //Caso não tenha parâmetros de entrada na tela
-                    //        #region
-                    //        else
-                    //        {
-                    //            int idParam = Int32.Parse(arrTempParamEntBanco[i]);
-                    //            int tipoParam = (int)EnumTipoParametro.Input;
-                    //            ParametroScript ps = db.ParametroScript.Where(y => y.IdParametro == idParam).Where(y => y.IdScript_CondicaoScript == IdScript_CondicaoScript).Where(y => y.IdTipoParametro == tipoParam).First();
-                    //            db.ParametroScript.Remove(ps);
-                    //            //db.SaveChanges();
-                    //        }
-                    //        #endregion
-                    //    }
-                    //}
-                    ////db.SaveChanges();
-                    //if (arrParamSaidaBanco[0] != "")
-                    //{
-                    //    for (int i = 0; i < arrParamSaidaBanco.Length; i++)
-                    //    {
-                    //        string[] arrTempParamSaiBanco = arrParamSaidaBanco[i].Split(',');
-                    //        bool temp = false;
-                    //        // Caso tenha parâmetros de saida na tela
-                    //        #region
-                    //        if (arrParamSaidaTela[0] != "")
-                    //        {
-
-                    //            for (int x = 0; x < arrParamSaidaTela.Length; x++)
-                    //            {
-                    //                string[] arrTempParamSaiTela = arrParamSaidaTela[x].Split(',');
-                    //                if (arrTempParamSaiTela[0] == arrTempParamSaiBanco[0])
-                    //                {
-                    //                    temp = true;
-                    //                    int idParam = Int32.Parse(arrTempParamSaiTela[0]);
-                    //                    int tipoParam = (int)EnumTipoParametro.Output;
-                    //                    ParametroScript ps = db.ParametroScript.Where(y => y.IdParametro == idParam).Where(y => y.IdScript_CondicaoScript == IdScript_CondicaoScript).Where(y => y.IdTipoParametro == tipoParam).First();
-                    //                    if (arrTempParamSaiTela[1] != arrTempParamSaiBanco[1])
-                    //                    {
-                    //                        ps.Obrigatorio = Convert.ToBoolean(arrTempParamSaiTela[1]);
-                    //                        db.ParametroScript.Attach(ps);
-                    //                        //Prepara a entidade para uma Edição
-                    //                        db.Entry(ps).State = System.Data.Entity.EntityState.Modified;
-                    //                    }
-                    //                    if (arrTempParamSaiTela[2] != arrTempParamSaiBanco[2])
-                    //                    {
-                    //                        ps.VisivelEmTela = Convert.ToBoolean(arrTempParamSaiTela[2]);
-                    //                        db.ParametroScript.Attach(ps);
-                    //                        //Prepara a entidade para uma Edição
-                    //                        db.Entry(ps).State = System.Data.Entity.EntityState.Modified;
-                    //                    }
-                    //                    if (arrTempParamSaiTela[3] != arrTempParamSaiBanco[3])
-                    //                    {
-                    //                        ps.ValorDefault = arrTempParamSaiTela[3];
-                    //                        db.ParametroScript.Attach(ps);
-                    //                        //Prepara a entidade para uma Edição
-                    //                        db.Entry(ps).State = System.Data.Entity.EntityState.Modified;
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //        #region
-                    //        else
-                    //        {
-                    //            int idParam = Int32.Parse(arrTempParamSaiBanco[i]);
-                    //            int tipoParam = (int)EnumTipoParametro.Output;
-                    //            ParametroScript ps = db.ParametroScript.Where(y => y.IdParametro == idParam).Where(y => y.IdScript_CondicaoScript == IdScript_CondicaoScript).Where(y => y.IdTipoParametro == tipoParam).First();
-                    //            db.ParametroScript.Remove(ps);
-                    //            //db.SaveChanges();
-                    //        }
-                    //        #endregion
-                    //        if (temp == false)
-                    //        {
-                    //            int idParam = Int32.Parse(arrTempParamSaiBanco[0]);
-                    //            int tipoParam = (int)EnumTipoParametro.Output;
-                    //            ParametroScript ps = db.ParametroScript.Where(y => y.IdParametro == idParam).Where(y => y.IdScript_CondicaoScript == IdScript_CondicaoScript).Where(y => y.IdTipoParametro == tipoParam).First();
-                    //            db.ParametroScript.Remove(ps);
-                    //            db.SaveChanges();
-                    //        }
-                    //        #endregion
-                    //        //Caso não tenha parâmetros de saida na tela
-
-                    //    }
-                    //}
-
-                    //if (arrParamEntradaTela[0] != "")
-                    //{
-                    //    for (int i = 0; i < arrParamEntradaTela.Length; i++)
-                    //    {
-                    //        string[] arrTempParamEntTela = arrParamEntradaTela[i].Split(',');
-
-                    //        // Caso tenha parâmetros de entrada no banco
-                    //        #region
-                    //        if (arrParamEntradaBanco[0] != "")
-                    //        {
-                    //            bool temp = false;
-                    //            for (int x = 0; x < arrParamEntradaBanco.Length; x++)
-                    //            {
-                    //                string[] arrTempParamEntBanco = arrParamEntradaBanco[x].Split(',');
-                    //                if (arrTempParamEntTela[0] == arrTempParamEntBanco[0])
-                    //                {
-                    //                    temp = true;
-                    //                }
-                    //            }
-                    //            if (temp == false)
-                    //            {
-                    //                ParametroScript ps = new ParametroScript()
-                    //                {
-                    //                    IdParametro = Int32.Parse(arrTempParamEntTela[0]),
-                    //                    IdScript_CondicaoScript = IdScript_CondicaoScript,
-                    //                    IdTipoParametro = (int)EnumTipoParametro.Input,
-                    //                    ValorDefault = arrTempParamEntTela[3],
-                    //                    Obrigatorio = Convert.ToBoolean(arrTempParamEntTela[1]),
-                    //                    VisivelEmTela = Convert.ToBoolean(arrTempParamEntTela[2])
-                    //                };
-                    //                db.ParametroScript.Add(ps);
-                    //            }
-                    //        }
-                    //        #endregion
-                    //    }
-                    //}
-
-                    //if (arrParamSaidaTela[0] != "")
-                    //{
-                    //    for (int i = 0; i < arrParamSaidaTela.Length; i++)
-                    //    {
-                    //        string[] arrTempParamSaiTela = arrParamSaidaTela[i].Split(',');
-
-                    //        // Caso tenha parâmetros de saida no banco
-                    //        #region
-                    //        if (arrParamSaidaBanco[0] != "")
-                    //        {
-                    //            bool temp = false;
-                    //            for (int x = 0; x < arrParamSaidaBanco.Length; x++)
-                    //            {
-                    //                string[] arrTempParamSaiBanco = arrParamSaidaBanco[x].Split(',');
-                    //                if (arrTempParamSaiTela[0] == arrTempParamSaiBanco[0])
-                    //                {
-                    //                    temp = true;
-                    //                }
-                    //            }
-                    //            if (temp == false)
-                    //            {
-                    //                ParametroScript ps = new ParametroScript()
-                    //                {
-                    //                    IdParametro = Int32.Parse(arrTempParamSaiTela[0]),
-                    //                    IdScript_CondicaoScript = IdScript_CondicaoScript,
-                    //                    IdTipoParametro = (int)EnumTipoParametro.Output,
-                    //                    ValorDefault = arrTempParamSaiTela[3],
-                    //                    Obrigatorio = Convert.ToBoolean(arrTempParamSaiTela[1]),
-                    //                    VisivelEmTela = Convert.ToBoolean(arrTempParamSaiTela[2])
-                    //                };
-                    //                db.ParametroScript.Add(ps);
-                    //            }
-                    //        }
-                    //        #endregion
-                    //    }
-                    //}
-
-                    //db.SaveChanges();
-
                 }
                 #endregion
                 #region
@@ -1248,7 +977,6 @@ namespace LaefazWeb.Controllers
                         context.ParametroScript.Add(ps);
                         context.SaveChanges();
                         log.Info("Parametro adicionado com sucesso na tabela parametro_script");
-                        log.Debug("ParametroScript = " + Util.ToString(ps));
                     }
                     //Adicionar na tabela ParametroScript os parametros de saida
                     for (int i = 0; i < listaParametrosSaidaTela.Count; i++)
@@ -1265,7 +993,6 @@ namespace LaefazWeb.Controllers
                         context.ParametroScript.Add(ps);
                         context.SaveChanges();
                         log.Info("Parametro adicionado com sucesso na tabela parametro_script");
-                        log.Debug("ParametroScript = " + Util.ToString(ps));
                     }
                     retorno = true;
                 }
@@ -1355,7 +1082,6 @@ namespace LaefazWeb.Controllers
 
                             // informa que o objeto será modificado
                             log.Info("Script editado com sucesso");
-                            log.Debug("Script: " + Util.ToString(scriptVO.Script));
 
                             string nomeAUTO = (from aut in db.AUT
                                                where aut.Id == scriptVO.Script.IdAUT
@@ -1363,8 +1089,13 @@ namespace LaefazWeb.Controllers
                             nomeAUTO = nomeAUTO.Replace(" ", "_");
                             nomeAUTO = nomeAUTO.Replace(".", "");
 
+                            if (nomeAUTO == "SIEBEL")
+                            {
+                                nomeAUTO = "SIEBEL_63";
+                            }
+
                             string listaExecucao = ConfigurationSettings.AppSettings["ListaExecucaoTosca"];
-                            listaExecucao += nomeAUTO + "/" + scriptVO.Script_CondicaoScript.NomeTecnicoScript;
+                            listaExecucao += "DEV/" + nomeAUTO + "/" + scriptVO.Script_CondicaoScript.NomeTecnicoScript;
 
                             string caminhoArquivoTCS = ConfigurationSettings.AppSettings["CaminhoArquivoTCS"];
                             string nomeAlterado = scriptVO.Script_CondicaoScript.NomeTecnicoScript.ToLower();
@@ -1373,7 +1104,7 @@ namespace LaefazWeb.Controllers
 
                             string diretorioRelatorio = ConfigurationSettings.AppSettings["DiretorioRelatorio"];
 
-                            Script_CondicaoScript scs = context.Script_CondicaoScript.Where(x => x.IdScript == s.Id).FirstOrDefault();
+                            Script_CondicaoScript scs = context.Script_CondicaoScript.Where(x => x.Id == scriptVO.Script_CondicaoScript.Id).FirstOrDefault();
 
                             DateTime tempo = scriptVO.Script_CondicaoScript.TempoEstimadoExecucao;
 
@@ -1384,7 +1115,8 @@ namespace LaefazWeb.Controllers
                             scs.IdScript = scriptVO.Script_CondicaoScript.IdScript;
                             scs.QueryTosca = MakeQueryTosca(scriptVO.ListaParametros);
                             scs.TempoEstimadoExecucao = tempo;
-
+                            scs.IdPlataforma = scriptVO.Script_CondicaoScript.IdPlataforma;
+                            scs.IdStatusScript = scriptVO.Script_CondicaoScript.IdStatusScript;
 
                             context.Script_CondicaoScript.Attach(scs);
 
@@ -1392,8 +1124,7 @@ namespace LaefazWeb.Controllers
                             context.Entry(scs).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
 
-                            log.Info("ScriptCondiçãoScript adicionado com sucesso");
-                            log.Debug("ScriptCondiçãoScript = " + Util.ToString(scs));
+                            log.Info("ScriptCondiçãoScript editado com sucesso");
 
                             inserirAmbientes(scs.Id, scriptVO.AmbienteExecucao, scriptVO.AmbienteVirtual, context, true);
                             //inserirAmbientes(scs.Id, );
@@ -1450,10 +1181,9 @@ namespace LaefazWeb.Controllers
 
                                 if (ValidarScript == null)
                                 {
-                                    context.Script.Add(script);
-                                    context.SaveChanges();
-                                    log.Info("Script adicionado com sucesso");
-                                    log.Debug("Script = " + Util.ToString(script));
+                                    db.Script.Add(script);
+                                    db.SaveChanges();
+                                    log.Info("Script adicionado com sucesso");                                    
                                 }
                                 else
                                 {
@@ -1463,13 +1193,18 @@ namespace LaefazWeb.Controllers
                                 #endregion
 
                                 string nomeAUTO = (from aut in db.AUT
-                                                   where aut.Id == script.IdAUT
+                                                   where aut.Id == scriptVO.Script.IdAUT
                                                    select aut.Descricao).First();
                                 nomeAUTO = nomeAUTO.Replace(" ", "_");
                                 nomeAUTO = nomeAUTO.Replace(".", "");
 
+                                if (nomeAUTO == "SIEBEL")
+                                {
+                                    nomeAUTO = "SIEBEL_63";
+                                }
+
                                 string listaExecucao = ConfigurationSettings.AppSettings["ListaExecucaoTosca"];
-                                listaExecucao += nomeAUTO + "/" + nomeTecnicoScript;
+                                listaExecucao += "DEV/" + nomeAUTO + "/" + scriptVO.Script_CondicaoScript.NomeTecnicoScript;
 
                                 string caminhoArquivoTCS = ConfigurationSettings.AppSettings["CaminhoArquivoTCS"];
                                 string nomeAlterado = nomeTecnicoScript.ToLower();
@@ -1489,11 +1224,11 @@ namespace LaefazWeb.Controllers
                                 scs.DiretorioRelatorio = diretorioRelatorio;
                                 scs.TempoEstimadoExecucao = tempo;
                                 scs.NomeTecnicoScript = nomeTecnicoScript;
+                                scs.IdStatusScript = scriptVO.Script_CondicaoScript.IdStatusScript;
 
                                 context.Script_CondicaoScript.Add(scs);
                                 context.SaveChanges();
                                 log.Info("ScriptCondiçãoScript adicionado com sucesso");
-                                log.Debug("ScriptCondiçãoScript = " + Util.ToString(scs));
 
                                 //Adicionar os ambientes na tabela de Script_CondicaoScriptAmbiente
                                 int IdScript_CondicaoScript = scs.Id;

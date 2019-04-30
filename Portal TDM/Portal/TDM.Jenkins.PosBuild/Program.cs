@@ -20,7 +20,6 @@ namespace TDM.Jenkins.PosBuild
 {
     class Program
     {
-
         private static string Canal = ConfigurationSettings.AppSettings["CanalTelegram"];
         private static string TokenBotTelegram = ConfigurationSettings.AppSettings["TokenBotTelegram"];
         private static string Message = "";
@@ -54,7 +53,7 @@ namespace TDM.Jenkins.PosBuild
 
                 Ip = GetIpLocal();
 #if DEBUG
-                Ip = "10.43.6.219";
+                Ip = "10.43.6.141";
 #endif
                 #region Debug
                 Log.Info("IP recuperado com sucesso.");
@@ -164,7 +163,7 @@ namespace TDM.Jenkins.PosBuild
                                 Log.Info("A execução de ID: " + item.Id + " foi cancelada pelo usuário '" + usuario.Login + "'");
                                 break;
                             }
-
+                            
 
                             #region Define início execução
                             Execucao exec = db.Execucao.FirstOrDefault(x => x.Id == item.Id);
@@ -238,15 +237,25 @@ namespace TDM.Jenkins.PosBuild
                                 Console.ReadLine();
                             }
 
+                            Execucao ex_tmp = db.Execucao.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                            TipoFaseTeste tp_fase_teste = db.TipoFaseTeste.Where(x => x.Id == ex_tmp.IdTipoFaseTeste).FirstOrDefault();
+
+                            Log.Info("Fase de teste selecionada:" + tp_fase_teste.Descricao);
+
+                            string listaExecucaoTosca = item.ListaExecucaoTosca.Replace("AMBIENTE", tp_fase_teste.Descricao);
                             //criação do script tcs que será usado pelo tcshell do tosca
                             Log.Info("Criando Arquivo TCS do Tcshell");
                             string tcs = ConfigurationSettings.AppSettings["ArquivoTCS"];
 
                             tcs = tcs.Replace("@QuebraLinha ", Environment.NewLine);
                             tcs = tcs.Replace("@LimpaLog", "\"Clear Log\"");
-                            tcs = tcs.Replace("@ListaExecucaoTosca", "\"" + item.ListaExecucaoTosca + "\"");
+                            tcs = tcs.Replace("@ListaExecucaoTosca", "\"" + listaExecucaoTosca + "\"" + " task \"Checkout tree\" ");
+                            //tcs = tcs.Replace("@ListaExecucaoTosca", "\"" + item.ListaExecucaoTosca + "\"");
+                            //tcs = tcs.Replace("@ListaExecucaoTosca", "\"" + "/Execution/ExecutionLists/DEV/SIEBEL_63/TI/CONTATO_E_CONTA_PF_SEM_ENVIO_CDI" + "\"" + " task \"Checkout tree\" ");
                             tcs = tcs.Replace("@NomeRelatorio", "\"Print Report ... TDMREPORT\"");
-                            tcs = tcs.Replace("@DiretorioRelatorio", "\"" + item.DiretorioRelatorio + "\"");
+                            tcs = tcs.Replace("@DiretorioRelatorio", "\"" + item.DiretorioRelatorio + "\" checkinall");
+                            //tcs = tcs.Replace("@DiretorioRelatorio", "\"" + item.DiretorioRelatorio + "\"");
 
                             CriaArquivoTCS(tcs, item.CaminhoArquivoTCS);
 
@@ -263,8 +272,9 @@ namespace TDM.Jenkins.PosBuild
                             strcmdtext.Add(@"tcshell -workspace");
                             //strcmdtext.Add(@" ""C:\Tosca_Projects\Tosca_Workspaces\Workspace_TRG_Fev\portal_remote\portal_remote.tws"" ");
                             strcmdtext.Add(@ConfigurationSettings.AppSettings["ToscaWorkspace"]);
-
                             Log.Debug("Workspace escolhido = " + @ConfigurationSettings.AppSettings["ToscaWorkspace"]);
+
+                            strcmdtext.Add(" -login \"credencial_atmp\" \"@utomaoi\"");
 
                             strcmdtext.Add(" -executionmode");
                             strcmdtext.Add(@" """ + item.CaminhoArquivoTCS + "\" ");
@@ -874,11 +884,11 @@ namespace TDM.Jenkins.PosBuild
 
                     Log.Info("Script_CondicaoScript carregada");
 
-                    for (int i = 1; i < Parametros.Count; i++)
+                    for (int i = 1; i+1 <= Parametros.Count; i++)
                     {
-                        sheet.Cells[1, i].Value = Parametros[i].DescricaoParametro;
+                        sheet.Cells[1, i].Value = Parametros[i-1].DescricaoParametro;
                         sheet.Cells[1, i].Worksheet.Cells["A1:Z1"].Style.Font.Bold = true;
-                        sheet.Cells[2, i].Value = Parametros[i].Valor;
+                        sheet.Cells[2, i].Value = Parametros[i-1].Valor;
                     }
                     Log.Info("Fim da criação dos títulos das colunas");
 
@@ -886,7 +896,7 @@ namespace TDM.Jenkins.PosBuild
                     string nomeTecnicoScript = "\\" + scs.NomeTecnicoScript + ".xls";
                     path += nomeTecnicoScript;
                     File.WriteAllBytes(path, excelPackage.GetAsByteArray());
-                    Log.Info("Arquivo criado com sucesso.");
+                    Log.Info("Arquivo criado com sucesso no caminho: " + path);
                 }
 
                 Log.Info("O arquivo Excel foi criado com sucesso.");

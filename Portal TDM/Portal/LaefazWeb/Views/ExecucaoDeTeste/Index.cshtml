@@ -31,6 +31,15 @@
         .imgExcluir {
             cursor: pointer;
         }
+
+
+        /*#box-parametros-entrada {
+            overflow: auto;
+        }
+
+        #box-parametros-saida {
+            overflow: auto;
+        }*/
     </style>
 }
 
@@ -218,7 +227,7 @@
 
 
 <div class="modal fade in" id="modal-play">
-    <div class="modal-dialog" style="margin-top:5%">
+    <div class="modal-dialog" style="margin-top:5%; width:45%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -228,51 +237,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <input type="hidden" id="IdMassas" value="" />
-                    <div class="col-xs-12 form-group">
-                        @Html.Label("escolher_ambiente", "Ambiente")
-                        @Html.DropDownList("escolher_ambiente", new SelectList(ViewBag.ListaAmbienteExec, "IdAmbienteExecucao", "DescricaoAmbienteExecucao"), null, new
-                   {
-                       @class = "form-control",
-                       @id = "list_escolher_ambiente",
-                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
-                       @required = "required",
-                   }
-                    )
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4 form-group">
-                        @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
-                        @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirt, "IdAmbienteVirtual", "DescricaoAmbienteVirtual"), null, new
-                   {
-                       @class = "form-control",
-                       @id = "list_escolher_maquina_virtual",
-                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
-                       @required = "required",
-                   }
-                    )
-                    </div>
-                    <div class="col-xs-4 form-group">
-                        @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
-                        @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
-                   {
-                       @class = "form-control",
-                       @id = "list_escolher_tipo_fase_teste",
-                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
-                       @required = "required",
-                   }
-                    )
-                    </div>
-                    <div class="col-xs-4 form-group">
-                        @Html.Label("deseja_receber_status_via_telegram", "Notificação via Telegram?")
-                        <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
-                            <option value='1'>Sim</option>
-                            <option value='0'>Não</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
+                    <input type="hidden" id="IdPlanoTeste_TI_modal" value="" />
                     <div class="col-xs-12 form-group">
                         @Html.Label("escolher_script", "Script")
                         @Html.DropDownList("escolher_dropdownlist_script", new SelectList(ViewBag.ListaScript, "Id", "Descricao"), null, new
@@ -283,6 +248,74 @@
                        @required = "required",
                    }
                     )
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        @Html.Label("escolher_testData", "TestData")
+                        @Html.DropDownList("escolher_dropdownlist_testData", new SelectList(ViewBag.ListaTestData, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "dropdownlist_testData",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                </div>
+
+                <div class="box box-header collapsed-box">
+                    <h4 class="box-title">Parâmetros</h4>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="box-body" id="div-box-parametros">
+                        @*codigo gerado no javascript*@
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="hidden" id="IdMassas" value="" />
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("escolher_ambiente", "Ambiente")
+                        @Html.DropDownList("escolher_ambiente", new SelectList(ViewBag.ListaAmbienteExec, "IdAmbienteExecucao", "DescricaoAmbienteExecucao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_ambiente",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("escolher_maquina_virtual", "Máquina Virtual")
+                        @Html.DropDownList("maquina_virtual", new SelectList(ViewBag.ListaAmbienteVirt, "IdAmbienteVirtual", "DescricaoAmbienteVirtual"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_maquina_virtual",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("escolher_tipo_da_fase_de_teste", "Fase de Teste")
+                        @Html.DropDownList("escolher_fase_teste", new SelectList(ViewBag.ListaTipoFaseTeste, "Id", "Descricao"), null, new
+                   {
+                       @class = "form-control",
+                       @id = "list_escolher_tipo_fase_teste",
+                       @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                       @required = "required",
+                   }
+                    )
+                    </div>
+                    <div class="col-xs-3 form-group">
+                        @Html.Label("deseja_receber_status_via_telegram", "Notificação via Telegram?")
+                        <select id='opcaoNotificacaoTelegram' class="form-control" style="width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;" required>
+                            <option value='1'>Sim</option>
+                            <option value='0'>Não</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -347,6 +380,46 @@
 
         $("#list_escolher_motivo_ofensor").select2({
             placeholder: "Selecione o motivo.",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $('#dropdownlist_script').select2({
+            placeholder: "Selecione o Script.",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $('#dropdownlist_testData').select2({
+            placeholder: "Selecione o TestData.",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $('#list_escolher_ambiente').select2({
+            placeholder: "Selecione o Ambiente.",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
+
+        $('#list_escolher_maquina_virtual').select2({
+            placeholder: "Selecione a Máquina Virtual.",
             "language": {
                 "noResults": function () {
                     return "Nenhum resultado encontrado.";
@@ -971,6 +1044,10 @@
                             $('#selectExecAutomatizada-' + IdPlanoTeste_TI).val('');
                         }
                     });
+                } else {
+                    $.MessageBoxOK({ mensagem: "Não é possível marcar um CT como automatizado quando ele não possui script associado a ele." });
+                    $('#selectExecAutomatizada-' + IdPlanoTeste_TI).val('');
+                    return;
                 }
             }
         }
@@ -1295,13 +1372,154 @@
             return result;
         }
 
-        function modalPlay(IdPlanoTeste_TI) {
-            $('#modal-play').modal('toggle');
+        function CarregarTestDatas(IdScript_CondicaoScript, idPlanoTeste_TI) {
 
-            if(IdPlanoTeste_TI != 0){
+            if (IdScript_CondicaoScript != 0) {
+                return $.ajax({
+                    url: '@Url.Action("CarregarTestDatas", "ExecucaoDeTeste")',
+                    data: "{'IdScript_CondicaoScript':'" + IdScript_CondicaoScript + "', 'IdPlanoTeste_TI':'" + idPlanoTeste_TI + "'}",
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    cache: false,
+                    async: false,
+                    beforeSend: function () {
+                        $("#Loading").show();
+                        //console.log("Starting...");
+                    },
+                    complete: function () {
+                        $("#Loading").fadeOut();
+                        //console.log("Complete!");
+                    },
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        var cmp_testData = $('#dropdownlist_testData');
+                        cmp_testData.empty();
+                        cmp_testData.append(new Option("", ""));
+
+                        obj.forEach(function (o, index) {
+                            cmp_testData.append(new Option(o.IdTestData + " - " + o.MassaDeDados, o.IdTestData))
+                        });
+
+                    },
+                    error: function () {
+                        result = false;
+                    }
+                });
+            }
+        }
+
+        $('#dropdownlist_testData').on('change', function () {
+            var divParametros = $('#div-box-parametros');
+            var IdTestData = $('#dropdownlist_testData').val();
+            CarregarParametrosTestData(IdTestData);
+        });
+
+        function play() {
+            var script = $('#dropdownlist_script').val();
+            var testData = $('#dropdownlist_testData').val();
+            var ambiente = $('#list_escolher_ambiente').val()
+            var maquina_virtual = $('#list_escolher_maquina_virtual').val();
+            var fase_de_teste = $('#list_escolher_tipo_fase_teste').val();
+            var notificacao_telegram = $('#opcaoNotificacaoTelegram').val();
+
+            if (script != "" && testData != "" && ambiente != "" && maquina_virtual != "" && fase_de_teste != "" && notificacao_telegram != "") {
+
                 $.ajax({
-                    url: '@Url.Action("CarregarDadosModalPlay", "ExecucaoDeTeste")',
-                    data: "{'IdPlanoTeste_TI':'" + IdPlanoTeste_TI + "'}",
+                    url: '@Url.Action("Play", "ExecucaoDeTeste")',
+                    type: 'POST',
+                    data: "{'IdTestData':'" + testData + "', 'IdFaseTeste':'" + fase_de_teste + "','IdMaquinaVirtual':'" + maquina_virtual + "','OpcaoTelegram':'" + notificacao_telegram + "','IdAmbienteExecucao':'" + ambiente + "','PlayTestData':'" + true + "' }",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#modal-play').modal('toggle');
+                        $.MessageBoxOK({ mensagem: data.Data });
+                    },
+                    error: function (erro) {
+                        $.MessageBoxOK({ mensagem: "Não foi possível iniciar a execução." });
+                    }
+                });
+            }
+        }
+
+        function CarregarParametrosTestData(IdTestData) {
+            $.ajax({
+                url: '@Url.Action("CarregarParametrosTestData", "ExecucaoDeTeste")',
+                data: "{'IdTestData':'" + IdTestData + "'}",
+                contentType: 'application/json; charset=utf-8',
+                type: "POST",
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#Loading").show();
+                    //console.log("Starting...");
+                },
+                complete: function () {
+                    $("#Loading").fadeOut();
+                    //console.log("Complete!");
+                },
+                success: function (data) {
+                    var $divParametros = $('#div-box-parametros');
+                    var divRow = "<div class='row'>";
+
+                    var paramEntrada = "<div class='col-xs-6 form-group' style='height: 20%; overflow: auto;'><div class='box box-primary' id='box-parametros-entrada'><div class='box-header with-border'><h3 class='box-title'>Entrada</h3></div><div class='box-body' id='parametros-entrada'>";
+                    var paramSaida = "<div class='col-xs-6 form-group' style='height: 20%; overflow: auto;'><div class='box box-primary' id='box-parametros-saida'><div class='box-header with-border'><h3 class='box-title'>Saída</h3></div><div class='box-body' id='parametros-saida'>";
+
+                    var tableEntrada = "<table class='table'><thead><tr><th>Parâmetro</th><th>Valor</th></tr></thead><tbody>";
+                    var tableSaida = "<table class='table'><thead><tr><th>Parâmetro</th><th>Valor</th></tr></thead><tbody>";
+
+                    data.forEach(function (o, index) {
+                        if (o.IdTipoParametro == 2) {
+                            tableSaida += "<tr><td>" + o.DescricaoParametro + "</td><td>" + o.Valor + "</td></tr>";
+
+                        } else {
+                            tableEntrada += "<tr><td>" + o.DescricaoParametro + "</td><td>" + o.Valor + "</td></tr>";
+                        }
+                    });
+
+                    tableEntrada += "</tbody></table></div></div></div>";
+                    tableSaida += "</tbody></table></div></div></div>";
+
+                    paramEntrada += tableEntrada;
+                    paramSaida += tableSaida;
+
+                    divRow += paramEntrada + paramSaida + "</div>";
+
+                    $divParametros.html(divRow);
+
+                    //$('#parametros-testData').modal('show');
+
+                },
+                error: function () {
+                    result = false;
+                }
+            });
+        }
+
+        function addLinha(campos) {
+            var iniLinha = "<div class=\"row\">";
+            var linha = "";
+            var fimLinha = "</div>";
+            for (var i = 0; i < campos.length; i++) {
+                linha += campos[i];
+            }
+
+            return iniLinha + linha + fimLinha;
+        }
+
+        $("#dropdownlist_script").on('change', function () {
+            var idScript_CondicaoScript = $('#dropdownlist_script').val();
+            var idPlanoTeste_TI = $('#IdPlanoTeste_TI_modal').val();
+            //carrega os testdatas e quando termina, carrega os ambientes
+            CarregarTestDatas(idScript_CondicaoScript, idPlanoTeste_TI).done(function () {
+                CarregarAmbientes(idScript_CondicaoScript);
+            });
+        });
+
+        function CarregarAmbientes(IdScript_CondicaoScript) {
+            if (IdScript_CondicaoScript != "") {
+                $.ajax({
+                    url: '@Url.Action("CarregarAmbientes", "ExecucaoDeTeste")',
+                    data: "{'IdScript_CondicaoScript':'" + IdScript_CondicaoScript + "'}",
                     contentType: 'application/json; charset=utf-8',
                     type: "POST",
                     cache: false,
@@ -1317,7 +1535,63 @@
                     success: function (data) {
                         var obj = JSON.parse(data);
 
-                        
+                        var objAmbVirt = JSON.parse(obj.ambvirtu);
+                        var objAmbExec = JSON.parse(obj.ambexec);
+
+                        var cmp_amb = $('#list_escolher_ambiente');
+                        var cmp_maq_virt = $('#list_escolher_maquina_virtual');
+
+                        cmp_maq_virt.empty();
+                        cmp_maq_virt.append(new Option("", ""));
+
+                        cmp_amb.empty();
+                        cmp_amb.append(new Option("", ""));
+
+                        objAmbExec.forEach(function (o, index) {
+                            cmp_amb.append(new Option(o.DescricaoAmbienteExecucao, o.IdAmbienteExecucao))
+                        });
+
+                        objAmbVirt.forEach(function (o, index) {
+                            cmp_maq_virt.append(new Option(o.DescricaoAmbienteVirtual, o.IdAmbienteVirtual))
+                        });
+
+                    },
+                    error: function () {
+                        result = false;
+                    }
+                });
+            }
+        }
+
+        function modalPlay(IdPlanoTeste_TI) {
+            $('#modal-play').modal('toggle');
+
+            if (IdPlanoTeste_TI != 0) {
+                $.ajax({
+                    url: '@Url.Action("CarregarDadosScript", "ExecucaoDeTeste")',
+                    data: "{'IdPlanoTeste_TI':'" + IdPlanoTeste_TI + "'}",
+                    contentType: 'application/json; charset=utf-8',
+                    type: "POST",
+                    cache: false,
+                    async: true,
+                    beforeSend: function () {
+                        $("#Loading").show();
+                        //console.log("Starting...");
+                    },
+                    complete: function () {
+                        $("#Loading").fadeOut();
+                        //console.log("Complete!");
+                    },
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        var cmp_script = $('#dropdownlist_script');
+                        cmp_script.empty();
+                        cmp_script.append(new Option("", ""));
+
+                        obj.forEach(function (o, index) {
+                            cmp_script.append(new Option(o.DescricaoScript, o.IdScript_CondicaoScript))
+                        });
+                        $('#IdPlanoTeste_TI_modal').val(IdPlanoTeste_TI);
                     },
                     error: function () {
                         result = false;

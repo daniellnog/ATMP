@@ -1,0 +1,24 @@
+22-04-2019 11:53:56 [ERROR] (LaefazWeb.Controllers.TestDataController - line 74) - Erro ao editar tesdata. CODIGO_ERRO: 22970169
+System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.TestDataController.SalvarEdicao(TestData objeto) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\TestDataController.cs:line 140
+22-04-2019 11:54:20 [ERROR] (LaefazWeb.Controllers.TestDataController - line 74) - Erro ao editar tesdata. CODIGO_ERRO: 22970169
+System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.TestDataController.SalvarEdicao(TestData objeto) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\TestDataController.cs:line 140
+22-04-2019 11:56:33 [ERROR] (LaefazWeb.Controllers.TestDataController - line 74) - Erro ao editar tesdata. CODIGO_ERRO: 22970169
+System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.TestDataController.SalvarEdicao(TestData objeto) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\TestDataController.cs:line 140
+22-04-2019 13:40:32 [ERROR] (LaefazWeb.Controllers.TestDataController - line 74) - The type initializer for 'TDMWeb.Extensions.Util' threw an exception.
+System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.TestDataController.Salvar(TestData objeto, Boolean editar) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\TestDataController.cs:line 253

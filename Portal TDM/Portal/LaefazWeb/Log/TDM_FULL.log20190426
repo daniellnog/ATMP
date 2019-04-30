@@ -1,0 +1,99 @@
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ScriptCondiçãoScript adicionado com sucesso
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Ambiente adicionado com sucesso na tabela Script_CondicaoScript_Ambiente
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Ambiente adicionado com sucesso na tabela Script_CondicaoScript_Ambiente
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:33 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 16:59:34 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Parametro adicionado com sucesso na tabela parametro_script
+26-04-2019 17:34:21 [INFO ] (LaefazWeb.Controllers.DataPoolController - line 101) - DataPool adicionado com sucesso
+26-04-2019 17:34:21 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 68) - System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.DataPoolController.Salvar(DataPool objeto, Boolean editar) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\DataPoolController.cs:line 1389
+26-04-2019 17:34:21 [WARN ] (LaefazWeb.Controllers.DataPoolController - line 115) - Já existe um DataPool com essa descrição.
+26-04-2019 17:35:28 [WARN ] (LaefazWeb.Controllers.DataPoolController - line 115) - O DataPool não pôde ser incluido pois existe um já cadastrado com a mesma condição, script e demanda.
+26-04-2019 17:35:28 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 68) - System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.DataPoolController.Salvar(DataPool objeto, Boolean editar) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\DataPoolController.cs:line 1396
+26-04-2019 17:35:28 [WARN ] (LaefazWeb.Controllers.DataPoolController - line 115) - Já existe um DataPool com essa descrição.
+26-04-2019 17:37:14 [WARN ] (LaefazWeb.Controllers.DataPoolController - line 115) - O DataPool não pôde ser incluido pois existe um já cadastrado com a mesma condição, script e demanda.
+26-04-2019 17:37:14 [ERROR] (LaefazWeb.Controllers.DataPoolController - line 68) - System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.DataPoolController.Salvar(DataPool objeto, Boolean editar) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\DataPoolController.cs:line 1396
+26-04-2019 17:37:14 [WARN ] (LaefazWeb.Controllers.DataPoolController - line 115) - Já existe um DataPool com essa descrição.
+26-04-2019 17:46:14 [ERROR] (LaefazWeb.Controllers.TestDataController - line 74) - The type initializer for 'TDMWeb.Extensions.Util' threw an exception.
+System.TypeInitializationException: The type initializer for 'TDMWeb.Extensions.Util' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at TDMWeb.Extensions.Util..cctor() in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Extensions\Util.cs:line 22
+   --- End of inner exception stack trace ---
+   at TDMWeb.Extensions.Util.ToString(Object obj, StringBuilder sb)
+   at LaefazWeb.Controllers.TestDataController.Salvar(TestData objeto, Boolean editar) in C:\Users\daniel.lima.nogueira\Projetos\Portal TDM\Portal\LaefazWeb\Controllers\TestDataController.cs:line 315
+26-04-2019 17:48:20 [INFO ] (LaefazWeb.Controllers.TestDataController - line 101) - TestData adicionado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - Script editado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ScriptCondiçãoScript editado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:51:06 [INFO ] (LaefazWeb.Controllers.ScriptController - line 101) - ParametroScript atualizado com sucesso
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 0
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 53
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 1
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 165785
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - ParametroValor: ParametroValor_82AD46BEC3D1864086E93D3A6EB9651FCAE87FCE3407E6BE4FC08409DF7D1CE5[{'Object':'ParametroScript','Object':'ParametroValor_Historico','Object':'ParametroValor1','ParametroValor2':'NULL','Object':'TestData','Id':'165785','IdTestData':'9260','IdParametroScript':'975','IdParametroValor_Origem':'','Valor':'TI8',}]
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 50) - AmbienteExecucao: AmbienteExecucao_9B8882199AC9C319FB89A3968CBC6A78C84CA9F3A5AF5B6BA9FBA3CA7C5B865A[{'Object':'DeParaAtmpAlmFase','Object':'Script_CondicaoScript_Ambiente','Id':'1','Descricao':'TI8',}]
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbExec: 1
+26-04-2019 17:52:03 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - _idParamValor: 165785
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 181
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 2
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 182
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 3
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 2
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 4
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 34
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 5
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 24
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 6
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 18
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 7
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 54
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - Indice de repetição: 8
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - listaParametrosObrigatorios[w].IdParametro: 55
+26-04-2019 17:52:04 [DEBUG] (LaefazWeb.Controllers.TestDataController - line 33) - idAmbienteExecucao: 1

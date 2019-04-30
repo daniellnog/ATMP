@@ -97,12 +97,11 @@
                 @*campo condicao script*@
                 <div class="col-xs-4 form-group">
                     @Html.Label("script", "Condição")
-                    @Html.DropDownList("listCondicaoScript", new SelectList(ViewBag.listCondicaoScript, "Id", "Descricao"), null, new
+                    @Html.DropDownList("listCondicaoScript", new SelectList(ViewBag.listCondicaoScript, "Id", "Descricao"), "", new
                {
                    @class = "form-control",
                    @id = "list-script-condicao",
                    @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
-                   @required = "required",
                }
                         )
                 </div>
@@ -172,6 +171,15 @@
             }
         }
 
+        $('#list-script-condicao').select2({
+            placeholder: "Selecione a Condição do script.",
+            "language": {
+                "noResults": function () {
+                    return "Nenhum resultado encontrado.";
+                }
+            },
+            allowClear: true
+        });
         
         $(function () {
             $('#dt_termino').daterangepicker({
@@ -320,6 +328,8 @@
                    $("#list-script-condicao").attr("disabled", true);
                    $("#list-script-condicao").empty();
                } else {
+                   $("#list-script-condicao").append
+                       ($('<option></option>').val("").html(""))
                    $.each(json, function (id, descricao) {
                        $("#list-script-condicao").append
                        ($('<option></option>').val(id).html(descricao))

@@ -550,6 +550,8 @@
                                         input += "<option value=''></option><option value='1P'>1 P</option><option value='2P'>2 P</option><option value='3P' selected>3 P</option><option value='4P'>4 P</option></select></div>";
                                     }else if(o.Valor == '4P'){
                                         input += "<option value=''></option><option value='1P'>1 P</option><option value='2P'>2 P</option><option value='3P'>3 P</option><option value='4P' selected>4 P</option></select></div>";
+                                    } else {
+                                        input += "<option value=''></option><option value='1P'>1 P</option><option value='2P'>2 P</option><option value='3P'>3 P</option><option value='4P'>4 P</option></select></div>";
                                     }
                                 } else {
                                     input = "<div class=\"col-xs-4 form-group\"><label class=" + asteristico + ">" + o.Descricao + "</label><input onfocus='Alterou(1, this)' onblur='Alterou(2, this)' " + readOnly + "  IdParametroScript=" + o.IdParametroScript + " idValor=" + o.Id + " tipo=\"parametro\" name=\"" + o.Descricao + "\" type=\"text\" value=\"" + o.Valor + "\" class=\"form-control\" id=\"" + o.Descricao + "\" " + (o.IdTipoParametro == 1 ? "" : "readonly") + " /></div>";

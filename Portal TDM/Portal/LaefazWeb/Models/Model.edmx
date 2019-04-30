@@ -263,6 +263,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="VARIANTE" Type="nvarchar" MaxLength="256" />
           <Property Name="PRE_CONDICAO" Type="nvarchar" MaxLength="2000" />
           <Property Name="OBS" Type="nvarchar" MaxLength="256" />
+          <Property Name="OBS_2" Type="nchar" MaxLength="256" />
           <Property Name="NRO_CENARIO" Type="numeric" Precision="10" Scale="0" />
           <Property Name="NRO_CT" Type="numeric" Precision="10" Scale="0" />
           <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="nvarchar" MaxLength="32" />
@@ -314,6 +315,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="VARIANTE" Type="nvarchar" MaxLength="256" />
           <Property Name="PRE_CONDICAO" Type="nvarchar" MaxLength="2000" />
           <Property Name="OBS" Type="nvarchar" MaxLength="256" />
+          <Property Name="OBS_2" Type="nchar" MaxLength="256" />
           <Property Name="NRO_CENARIO" Type="numeric" Precision="10" Scale="0" />
           <Property Name="NRO_CT" Type="numeric" Precision="10" Scale="0" />
           <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="nvarchar" MaxLength="32" />
@@ -363,6 +365,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="CaminhoArquivoSVN" Type="varchar(max)" />
           <Property Name="WorkspaceCompartilhado" Type="varchar(max)" />
           <Property Name="IdPlataforma" Type="int" Nullable="false" />
+          <Property Name="IdStatusScript" Type="int" />
         </EntityType>
         <EntityType Name="Script_CondicaoScript_Ambiente">
           <Key>
@@ -395,15 +398,13 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descricao" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="StatusScript">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nchar" MaxLength="50" />
+          <Property Name="Descricao" Type="nchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="TDM">
           <Key>
@@ -889,6 +890,18 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Script_CondicaoScript_StatusScript">
+          <End Role="StatusScript" Type="Self.StatusScript" Multiplicity="0..1" />
+          <End Role="Script_CondicaoScript" Type="Self.Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdStatusScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Script_ScriptPai">
           <End Role="Script" Type="Self.Script" Multiplicity="0..1" />
           <End Role="Script1" Type="Self.Script" Multiplicity="*" />
@@ -1074,7 +1087,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <EntitySet Name="Script_CondicaoScript_CT" EntityType="Self.Script_CondicaoScript_CT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StatusExecucao" EntityType="Self.StatusExecucao" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusScript" EntityType="Self.StatusScript" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDM" EntityType="Self.TDM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TDM_Usuario" EntityType="Self.TDM_Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TelaMapaCalor" EntityType="Self.TelaMapaCalor" Schema="dbo" store:Type="Tables" />
@@ -1223,6 +1236,10 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
             <End Role="Script" EntitySet="Script" />
             <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
           </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_StatusScript" Association="Self.FK_Script_CondicaoScript_StatusScript">
+            <End Role="StatusScript" EntitySet="StatusScript" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
+          </AssociationSet>
           <AssociationSet Name="FK_Script_ScriptPai" Association="Self.FK_Script_ScriptPai">
             <End Role="Script" EntitySet="Script" />
             <End Role="Script1" EntitySet="Script" />
@@ -1330,7 +1347,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <EntitySet Name="Script_CondicaoScript_Ambiente" EntityType="TDM.DbModel.Script_CondicaoScript_Ambiente" />
           <EntitySet Name="Script_CondicaoScript_CT" EntityType="TDM.DbModel.Script_CondicaoScript_CT" />
           <EntitySet Name="Status" EntityType="TDM.DbModel.Status" />
-          <EntitySet Name="sysdiagrams" EntityType="TDM.DbModel.sysdiagrams" />
+          <EntitySet Name="StatusScript" EntityType="TDM.DbModel.StatusScript" />
           <EntitySet Name="TDM" EntityType="TDM.DbModel.TDM" />
           <EntitySet Name="TDM_Usuario" EntityType="TDM.DbModel.TDM_Usuario" />
           <EntitySet Name="TestData" EntityType="TDM.DbModel.TestData" />
@@ -1491,6 +1508,10 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <AssociationSet Name="FK_Script_CondicaoScript_CT_Script_CondicaoScript" Association="TDM.DbModel.FK_Script_CondicaoScript_CT_Script_CondicaoScript">
             <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
             <End Role="Script_CondicaoScript_CT" EntitySet="Script_CondicaoScript_CT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Script_CondicaoScript_StatusScript" Association="TDM.DbModel.FK_Script_CondicaoScript_StatusScript">
+            <End Role="StatusScript" EntitySet="StatusScript" />
+            <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
           </AssociationSet>
           <AssociationSet Name="FK_TestData_Script_CondicaoScript" Association="TDM.DbModel.FK_TestData_Script_CondicaoScript">
             <End Role="Script_CondicaoScript" EntitySet="Script_CondicaoScript" />
@@ -1862,6 +1883,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="VARIANTE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="PRE_CONDICAO" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="OBS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OBS_2" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
           <Property Name="NRO_CENARIO" Type="Decimal" Precision="10" Scale="0" />
           <Property Name="NRO_CT" Type="Decimal" Precision="10" Scale="0" />
           <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
@@ -1914,6 +1936,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="VARIANTE" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="PRE_CONDICAO" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="OBS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OBS_2" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
           <Property Name="NRO_CENARIO" Type="Decimal" Precision="10" Scale="0" />
           <Property Name="NRO_CT" Type="Decimal" Precision="10" Scale="0" />
           <Property Name="EVIDENCIA_VALIDACAO_CLIENTE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
@@ -1969,6 +1992,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="CaminhoArquivoSVN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="WorkspaceCompartilhado" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IdPlataforma" Type="Int32" Nullable="false" />
+          <Property Name="IdStatusScript" Type="Int32" />
           <NavigationProperty Name="CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="CondicaoScript" />
           <NavigationProperty Name="DataPool" Relationship="TDM.DbModel.FK_DataPool_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="DataPool" />
           <NavigationProperty Name="ParametroScript" Relationship="TDM.DbModel.FK_ParametroScript_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="ParametroScript" />
@@ -1976,6 +2000,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <NavigationProperty Name="Script" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Script" FromRole="Script_CondicaoScript" ToRole="Script" />
           <NavigationProperty Name="Script_CondicaoScript_Ambiente" Relationship="TDM.DbModel.FK_Script_CondicaoScript_Ambiente_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="Script_CondicaoScript_Ambiente" />
           <NavigationProperty Name="Script_CondicaoScript_CT" Relationship="TDM.DbModel.FK_Script_CondicaoScript_CT_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="Script_CondicaoScript_CT" />
+          <NavigationProperty Name="StatusScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_StatusScript" FromRole="Script_CondicaoScript" ToRole="StatusScript" />
           <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_Script_CondicaoScript" FromRole="Script_CondicaoScript" ToRole="TestData" />
         </EntityType>
         <EntityType Name="Script_CondicaoScript_Ambiente">
@@ -2009,15 +2034,14 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TestData" Relationship="TDM.DbModel.FK_TestData_Status" FromRole="Status" ToRole="TestData" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="StatusScript">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Descricao" Type="String" MaxLength="250" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Script_CondicaoScript" Relationship="TDM.DbModel.FK_Script_CondicaoScript_StatusScript" FromRole="StatusScript" ToRole="Script_CondicaoScript" />
         </EntityType>
         <EntityType Name="TDM">
           <Key>
@@ -2583,6 +2607,18 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Script_CondicaoScript_StatusScript">
+          <End Type="TDM.DbModel.StatusScript" Role="StatusScript" Multiplicity="0..1" />
+          <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusScript">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Script_CondicaoScript">
+              <PropertyRef Name="IdStatusScript" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TestData_Script_CondicaoScript">
           <End Type="TDM.DbModel.Script_CondicaoScript" Role="Script_CondicaoScript" Multiplicity="1" />
           <End Type="TDM.DbModel.TestData" Role="TestData" Multiplicity="*" />
@@ -2943,6 +2979,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
                 <ScalarProperty Name="EVIDENCIA_VALIDACAO_CLIENTE" ColumnName="EVIDENCIA_VALIDACAO_CLIENTE" />
                 <ScalarProperty Name="NRO_CT" ColumnName="NRO_CT" />
                 <ScalarProperty Name="NRO_CENARIO" ColumnName="NRO_CENARIO" />
+                <ScalarProperty Name="OBS_2" ColumnName="OBS_2" />
                 <ScalarProperty Name="OBS" ColumnName="OBS" />
                 <ScalarProperty Name="PRE_CONDICAO" ColumnName="PRE_CONDICAO" />
                 <ScalarProperty Name="VARIANTE" ColumnName="VARIANTE" />
@@ -2997,6 +3034,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
                 <ScalarProperty Name="EVIDENCIA_VALIDACAO_CLIENTE" ColumnName="EVIDENCIA_VALIDACAO_CLIENTE" />
                 <ScalarProperty Name="NRO_CT" ColumnName="NRO_CT" />
                 <ScalarProperty Name="NRO_CENARIO" ColumnName="NRO_CENARIO" />
+                <ScalarProperty Name="OBS_2" ColumnName="OBS_2" />
                 <ScalarProperty Name="OBS" ColumnName="OBS" />
                 <ScalarProperty Name="PRE_CONDICAO" ColumnName="PRE_CONDICAO" />
                 <ScalarProperty Name="VARIANTE" ColumnName="VARIANTE" />
@@ -3056,6 +3094,7 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
           <EntitySetMapping Name="Script_CondicaoScript">
             <EntityTypeMapping TypeName="TDM.DbModel.Script_CondicaoScript">
               <MappingFragment StoreEntitySet="Script_CondicaoScript">
+                <ScalarProperty Name="IdStatusScript" ColumnName="IdStatusScript" />
                 <ScalarProperty Name="IdPlataforma" ColumnName="IdPlataforma" />
                 <ScalarProperty Name="WorkspaceCompartilhado" ColumnName="WorkspaceCompartilhado" />
                 <ScalarProperty Name="CaminhoArquivoSVN" ColumnName="CaminhoArquivoSVN" />
@@ -3100,14 +3139,12 @@ warning 6002: The table/view 'DevTDM.Db.dbo.MotivoExecucao' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="TDM.DbModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="StatusScript">
+            <EntityTypeMapping TypeName="TDM.DbModel.StatusScript">
+              <MappingFragment StoreEntitySet="StatusScript">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

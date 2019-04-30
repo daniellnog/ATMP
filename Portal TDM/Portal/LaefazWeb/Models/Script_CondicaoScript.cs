@@ -38,6 +38,7 @@ namespace LaefazWeb.Models
         public string CaminhoArquivoSVN { get; set; }
         public string WorkspaceCompartilhado { get; set; }
         public int IdPlataforma { get; set; }
+        public Nullable<int> IdStatusScript { get; set; }
     
         public virtual CondicaoScript CondicaoScript { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -50,6 +51,7 @@ namespace LaefazWeb.Models
         public virtual ICollection<Script_CondicaoScript_Ambiente> Script_CondicaoScript_Ambiente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Script_CondicaoScript_CT> Script_CondicaoScript_CT { get; set; }
+        public virtual StatusScript StatusScript { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestData> TestData { get; set; }
     }

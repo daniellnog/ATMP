@@ -93,7 +93,6 @@
                    @id = "list-plataforma",
                    @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
                    @required = "required",
-                   @disabled = "disabled"
                }
                     )
                 </div>
@@ -137,6 +136,19 @@
                    @multiple = "",
                    @tabindex = "-1",
                    @id = "list-param-saida",
+                   @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
+                   @required = "required",
+               }
+                        )
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 form-group">
+                    @Html.Label("label_status_script", "Status do Script")
+                    @Html.DropDownList("listaStatusScript", new SelectList(ViewBag.ListaStatusScript, "Id", "Nome"), "", new
+               {
+                   @class = "form-control",
+                   @id = "list-status-script",
                    @style = "width: 100%; padding-right: 12px; padding-left: 12px; border-right-width: 1px;",
                    @required = "required",
                }
@@ -231,7 +243,7 @@
                                 </div>
                                 <div class="col-xs-4 form-group">
                                     @Html.Label("tipo-de-dado", "Tipo de dado")
-                                    @Html.DropDownList("tipo_dado_parametro", new SelectList(ViewBag.TipoDadoParametro, "Descricao", "Descricao"), "", new
+                                    @Html.DropDownList("tipo_dado_parametro", new SelectList(ViewBag.TipoDadoParametro, "Id", "Descricao"), "", new
                                {
                                    @class = "form-control",
                                    @id = "list_tipo_dado_parametro",
@@ -350,13 +362,14 @@
         ];
 
         $(document).ready(function () {
+            carregarStatus();
             carregarAmbientes();
             carregarParametros();
             $('.select2').select2();
             popularArrayParametros();
             popularArrayAssociacoes();
             initTable(parametros);
-            initTableAssociacao(datasetAssociacao)
+            initTableAssociacao(datasetAssociacao);
         });
 
         $('#btnCancelarAssociacao').on('click', function(){
@@ -382,6 +395,8 @@
         $('#list_plataforma').on('change', function (){
             var valorAtual = $('#list_plataforma').val();
         });
+
+        
 
         function AddTableRowAssociacao(obj){
 
@@ -801,6 +816,10 @@
 
             $("#list-ambientes-virtual").val(ambVirts);
         }
+        
+        function carregarStatus(){
+            $("#list-status-script").val(scriptVO.Script_CondicaoScript.IdStatusScript);
+        }
 
         function carregarParametros(){
 
@@ -1107,8 +1126,10 @@
                             mensagem: "Parâmetro adicionado com sucesso",
                             argFuncao: result.Status,
                             funcaoBotaoOK: function (status) {
-                                listaDE = "<li data-draggable='item' value='0' class='ui-draggable ui-draggable-handle list-group-item' draggable='true' aria-grabbed='false' tabindex='0'>" + Descricao.toString() + "<input name='checkBox' descricao='" + Descricao.toString() + "' id='" + result.Id + "' colunaTecnica='" + NomeTecnico.toString() + "' type='checkbox' checked class='pull-right'></li>";
-                                $("#panel_left").append(listaDE);
+                                $("#list-param-entrada").append("<option value='" + result.Id + "' selected>" + Descricao + "</option>");
+                                $("#list-param-saida").append("<option value='" + result.Id + "' selected>" + Descricao + "</option>");
+                                //listaDE = "<li data-draggable='item' value='0' class='ui-draggable ui-draggable-handle list-group-item' draggable='true' aria-grabbed='false' tabindex='0'>" + Descricao.toString() + "<input name='checkBox' descricao='" + Descricao.toString() + "' id='" + result.Id + "' colunaTecnica='" + NomeTecnico.toString() + "' type='checkbox' checked class='pull-right'></li>";
+                                //$("#panel_left").append(listaDE);
                                 $('#idDescricao').val("");
                                 $('#idNomeTecnico').val("");
                                 $('#list_tipo_dado_parametro').val("");
@@ -1206,6 +1227,7 @@
             scriptVO.Script_CondicaoScript.NomeTecnicoScript = $('#nomeTecnico').val();
             scriptVO.Script.IdScriptPai = $('#list-script-pai').val();
             scriptVO.Script_CondicaoScript.IdCondicaoScript = $('#list-script-condicao').val();
+            scriptVO.Script_CondicaoScript.IdStatusScript = $('#list-status-script').val();
 
 
             //scriptVO.Script_CondicaoScript.Id = 0;
@@ -1213,7 +1235,7 @@
 
             //scriptVO.Script_CondicaoScript.IdScript = 0;
             //scriptVO.Script.Id = 0;
-
+            scriptVO.Script_CondicaoScript.IdPlataforma = $('#list-plataforma').val();
 
 
             var myJSON = JSON.stringify(scriptVO);

@@ -119,13 +119,13 @@ namespace LaefazWeb.Models.VOs
 
             }else if(name.Equals("TestData"))
             {
-                return ((TestData)obj).IdDataPool;
+                return (int)((TestData)obj).IdDataPool;
             }
             else if(name.Equals("Execucao"))
             {
                 DbEntities db = new DbEntities();
                 TestData td = db.TestData.Where(x => x.Id == ((Execucao)obj).IdTestData).FirstOrDefault();
-               return td.IdDataPool;
+               return (int)td.IdDataPool;
             }
 
             return -1;

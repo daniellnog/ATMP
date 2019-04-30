@@ -44,6 +44,7 @@ namespace LaefazWeb.Controllers
             ViewBag.ListaAmbienteVirt = new List<AmbienteVirtual>();
             ViewBag.ListaTipoFaseTeste = new List<TipoFaseTeste>();
             ViewBag.ListaScript = new List<Script>();
+            ViewBag.ListaTestData = new List<TestData>();
 
             //ViewBag.Sistema = new List<listaVO>();
             //ViewBag.Pasta = new List<listaVO>();
@@ -57,143 +58,492 @@ namespace LaefazWeb.Controllers
 
             ViewBag.PlanoDeTeste = new List<listaVO>();
 
+            ViewBag.ListaTipoFaseTeste = db.TipoFaseTeste.ToList();
+
             return View();
         }
 
-        public JsonResult CarregarDadosModalPlay(int IdPlanoTeste_TI)
+        public JsonResult CarregarDadosScript(int IdPlanoTeste_TI)
         {
+            string result = JsonConvert.SerializeObject(false, Formatting.Indented);
             try
             {
-                PlanoTeste_TI pt_ti = db.PlanoTeste_TI.Where(x => x.ID == IdPlanoTeste_TI).FirstOrDefault();
-                log.Info("Carregando o objeto do Plano de Teste" + pt_ti);
-                if (pt_ti != null)
+                log.Info("entrada no try ");
+
+                List<ListaScriptsVO> listaScripts = new List<ListaScriptsVO>();
+
+                SqlParameter[] param =
                 {
-                    log.Info("Verificando se existe um CT associado ao plano de Teste.");
-                    string Nome = pt_ti.NOME.Replace("\r\n", " ");
-                    CT ct = db.CT.Where(x => x.Nome == pt_ti.NOME.Replace("\r\n", " ") && x.Sistema == pt_ti.SISTEMA && x.Fase == pt_ti.CICLO).FirstOrDefault();
-                    log.Info("CT carregado: " + ct);
+                    new SqlParameter("@IDPLANOTESTE", IdPlanoTeste_TI),
+                };
+                log.Info("Carregou os parametros");
 
-                    if (ct != null)
-                    {
-                        log.Info("Verificando a Script_condicaoScript_CT");
-                        Script_CondicaoScript_CT scs_ct = db.Script_CondicaoScript_CT.Where(x => x.IdCT == ct.Id).FirstOrDefault();
-                        log.Info("Script_condicaoScript_CT carregado: " + scs_ct);
+                listaScripts = db.Database.SqlQuery<ListaScriptsVO>(
+                        "EXEC PR_LISTAR_SCRIPTS_EXECUCAO @IDPLANOTESTE ", param).ToList();
 
-                        log.Info("Verificando a TestData_CT");
-                        List<TestData_CT> testDatas = db.TestData_CT.Where(x => x.IdCT == ct.Id).ToList();
-                        log.Info("Lista de TestData_CT carregado: " + scs_ct);
+                log.Info("Executou a proc");
 
-                        if (scs_ct != null)
-                        {
-                            log.Info("Verificando a Script_CondicaoScript");
-                            List<Script_CondicaoScript> scs = db.Script_CondicaoScript.Where(x => x.Id == scs_ct.IdScript_CondicaoScript).ToList();
-                            log.Info("Lista de Script_CondicaoScript carregado: " + scs);
+                result = JsonConvert.SerializeObject(listaScripts, Formatting.Indented);
 
-                            if (scs != null)
-                            {
-                                DadosModalPlayExecucaoTesteVO mp = new DadosModalPlayExecucaoTesteVO();
-                                var listScript = new List<listaVO>();
-                                List<int> IdsSCS = new List<int>();
-
-                                for (int i = 0; i < scs.Count; i++)
-                                {
-                                    string desc = scs[i].CondicaoScript == null ? scs[i].Script.Descricao : scs[i].Script.Descricao + " - " + scs[i].CondicaoScript.Descricao;
-                                    listaVO tmp = new listaVO
-                                    {
-                                        Id = scs[i].Id,
-                                        Descricao = desc
-                                    };
-                                    listScript.Add(tmp);
-                                    IdsSCS.Add(scs[i].Id);
-                                }
-                                log.Info("Lista de chave/valor de script preenchida com sucesso: " + listScript);
-                                mp.ListaScripts = listScript;
-
-                                var listTestDatas = new List<listaVO>();
-
-                                for (int i = 0; i < testDatas.Count; i++)
-                                {
-                                    listaVO tmp = new listaVO
-                                    {
-                                        Id = testDatas[i].IdTestData,
-                                        Descricao = testDatas[i].TestData.Descricao
-                                    };
-                                    
-                                    listTestDatas.Add(tmp);
-                                }
-                                log.Info("Lista de chave/valor de testData preenchida com sucesso: " + listTestDatas);
-                                mp.ListaTestDatas = listTestDatas;
-
-                                // Recuperando todos os ambientes execução e virtual possível para o Script+Condicao da tela
-                                var QueryAmbientes =
-                                   (from av in db.AmbienteVirtual
-                                    join sca in db.Script_CondicaoScript_Ambiente on av.Id equals sca.IdAmbienteVirtual
-                                    join aexec in db.AmbienteExecucao on sca.IdAmbienteExecucao equals aexec.Id
-                                    where IdsSCS.Contains(sca.IdScript_CondicaoScript) // pegar id da tela
-                                    select new AmbienteExecucao_Popup
-                                    {
-                                        IdAmbienteVirtual = av.Id,
-                                        DescricaoAmbienteVirtual = av.Descricao,
-                                        IdAmbienteExecucao = aexec.Id,
-                                        DescricaoAmbienteExecucao = aexec.Descricao,
-                                        Disponivel = true
-
-                                    }).ToList().Distinct();
-
-                                // Recuperando todos os ambientes execução que estão em uso
-                                var QueryAmbienteVirtualDisponivel =
-                                    (from exec in db.Execucao
-                                     where exec.SituacaoAmbiente == (int)Enumerators.EnumSituacaoAmbiente.EmUso
-                                     select exec.Script_CondicaoScript_Ambiente.AmbienteVirtual.Id).ToList();
-
-                                // Percorrendo todos os ambientes execução e virtual possíveis e atualizando o status (disponível)
-                                foreach (var item in QueryAmbientes)
-                                {
-                                    if (QueryAmbienteVirtualDisponivel.Contains(item.IdAmbienteVirtual))
-                                        item.Disponivel = false;
-                                }
-
-                                // Recuperando todos os ambientes que possuem status disponível
-                                ViewBag.ListaAmbienteVirt = QueryAmbientes.Where(i => i.Disponivel == true).Select(i => new { i.IdAmbienteVirtual, i.DescricaoAmbienteVirtual }).ToList().Distinct();
-                                ViewBag.ListaAmbienteExec = QueryAmbientes.Where(i => i.Disponivel == true).Select(i => new { i.IdAmbienteExecucao, i.DescricaoAmbienteExecucao }).ToList().Distinct();
-
-                                //string json = JsonConvert.SerializeObject(ViewBag.ListaAmbienteExec, Formatting.Indented);
-
-                                string jsonAmbExec = JsonConvert.SerializeObject(ViewBag.ListaAmbienteExec, Formatting.Indented);
-                                string jsonAmbVirtual = JsonConvert.SerializeObject(ViewBag.ListaAmbienteVirt, Formatting.Indented);
-
-                                var resultado = new { dados = mp, ambexec = jsonAmbExec, ambvirtu = jsonAmbVirtual, mensagem = "Sucesso" };
-                                return Json(resultado, JsonRequestBehavior.AllowGet);
-                            }
-                            else
-                            {
-                                var resultado = new { mensagem = "Não encontrado o Script_CondicaoScript" };
-                                return Json(resultado, JsonRequestBehavior.AllowGet);
-                            }
-                        }
-                        else
-                        {
-                            var resultado = new { mensagem = "Não encontrado o Script_CondicaoScript_CT" };
-                            return Json(resultado, JsonRequestBehavior.AllowGet);
-                        }
-                    }
-                    else
-                    {
-                        var resultado = new { mensagem = "Não encontrado o CT associado ao plano de teste" };
-                        return Json(resultado, JsonRequestBehavior.AllowGet);
-                    }
-                }
-                else
-                {
-                    var resultado = new { mensagem = "Não encontrado o Plano de Teste" };
-                    return Json(resultado, JsonRequestBehavior.AllowGet);
-                }
+                //resultado = new { listaScript = listaScripts, mensagem = "Sucesso" };
             }
             catch (Exception ex)
             {
-                var resultado = new { mensagem = "Exeção :" + ex.Message };
-                return Json(resultado, JsonRequestBehavior.AllowGet);
+                result = JsonConvert.SerializeObject("Erro: " + ex.Message, Formatting.Indented);
+                //return Json(resultado, JsonRequestBehavior.AllowGet);
             }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CarregarParametrosTestData(int IdTestData)
+        {
+            string result = JsonConvert.SerializeObject(false, Formatting.Indented);
+
+            TestData td = db.TestData.Where(x => x.Id == IdTestData).FirstOrDefault();
+
+            List<ParametroValorVO> parametros = (from pv in db.ParametroValor
+                                                 join ps in db.ParametroScript on pv.IdParametroScript equals ps.Id
+                                                 join tp in db.TipoParametro on ps.IdTipoParametro equals tp.Id
+                                                 join p in db.Parametro on ps.IdParametro equals p.Id
+                                                 where pv.IdTestData == IdTestData
+                                                 select new ParametroValorVO
+                                                 {
+                                                     IdParametroValor = pv.Id,
+                                                     IdParametroScript = pv.IdParametroScript,
+                                                     Valor = pv.Valor,
+                                                     IdTestData = pv.IdTestData,
+                                                     DescricaoTestData = td.Descricao,
+                                                     DescricaoParametro = p.Descricao,
+                                                     DescricaoTipoParametro = tp.Descricao,
+                                                     IdParametroValor_Origem = pv.IdParametroValor_Origem,
+                                                     IdTipoParametro = ps.IdTipoParametro,
+                                                     Tipo = p.Tipo
+                                                 }).ToList();
+
+            return Json(parametros, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Play(int IdTestData, int IdFaseTeste, int IdMaquinaVirtual, int OpcaoTelegram, int IdAmbienteExecucao, bool PlayTestData = false)
+        {
+            try
+            {
+                Usuario user = (Usuario)Session["ObjUsuario"];
+                //baixarEvidencia("http:///10.43.6.160:8081//PortalTDM//Evidencias//10_05_2018//SIEBEL%208-ETRG-TRG_MAIO_2018-10_05_2018_03_33_53.ZIP");
+                string mensagem = "";
+                var testDatas = new List<int>();
+                List<ListaTestDatas> listaTestDatas = new List<ListaTestDatas>();
+                int IdDatapool;
+                int[] ids = null;
+                //Verifica se o Play é da entidade DataPool ou da TestData
+                if (PlayTestData)
+                {
+                    TestData TestData = db.TestData.FirstOrDefault(x => x.Id == IdTestData);
+                    IdDatapool = db.DataPool.FirstOrDefault(x => x.Id == TestData.IdDataPool).Id;
+
+                    listaTestDatas =
+                        (from dp in db.DataPool
+                         join td in db.TestData on dp.Id equals td.IdDataPool
+                         where td.Id == IdTestData
+                         select new ListaTestDatas
+                         {
+                             IdDatapool = dp.Id,
+                             IdTestData = td.Id,
+                             IdStatus = td.IdStatus
+                         }).ToList();
+
+                    if (listaTestDatas.Where(x => x.IdStatus != (int)EnumStatusTestData.Cadastrada).ToList().Count() > 0)
+                        throw new Exception("Não é possível iniciar a execução de massas com o status diferente de CADASTRADA!");
+
+                    List<ParametrosValores> listaParametrosObrigatorios =
+                                            (from pv in db.ParametroValor
+                                             join ps in db.ParametroScript on pv.IdParametroScript equals ps.Id
+                                             join p in db.Parametro on ps.IdParametro equals p.Id
+                                             where pv.IdTestData == IdTestData && ps.Obrigatorio == true
+                                             select new ParametrosValores
+                                             {
+                                                 IdTestData = pv.IdTestData,
+                                                 IdDatapool = IdDatapool,
+                                                 IdParametro = p.Id,
+                                                 IdParametroValor = pv.Id,
+                                                 Descricao = p.Descricao,
+                                                 Valor = pv.Valor,
+                                                 Obrigatorio = ps.Obrigatorio
+                                             }).ToList();
+
+                    for (int w = 0; w < listaParametrosObrigatorios.Count; w++)
+                    {
+                        #region
+                        log.Debug("Indice de repetição: " + w);
+                        log.Debug("listaParametrosObrigatorios[w].IdParametro: " + listaParametrosObrigatorios[w].IdParametro);
+                        log.Debug("idAmbienteExecucao: " + IdAmbienteExecucao);
+
+                        #endregion
+
+                        //Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play
+                        if (listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Ambiente_Sistema || listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Ambiente || listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.URL)
+                        {
+                            #region Debug
+                            log.Debug("Entrada na condição Verifico se o Script tem o parametro Ambiente sistema, caso tenha, o valor do parametro é atualizado com o valor que vem da tela do play.");
+                            #endregion
+
+                            int idAmbExec = IdAmbienteExecucao;
+                            int? _idParamValor = listaParametrosObrigatorios[w].IdParametroValor;
+
+                            #region Debug
+                            log.Debug("idAmbExec: " + idAmbExec);
+                            log.Debug("_idParamValor: " + _idParamValor);
+                            #endregion
+
+                            if (_idParamValor != null)
+                            {
+                                ParametroValor pv = db.ParametroValor.Where(x => x.Id == _idParamValor).FirstOrDefault();
+
+                                #region Debug
+                                log.DebugObject(pv);
+                                #endregion
+
+                                AmbienteExecucao ambExec = db.AmbienteExecucao.Where(x => x.Id == idAmbExec).FirstOrDefault();
+
+                                #region Debug 
+
+                                log.DebugObject(ambExec);
+
+                                log.Debug("idAmbExec: " + idAmbExec);
+                                log.Debug("_idParamValor: " + _idParamValor);
+                                #endregion
+
+                                if (ambExec.Id == (int)EnumAmbienteExec.Ti1_Siebel8 || ambExec.Id == (int)EnumAmbienteExec.Ti8_Siebel8)
+                                {
+                                    string amb = ambExec.Descricao.Substring(ambExec.Descricao.IndexOf("http"), ambExec.Descricao.Length - ambExec.Descricao.IndexOf("http"));
+
+                                    #region Debug 
+                                    log.Debug("amb: " + amb);
+                                    #endregion
+
+                                    pv.Valor = amb;
+                                    listaParametrosObrigatorios[w].Valor = amb;
+
+                                    #region Debug 
+                                    log.Debug("pv.Valor: " + pv.Valor);
+                                    log.Debug("listaParametrosObrigatorios[w].Valor: " + listaParametrosObrigatorios[w].Valor);
+
+                                    #endregion
+                                }
+                                else
+                                {
+                                    pv.Valor = ambExec.Descricao;
+                                    listaParametrosObrigatorios[w].Valor = ambExec.Descricao;
+                                }
+                                // anexar objeto ao contexto
+                                db.ParametroValor.Attach(pv);
+                                //Prepara a entidade para uma Edição
+                                db.Entry(pv).State = System.Data.Entity.EntityState.Modified;
+
+                                // informa que o obejto será modificado
+                                db.SaveChanges();
+                            }
+                        }
+
+                        if (listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Dados_De_Entrada ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Dados_De_Saida ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Fase ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Nome_Do_Caso_De_Teste ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Numero_Do_Caso_De_Teste ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Prj ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Resultado_Esperado ||
+                            listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Titulo)
+                        {
+                            int? _idParamValor = listaParametrosObrigatorios[w].IdParametroValor;
+                            ParametroValor pv = db.ParametroValor.Where(x => x.Id == _idParamValor).FirstOrDefault();
+
+                            #region Debug 
+                            log.Debug("_idParamValor: " + _idParamValor);
+                            log.DebugObject(pv);
+
+                            #endregion
+
+                            if (pv.Valor.Equals(""))
+                                pv.Valor = "TESTE";
+
+                            // anexar objeto ao contexto
+                            db.ParametroValor.Attach(pv);
+                            //Prepara a entidade para uma Edição
+                            db.Entry(pv).State = System.Data.Entity.EntityState.Modified;
+
+                            // informa que o obejto será modificado
+                            db.SaveChanges();
+
+                            listaParametrosObrigatorios[w].Valor = pv.Valor;
+                        }
+
+                        if (listaParametrosObrigatorios[w].IdParametro == (int)EnumParametro.Evidencia_Autor)
+                        {
+                            int? _idParamValor = listaParametrosObrigatorios[w].IdParametroValor;
+                            ParametroValor pv = db.ParametroValor.Where(x => x.Id == _idParamValor).FirstOrDefault();
+                            pv.Valor = user.Login;
+
+                            // anexar objeto ao contexto
+                            db.ParametroValor.Attach(pv);
+                            //Prepara a entidade para uma Edição
+                            db.Entry(pv).State = System.Data.Entity.EntityState.Modified;
+
+                            // informa que o obejto será modificado
+                            db.SaveChanges();
+
+                            listaParametrosObrigatorios[w].Valor = user.Login;
+                        }
+                        else
+                        {
+                            if (listaParametrosObrigatorios[w].Valor == "" || listaParametrosObrigatorios[w].Valor == null)
+                            {
+                                if (!testDatas.Contains(IdTestData))
+                                {
+                                    testDatas.Add(IdTestData);
+                                }
+                            }
+                        }
+                    }
+
+                    if (testDatas.Count > 0)
+                    {
+                        string combindedString = string.Join(",", testDatas.ToArray());
+                        string stringFinal = "";
+                        for (int i = 0; i < combindedString.Length; i++)
+                        {
+                            if (i % 100 == 0)
+                            {
+                                if (i == 0)
+                                {
+                                    stringFinal += combindedString[i];
+                                }
+                                else
+                                {
+                                    stringFinal += combindedString[i] + "<br >";
+                                }
+                            }
+                            else
+                            {
+                                stringFinal += combindedString[i];
+                            }
+                        }
+                        mensagem = "O(s) TestData(s): abaixo possui(em) parâmetro(s) obrigatório(s) que não foram preenchidos <br>" + stringFinal;
+                    }
+                    else
+                    {
+                        bool EnvioTelegram = Convert.ToBoolean(OpcaoTelegram);
+                        // Utilizando o Datapool da tela, substituir a query do script e salvar os dados na tabela de execução (Controle_Ambiente)
+
+                        if (PlayTestData)
+                            ReplaceQuery(IdTestData, IdFaseTeste, IdMaquinaVirtual, IdAmbienteExecucao, EnvioTelegram); // enviar o testData selecionado para execução
+                        //else
+                            //ReplaceQuery(ObtemIdTestData(Int32.Parse(id)), Int32.Parse(idFaseTeste), Int32.Parse(idMaquinaVirtual), Int32.Parse(idAmbienteExecucao), EnvioTelegram); // enviar o Datapool da tela
+
+                        #region 
+                        //Realizar execução através de requisição Jenkins
+
+                        string pAginaDoJob = null;
+
+                        AmbienteVirtual ambv = db.AmbienteVirtual.Where(x => x.Id == IdMaquinaVirtual).FirstOrDefault();
+
+                        if (ambv.IP != null)
+                        {
+                            mensagem = "Execução iniciada com sucesso!";
+                            pAginaDoJob = ConfigurationSettings.AppSettings[ambv.IP];
+                        }
+                        else
+                        {
+                            mensagem = "Não foi possível definir o Job do Jenkins.";
+                        }
+
+                        runJobJenkinsRemote(pAginaDoJob);
+                        log.Info("Execução iniciada.");
+                        #endregion
+                        //Usar esta opção para rodar local
+                        //runJobJenkinsLocal(pAginaDoJob, "brucilin.de.gouveia", "brucilin.de.gouveia");
+                    }
+
+                }
+                else
+                {
+
+                    //IdDatapool = Int32.Parse(id);
+                    //listaTestDatas =
+                    //    (from dp in db.DataPool
+                    //     join td in db.TestData on dp.Id equals td.IdDataPool
+                    //     where dp.Id == IdDatapool
+                    //     select new ListaTestDatas
+                    //     {
+                    //         IdDatapool = dp.Id,
+                    //         IdTestData = td.Id
+                    //     }).ToList();
+                }
+
+
+
+                return Json(new { Data = mensagem }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Data = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        private void runJobJenkinsRemote(string url)
+        {
+            try
+            {
+                WebRequest wrIniciaJob;
+
+                wrIniciaJob = WebRequest.Create(url);
+
+                wrIniciaJob.Method = "POST";
+
+                WebResponse response = wrIniciaJob.GetResponse();
+                log.Info("ToString : " + response.ToString());
+                log.Info("responseUri: " + response.ResponseUri);
+                log.Info("hashcode: " + response.GetHashCode());
+                response.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                log.Error(ex);
+            }
+
+        }
+
+        private void ReplaceQuery(int IdTestData, int idFaseTeste, int idMaquinaVirtual, int idAmbienteExecucao, bool EnvioTelegram)
+        {
+            Entities db = new Entities();
+            
+            //recuperando objeto testdata, para ter recuperar o IdScript_CondicaoScript
+            TestData testData = db.TestData.Where(x => x.Id == IdTestData).FirstOrDefault();
+
+            Script_CondicaoScript script_CondicaoScript = db.Script_CondicaoScript.Where(x => x.Id == testData.IdScript_CondicaoScript).FirstOrDefault();
+
+            string query = script_CondicaoScript.QueryTosca;
+
+            String queryTemp = query.Replace("ptdTosca", testData.Id.ToString());
+
+            Usuario user = (Usuario)Session["ObjUsuario"];
+            Execucao exec = new Execucao();
+            Script_CondicaoScript_Ambiente script_CondicaoScript_Ambiente = db.Script_CondicaoScript_Ambiente.Where(x => x.IdScript_CondicaoScript == testData.IdScript_CondicaoScript).Where(x => x.IdAmbienteVirtual == idMaquinaVirtual).Where(x => x.IdAmbienteExecucao == idAmbienteExecucao).FirstOrDefault();
+            exec.IdScript_CondicaoScript_Ambiente = script_CondicaoScript_Ambiente.Id;
+            exec.IdTipoFaseTeste = idFaseTeste; // pegar via campo popup modal play
+            exec.IdStatusExecucao = (int)Enumerators.EnumStatusExecucao.AguardandoProcessamento;
+            exec.Usuario = user.Id.ToString();
+            exec.IdTestData = testData.Id; // pegar o id via tela
+            exec.SituacaoAmbiente = (int)Enumerators.EnumSituacaoAmbiente.EmUso;
+            exec.ToscaInput = queryTemp;
+            exec.EnvioTelegram = EnvioTelegram;
+            db.Execucao.Add(exec);
+
+            //Entities db1 = new Entities();
+            //TestData td1 = db1.TestData.Where(x => x.Id == testData.Id).FirstOrDefault();
+            TestData td1 = db.TestData.Where(x => x.Id == testData.Id).FirstOrDefault();
+            td1.IdStatus = (int)Enumerators.EnumStatusTestData.EmGeracao;
+            td1.GeradoPor = user.Login;
+
+            db.TestData.Attach(td1);
+            //db1.TestData.Attach(td1);
+
+            db.Entry(td1).State = System.Data.Entity.EntityState.Modified;
+            //db1.Entry(td1).State = System.Data.Entity.EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+                //db1.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                this.FlashError(ex.Message);
+            }
+
+        }
+
+        public JsonResult CarregarAmbientes(int IdScript_CondicaoScript)
+        {
+            string result = JsonConvert.SerializeObject(false, Formatting.Indented);
+            try
+            {
+                var QueryAmbientes =
+               (from av in db.AmbienteVirtual
+                join sca in db.Script_CondicaoScript_Ambiente on av.Id equals sca.IdAmbienteVirtual
+                join aexec in db.AmbienteExecucao on sca.IdAmbienteExecucao equals aexec.Id
+                where sca.IdScript_CondicaoScript == IdScript_CondicaoScript
+                select new AmbienteExecucao_Popup
+                {
+                    IdAmbienteVirtual = av.Id,
+                    DescricaoAmbienteVirtual = av.Descricao,
+                    IdAmbienteExecucao = aexec.Id,
+                    DescricaoAmbienteExecucao = aexec.Descricao,
+                    Disponivel = true
+
+                }).ToList().Distinct();
+
+                // Recuperando todos os ambientes execução que estão em uso
+                var QueryAmbienteVirtualDisponivel =
+                    (from exec in db.Execucao
+                     where exec.SituacaoAmbiente == (int)Enumerators.EnumSituacaoAmbiente.EmUso
+                     select exec.Script_CondicaoScript_Ambiente.AmbienteVirtual.Id).ToList();
+
+                // Percorrendo todos os ambientes execução e virtual possíveis e atualizando o status (disponível)
+                foreach (var item in QueryAmbientes)
+                {
+                    if (QueryAmbienteVirtualDisponivel.Contains(item.IdAmbienteVirtual))
+                        item.Disponivel = false;
+                }
+
+                // Recuperando todos os ambientes que possuem status disponível
+                ViewBag.ListaAmbienteVirt = QueryAmbientes.Where(i => i.Disponivel == true).Select(i => new { i.IdAmbienteVirtual, i.DescricaoAmbienteVirtual }).ToList().Distinct();
+                ViewBag.ListaAmbienteExec = QueryAmbientes.Where(i => i.Disponivel == true).Select(i => new { i.IdAmbienteExecucao, i.DescricaoAmbienteExecucao }).ToList().Distinct();
+
+                //string json = JsonConvert.SerializeObject(ViewBag.ListaAmbienteExec, Formatting.Indented);
+
+                string jsonAmbExec = JsonConvert.SerializeObject(ViewBag.ListaAmbienteExec, Formatting.Indented);
+                string jsonAmbVirtual = JsonConvert.SerializeObject(ViewBag.ListaAmbienteVirt, Formatting.Indented);
+
+                var ambientes = new { ambexec = jsonAmbExec, ambvirtu = jsonAmbVirtual };
+
+                result = JsonConvert.SerializeObject(ambientes, Formatting.Indented);
+            }
+            catch (Exception ex)
+            {
+                result = JsonConvert.SerializeObject("Erro: " + ex.Message, Formatting.Indented);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CarregarTestDatas(int IdScript_CondicaoScript, int IdPlanoTeste_TI)
+        {
+            string result = JsonConvert.SerializeObject(false, Formatting.Indented);
+            try
+            {
+                PlanoTeste_TI ptTi = db.PlanoTeste_TI.FirstOrDefault(x => x.ID == IdPlanoTeste_TI);
+                string Nome = ptTi.NOME.Replace("\r\n", " ");
+                CT ct = db.CT.Where(x => x.Nome == ptTi.NOME.Replace("\r\n", " ") && x.Sistema == ptTi.SISTEMA && x.Fase == ptTi.CICLO).FirstOrDefault();
+
+                List<TestDataCtVO> TestDataCtVo = new List<TestDataCtVO>();
+
+                SqlParameter[] param =
+                {
+                    new SqlParameter("@IDCT", ct.Id),
+                    new SqlParameter("@IDSCRIPTCONDICAOSCRIPT", IdScript_CondicaoScript),
+                };
+
+                TestDataCtVo = db.Database.SqlQuery<TestDataCtVO>(
+                        "EXEC PR_LISTAR_TESTDATA_CT @IDCT ", param).ToList();
+
+                log.Info("Executou a proc");
+                result = JsonConvert.SerializeObject(TestDataCtVo, Formatting.Indented);
+            }
+            catch (Exception ex)
+            {
+                result = JsonConvert.SerializeObject("Erro: " + ex.Message, Formatting.Indented);
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SalvarLinha(string execAutomatizada, string idPlanoTeste_TI, string motivoExecucao = "", string nrOfensor = "", string descricaoScript = null, string plataforma = null)
